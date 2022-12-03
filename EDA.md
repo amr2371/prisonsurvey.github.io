@@ -23,12 +23,14 @@ state_df <- da04572.0002%>%
 ``` r
 #Interview outcome
 da04572.0001 %>% 
-  count(V0003)
+  count(V0003) %>%
+  knitr:: kable()
 ```
 
-    ##                                                                V0003    n
-    ## 1                                           (201) Complete - regular 3615
-    ## 2 (203) Sufficient partial interview - no further follow-up possible   71
+| V0003                                                                |    n |
+|:---------------------------------------------------------------------|-----:|
+| \(201\) Complete - regular                                           | 3615 |
+| \(203\) Sufficient partial interview - no further follow-up possible |   71 |
 
 ``` r
 #Sex
@@ -285,3 +287,60 @@ federal_df %>%
 ```
 
 <img src="EDA_files/figure-gfm/unnamed-chunk-4-4.png" width="90%" />
+
+``` r
+# MH Treatment Continuation (one year prior to arrest and since admission)
+# TODO: we can maybe change scale to %, and have line plot to vary the viz
+
+state_tx = state_df %>%
+  group_by(MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD) %>%
+  summarize(n_obs = n()) %>%
+  mutate(
+    MCMH_MH_TREATMENT_PA = gsub(".* ", "", MCMH_MH_TREATMENT_PA),
+    MCMH_MH_TREATMENT_AD = gsub(".* ", "", MCMH_MH_TREATMENT_AD),
+    tx_pa_ad = str_c(MCMH_MH_TREATMENT_PA, '/',MCMH_MH_TREATMENT_AD)
+  ) %>%
+  ggplot(aes(x = tx_pa_ad, y = n_obs, fill = tx_pa_ad)) +
+  geom_bar(stat = "identity") +
+  guides(fill="none") +
+  labs(
+    title = "State",
+    x = "",
+    y = "Survey Respondents"
+  ) 
+```
+
+    ## `summarise()` has grouped output by 'MCMH_MH_TREATMENT_PA'. You can override using the
+    ## `.groups` argument.
+
+``` r
+federal_tx = federal_df %>%
+  group_by(MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD) %>%
+  summarize(n_obs = n()) %>%
+  mutate(
+    MCMH_MH_TREATMENT_PA = gsub(".* ", "", MCMH_MH_TREATMENT_PA),
+    MCMH_MH_TREATMENT_AD = gsub(".* ", "", MCMH_MH_TREATMENT_AD),
+    tx_pa_ad = str_c(MCMH_MH_TREATMENT_PA, '/',MCMH_MH_TREATMENT_AD)
+  ) %>%
+  ggplot(aes(x = tx_pa_ad, y = n_obs, fill = tx_pa_ad)) +
+  geom_bar(stat = "identity") +
+  guides(fill="none") +
+  labs(
+    title = "Federal",
+    x = "Prior to Arrest/After Admission",
+    y = "Survey Respondents"
+  ) 
+```
+
+    ## `summarise()` has grouped output by 'MCMH_MH_TREATMENT_PA'. You can override using the
+    ## `.groups` argument.
+
+``` r
+(state_tx / federal_tx) + 
+  plot_annotation(
+  title = 'Mental Health Treatment Continuation',
+  caption = 'Data Source: Bureau of Justice Statistics, Survey of Inmates in State and Federal Correctional Facilities, United States, 2004'
+)
+```
+
+<img src="EDA_files/figure-gfm/unnamed-chunk-4-5.png" width="90%" />

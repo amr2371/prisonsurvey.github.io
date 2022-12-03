@@ -9,6 +9,7 @@ output: github_document
 library(tidyverse)
 library(mgcv)
 library(modelr)
+library(patchwork)
 
 library(viridis)
 
@@ -46,25 +47,31 @@ state_df <- da04572.0002%>%
 
 ```
 
-## Summary of Demographic
+## Demographics
 ```{r}
 #Interview outcome
 da04572.0001 %>% 
-  count(V0003)
+  count(V0003) %>% 
+  rename("Interview Outcome"= V0003) %>%
+  knitr:: kable() 
 
 #Sex
 da04572.0001 %>% 
-  count(V0004)
+  count(V0004) %>%
+  rename("Sex" = V0004) %>%
+  knitr:: kable()
 
 #US Citizen
 da04572.0001%>% 
-  count(V0051)
+  count(V0051) %>%
+  rename("US Citizen" = V0051) %>%
+  knitr:: kable()
 
 #HIGHEST EDUCATION BEFORE ARREST
 da04572.0001%>% 
-  count(EDUCATION)
-
-
+  count(EDUCATION) %>%
+  rename("Highest Education Prior to Arrest" = EDUCATION) %>%
+  knitr:: kable()
 ```
 
 
@@ -174,6 +181,49 @@ federal_df %>%
   ggplot(aes(x = MCMH_MHOSPADM, y = n_obs, fill = MCMH_MHOSPADM)) +
   geom_bar(stat = "identity")
 
+
+# MH Treatment Continuation (one year prior to arrest and since admission)
+# TODO: we can maybe change scale to %, and have line plot to vary the viz
+
+state_tx = state_df %>%
+  group_by(MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD) %>%
+  summarize(n_obs = n()) %>%
+  mutate(
+    MCMH_MH_TREATMENT_PA = gsub(".* ", "", MCMH_MH_TREATMENT_PA),
+    MCMH_MH_TREATMENT_AD = gsub(".* ", "", MCMH_MH_TREATMENT_AD),
+    tx_pa_ad = str_c(MCMH_MH_TREATMENT_PA, '/',MCMH_MH_TREATMENT_AD)
+  ) %>%
+  ggplot(aes(x = tx_pa_ad, y = n_obs, fill = tx_pa_ad)) +
+  geom_bar(stat = "identity") +
+  guides(fill="none") +
+  labs(
+    title = "State",
+    x = "",
+    y = "Survey Respondents"
+  ) 
+
+federal_tx = federal_df %>%
+  group_by(MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD) %>%
+  summarize(n_obs = n()) %>%
+  mutate(
+    MCMH_MH_TREATMENT_PA = gsub(".* ", "", MCMH_MH_TREATMENT_PA),
+    MCMH_MH_TREATMENT_AD = gsub(".* ", "", MCMH_MH_TREATMENT_AD),
+    tx_pa_ad = str_c(MCMH_MH_TREATMENT_PA, '/',MCMH_MH_TREATMENT_AD)
+  ) %>%
+  ggplot(aes(x = tx_pa_ad, y = n_obs, fill = tx_pa_ad)) +
+  geom_bar(stat = "identity") +
+  guides(fill="none") +
+  labs(
+    title = "Federal",
+    x = "Prior to Arrest/After Admission",
+    y = "Survey Respondents"
+  ) 
+
+(state_tx / federal_tx) + 
+  plot_annotation(
+  title = 'Mental Health Treatment Continuation',
+  caption = 'Data Source: Bureau of Justice Statistics, Survey of Inmates in State and Federal Correctional Facilities, United States, 2004'
+)
 
 ```
 
