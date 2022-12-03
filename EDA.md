@@ -18,16 +18,17 @@ state_df <- da04572.0002%>%
    select(V2288, V2289, V2290, V2291, MCMH_HIVTEST, MCMH_RSLT_HIV, DRUG_INJECT_CB, V2401, V2402, V2403, V2404, V2405, V2406, V2407, V2409, V2412, MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD, MCMH_MENTAL_HISTORY, V1197, CS_SENTENCEMTH,CH_PRIORSENTENCE, CH_PRIORSENTENCE_NUM, CH_CRIMHIST, CH_CRIMHIST_COLLAPSED, CH_NUMCAR,CH_NUMCAR1, CH_NUMCAR2, CH_NUMCAR3, CH_NUMCAR4, CH_NUMCAR5, MOST_SERIOUS_OFFENSE2, TYPEOFFENSE, V1056, V1057, V1060, V1061, V1325, V0001, V0014, AGE_CAT, V2982, V0005, EDUCATION, SES_INCOMEMTH, DRUG_ANY, DRUG_ANYREG, DRUG_ANYMTH, SES_PHYSSEXABUSED_EVER, SES_PARENTS_INCARCERATED, SES_FAMILY_INCARCERATED, V0105, MCMH_WHEN_DISORDER, MCMH_WHEN_DISORDER2,MCMH_MHOSPYR,MCMH_MHOSPADM,MCMH_MHOSPYRADM,MCMH_SMI)
 ```
 
-## Summary of Demographic
+## Demographics
 
 ``` r
 #Interview outcome
 da04572.0001 %>% 
-  count(V0003) %>%
-  knitr:: kable()
+  count(V0003) %>% 
+  rename("Interview Outcome"= V0003) %>%
+  knitr:: kable() 
 ```
 
-| V0003                                                                |    n |
+| Interview Outcome                                                    |    n |
 |:---------------------------------------------------------------------|-----:|
 | \(201\) Complete - regular                                           | 3615 |
 | \(203\) Sufficient partial interview - no further follow-up possible |   71 |
@@ -35,79 +36,64 @@ da04572.0001 %>%
 ``` r
 #Sex
 da04572.0001 %>% 
-  count(V0004)
+  count(V0004) %>%
+  rename("Sex" = V0004) %>%
+  knitr:: kable()
 ```
 
-    ##        V0004    n
-    ## 1   (1) Male 2728
-    ## 2 (2) Female  958
+| Sex          |    n |
+|:-------------|-----:|
+| \(1\) Male   | 2728 |
+| \(2\) Female |  958 |
 
 ``` r
 #US Citizen
 da04572.0001%>% 
-  count(V0051)
+  count(V0051) %>%
+  rename("US Citizen" = V0051) %>%
+  knitr:: kable()
 ```
 
-    ##            V0051    n
-    ## 1        (1) Yes  635
-    ## 2         (2) No  118
-    ## 3 (7) Don't know    4
-    ## 4           <NA> 2929
+| US Citizen       |    n |
+|:-----------------|-----:|
+| \(1\) Yes        |  635 |
+| \(2\) No         |  118 |
+| \(7\) Don’t know |    4 |
+| NA               | 2929 |
 
 ``` r
 #HIGHEST EDUCATION BEFORE ARREST
 da04572.0001%>% 
-  count(EDUCATION)
+  count(EDUCATION) %>%
+  rename("Highest Education Prior to Arrest" = EDUCATION) %>%
+  knitr:: kable()
 ```
 
-    ##                                                                     EDUCATION
-    ## 1                      (0000000) Never attended or attended kindergarten only
-    ## 2                                                       (0000001) First grade
-    ## 3                                                      (0000002) Second grade
-    ## 4                                                       (0000003) Third grade
-    ## 5                                                      (0000004) Fourth grade
-    ## 6                                                       (0000005) Fifth grade
-    ## 7                                                       (0000006) Sixth grade
-    ## 8                                                     (0000007) Seventh grade
-    ## 9                                                      (0000008) Eighth grade
-    ## 10                                                      (0000009) Ninth grade
-    ## 11                                                      (0000010) Tenth grade
-    ## 12                                                   (0000011) Eleventh grade
-    ## 13                                                    (0000012) Twelfth grade
-    ## 14                                                 (0000013) College freshman
-    ## 15                                                (0000014) College sophomore
-    ## 16                                                   (0000015) College junior
-    ## 17                                                   (0000016) College senior
-    ## 18                                         (0000017) Graduate school one year
-    ## 19                                (0000018) Graduate school two or more years
-    ## 20 (0000019) Attended school in other country/system not comparable to grades
-    ## 21                                                       (9999997) Don't know
-    ## 22                                                          (9999998) Refused
-    ## 23                                                          (9999999) Missing
-    ##      n
-    ## 1   15
-    ## 2   11
-    ## 3   12
-    ## 4   15
-    ## 5   21
-    ## 6   25
-    ## 7   86
-    ## 8   66
-    ## 9  170
-    ## 10 330
-    ## 11 439
-    ## 12 508
-    ## 13 912
-    ## 14 214
-    ## 15 324
-    ## 16  96
-    ## 17 195
-    ## 18  35
-    ## 19 132
-    ## 20  35
-    ## 21   8
-    ## 22  12
-    ## 23  25
+| Highest Education Prior to Arrest                                            |   n |
+|:-----------------------------------------------------------------------------|----:|
+| \(0000000\) Never attended or attended kindergarten only                     |  15 |
+| \(0000001\) First grade                                                      |  11 |
+| \(0000002\) Second grade                                                     |  12 |
+| \(0000003\) Third grade                                                      |  15 |
+| \(0000004\) Fourth grade                                                     |  21 |
+| \(0000005\) Fifth grade                                                      |  25 |
+| \(0000006\) Sixth grade                                                      |  86 |
+| \(0000007\) Seventh grade                                                    |  66 |
+| \(0000008\) Eighth grade                                                     | 170 |
+| \(0000009\) Ninth grade                                                      | 330 |
+| \(0000010\) Tenth grade                                                      | 439 |
+| \(0000011\) Eleventh grade                                                   | 508 |
+| \(0000012\) Twelfth grade                                                    | 912 |
+| \(0000013\) College freshman                                                 | 214 |
+| \(0000014\) College sophomore                                                | 324 |
+| \(0000015\) College junior                                                   |  96 |
+| \(0000016\) College senior                                                   | 195 |
+| \(0000017\) Graduate school one year                                         |  35 |
+| \(0000018\) Graduate school two or more years                                | 132 |
+| \(0000019\) Attended school in other country/system not comparable to grades |  35 |
+| \(9999997\) Don’t know                                                       |   8 |
+| \(9999998\) Refused                                                          |  12 |
+| \(9999999\) Missing                                                          |  25 |
 
 # HIV
 
@@ -310,8 +296,8 @@ state_tx = state_df %>%
   ) 
 ```
 
-    ## `summarise()` has grouped output by 'MCMH_MH_TREATMENT_PA'. You can override using the
-    ## `.groups` argument.
+    ## `summarise()` has grouped output by 'MCMH_MH_TREATMENT_PA'. You can override using
+    ## the `.groups` argument.
 
 ``` r
 federal_tx = federal_df %>%
@@ -332,8 +318,8 @@ federal_tx = federal_df %>%
   ) 
 ```
 
-    ## `summarise()` has grouped output by 'MCMH_MH_TREATMENT_PA'. You can override using the
-    ## `.groups` argument.
+    ## `summarise()` has grouped output by 'MCMH_MH_TREATMENT_PA'. You can override using
+    ## the `.groups` argument.
 
 ``` r
 (state_tx / federal_tx) + 

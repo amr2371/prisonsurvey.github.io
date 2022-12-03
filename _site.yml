@@ -1,4 +1,4 @@
-name: "Yay internet!"
+name: "Health of Incarcerated Individuals"
 output_dir: "."
 navbar:
   title: "Home"
@@ -7,6 +7,8 @@ navbar:
       href: about.html
     - text: "Exploratory Analysis"
       href: EDA.html
+    - text: "Project Report"
+      href: project_report.html
     - icon: fa-github fa-lg
       href: https://github.com/amr2371/prisonsurvey.github.io
 output:

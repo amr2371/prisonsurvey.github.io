@@ -1,5 +1,5 @@
 ---
-title: "My awesome website"
+title: "Health of Incarcerated Individuals in State & Federal Correctional Facilities, 2003-2004"
 output: 
   html_document:
     toc: true
@@ -7,6 +7,33 @@ output:
     theme: cerulean
 ---
 
-# This is Jeff's awesome website
+# Introduction
 
-![](https://media.giphy.com/media/drXGoW1iudhKw/giphy.gif)
+# Screencast
+
+Link Here
+
+# Website Overview
+
+On the "About" page, you will find information related to: 
+
+* Link to the Data Source
+* Software used to create the website and run the analyses
+* R Packages used to create the website and run the analyses
+* References
+
+In the "Exploratory Analysis," you will find: 
+* Demographics for survey respondents 
+* Overview of the two primary health variables, HIV and Mental Health
+
+Our full project report can be found [here](project_report.html).
+
+# Collaborators
+
+Mackenzie Frost (maf2311)
+
+Allison Randy-Cofie (amr2371)
+
+Shritama Ray (sr3861)
+
+Anna Zavodszky (amz2148)

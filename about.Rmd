@@ -1,9 +1,16 @@
 ---
 title: "About"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    theme: cerulean
 ---
 
-### About this site
+### Data Source
 
-Sometimes you need to say a bit about the site -- how it was made, where it's hosted, where the source code can be found. 
+The data used for this analysis can be found [here](https://www.icpsr.umich.edu/web/NACJD/studies/4572). The demographic breakdown for the survey population can be found in the [Exploratory Analysis](EDA.html).
 
-If this is for a project or analysis, I recommend giving some details about the R package versions that you used to create the content.
+### Software
+
+### R Packages
