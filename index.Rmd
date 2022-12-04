@@ -7,28 +7,31 @@ output:
     theme: cerulean
 ---
 
-# Introduction
+## Introduction
 
-# Screencast
+The prevalence of mass incarceration in the United States has grown drastically, driving severe disparities in individual and community health that persist over time. Incarcerated individuals have a higher risk of HIV, as well as mental health and substance use disorders, with little access to quality treatment despite prisons being required to provide healthcare (Wildeman & Wang, 2017). In 2003 and 2004, the United States Bureau of Justice Statistics conducted a nationally representative survey to collect a variety of information, including current and past incarceration history and health status, on those incarcerated in federal and state prisons. This analysis will provide an overview on the differences in health status among incarcerated populations in both federal and state prison systems, specifically related to variables for HIV and Mental Health.  
+
+## Screencast
 
 Link Here
 
-# Website Overview
+## Website Overview
 
-On the "About" page, you will find information related to: 
+On the [About Page](about.html), you will find information related to: 
 
 * Link to the Data Source
 * Software used to create the website and run the analyses
 * R Packages used to create the website and run the analyses
 * References
 
-In the "Exploratory Analysis," you will find: 
+In the [Exploratory Analysis](EDA.html), you will find: 
+
 * Demographics for survey respondents 
 * Overview of the two primary health variables, HIV and Mental Health
 
-Our full project report can be found [here](project_report.html).
+Our [full project report](project_report.html) includes a comprehensive review of all topics and analyses.
 
-# Collaborators
+## Collaborators
 
 Mackenzie Frost (maf2311)
 
