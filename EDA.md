@@ -1,31 +1,16 @@
 Exploratory Data Analysis
 ================
-Allison Randy-Cofie
-2022-12-01
 
-## Importing the datasets
+# Demographics
 
-``` r
-federal_df <- load("./data/04572-0001-Data.rda") 
-
-federal_df <- da04572.0001%>% 
-  select(V2288, V2289, V2290, V2291, MCMH_HIVTEST, MCMH_RSLT_HIV, DRUG_INJECT_CB, V2401, V2402, V2403, V2404, V2405, V2406, V2407, V2409, V2412, MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD, MCMH_MENTAL_HISTORY, V1197, CS_SENTENCEMTH,CH_PRIORSENTENCE, CH_PRIORSENTENCE_NUM, CH_CRIMHIST, CH_CRIMHIST_COLLAPSED, CH_NUMCAR,CH_NUMCAR1, CH_NUMCAR2, CH_NUMCAR3, CH_NUMCAR4, CH_NUMCAR5, MOST_SERIOUS_OFFENSE2, TYPEOFFENSE, V1056, V1057, V1060, V1061, V1325, V0001, V0014, AGE_CAT, V2982, V0005, EDUCATION, SES_INCOMEMTH, DRUG_ANY, DRUG_ANYREG, DRUG_ANYMTH, SES_PHYSSEXABUSED_EVER, SES_PARENTS_INCARCERATED, SES_FAMILY_INCARCERATED, V0105, MCMH_WHEN_DISORDER, MCMH_WHEN_DISORDER2,MCMH_MHOSPYR,MCMH_MHOSPADM,MCMH_MHOSPYRADM,MCMH_SMI)
-
-
-state_df <- load("./data/04572-0002-Data.rda") 
-
-state_df <- da04572.0002%>% 
-   select(V2288, V2289, V2290, V2291, MCMH_HIVTEST, MCMH_RSLT_HIV, DRUG_INJECT_CB, V2401, V2402, V2403, V2404, V2405, V2406, V2407, V2409, V2412, MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD, MCMH_MENTAL_HISTORY, V1197, CS_SENTENCEMTH,CH_PRIORSENTENCE, CH_PRIORSENTENCE_NUM, CH_CRIMHIST, CH_CRIMHIST_COLLAPSED, CH_NUMCAR,CH_NUMCAR1, CH_NUMCAR2, CH_NUMCAR3, CH_NUMCAR4, CH_NUMCAR5, MOST_SERIOUS_OFFENSE2, TYPEOFFENSE, V1056, V1057, V1060, V1061, V1325, V0001, V0014, AGE_CAT, V2982, V0005, EDUCATION, SES_INCOMEMTH, DRUG_ANY, DRUG_ANYREG, DRUG_ANYMTH, SES_PHYSSEXABUSED_EVER, SES_PARENTS_INCARCERATED, SES_FAMILY_INCARCERATED, V0105, MCMH_WHEN_DISORDER, MCMH_WHEN_DISORDER2,MCMH_MHOSPYR,MCMH_MHOSPADM,MCMH_MHOSPYRADM,MCMH_SMI)
-```
-
-## Demographics
+### Federal
 
 ``` r
 #Interview outcome
 da04572.0001 %>% 
   count(V0003) %>% 
   rename("Interview Outcome"= V0003) %>%
-  knitr:: kable() 
+  knitr::kable() 
 ```
 
 | Interview Outcome                                                    |    n |
@@ -38,7 +23,7 @@ da04572.0001 %>%
 da04572.0001 %>% 
   count(V0004) %>%
   rename("Sex" = V0004) %>%
-  knitr:: kable()
+  knitr::kable()
 ```
 
 | Sex          |    n |
@@ -51,7 +36,7 @@ da04572.0001 %>%
 da04572.0001%>% 
   count(V0051) %>%
   rename("US Citizen" = V0051) %>%
-  knitr:: kable()
+  knitr::kable()
 ```
 
 | US Citizen       |    n |
@@ -66,7 +51,7 @@ da04572.0001%>%
 da04572.0001%>% 
   count(EDUCATION) %>%
   rename("Highest Education Prior to Arrest" = EDUCATION) %>%
-  knitr:: kable()
+  knitr::kable()
 ```
 
 | Highest Education Prior to Arrest                                            |   n |
@@ -94,6 +79,99 @@ da04572.0001%>%
 | \(9999997\) Don’t know                                                       |   8 |
 | \(9999998\) Refused                                                          |  12 |
 | \(9999999\) Missing                                                          |  25 |
+
+### State
+
+``` r
+#Interview outcome
+da04572.0002 %>% 
+  count(V0003) %>% 
+  rename("Interview Outcome"= V0003) %>%
+  knitr::kable() 
+```
+
+| Interview Outcome                                                    |     n |
+|:---------------------------------------------------------------------|------:|
+| \(201\) Complete - regular                                           | 14321 |
+| \(203\) Sufficient partial interview - no further follow-up possible |   178 |
+
+``` r
+#Sex
+da04572.0002 %>% 
+  count(V0004) %>%
+  rename("Sex" = V0004) %>%
+  knitr::kable()
+```
+
+| Sex          |     n |
+|:-------------|------:|
+| \(1\) Male   | 11569 |
+| \(2\) Female |  2930 |
+
+``` r
+#US Citizen
+da04572.0002 %>% 
+  count(V0051) %>%
+  rename("US Citizen" = V0051) %>%
+  knitr::kable()
+```
+
+| US Citizen       |     n |
+|:-----------------|------:|
+| \(1\) Yes        |   851 |
+| \(2\) No         |   213 |
+| \(7\) Don’t know |    10 |
+| \(8\) Refused    |     1 |
+| NA               | 13424 |
+
+``` r
+#HIGHEST EDUCATION BEFORE ARREST
+da04572.0002 %>% 
+  count(EDUCATION) %>%
+  rename("Highest Education Prior to Arrest" = EDUCATION) %>%
+  knitr::kable()
+```
+
+| Highest Education Prior to Arrest                                            |    n |
+|:-----------------------------------------------------------------------------|-----:|
+| \(0000000\) Never attended or attended kindergarten only                     |   41 |
+| \(0000001\) First grade                                                      |   32 |
+| \(0000002\) Second grade                                                     |   19 |
+| \(0000003\) Third grade                                                      |   54 |
+| \(0000004\) Fourth grade                                                     |   50 |
+| \(0000005\) Fifth grade                                                      |   74 |
+| \(0000006\) Sixth grade                                                      |  234 |
+| \(0000007\) Seventh grade                                                    |  341 |
+| \(0000008\) Eighth grade                                                     |  856 |
+| \(0000009\) Ninth grade                                                      | 1754 |
+| \(0000010\) Tenth grade                                                      | 2424 |
+| \(0000011\) Eleventh grade                                                   | 2781 |
+| \(0000012\) Twelfth grade                                                    | 3598 |
+| \(0000013\) College freshman                                                 |  586 |
+| \(0000014\) College sophomore                                                |  788 |
+| \(0000015\) College junior                                                   |  192 |
+| \(0000016\) College senior                                                   |  313 |
+| \(0000017\) Graduate school one year                                         |   50 |
+| \(0000018\) Graduate school two or more years                                |  140 |
+| \(0000019\) Attended school in other country/system not comparable to grades |   45 |
+| \(9999997\) Don’t know                                                       |   24 |
+| \(9999998\) Refused                                                          |   44 |
+| \(9999999\) Missing                                                          |   59 |
+
+# Sentencing Variables
+
+``` r
+#Interview outcome
+da04572.0001 %>% 
+  count(V0003) %>% 
+  rename("Interview Outcome"= V0003) %>%
+  knitr:: kable() 
+```
+
+| Interview Outcome                                                    |    n |
+|:---------------------------------------------------------------------|-----:|
+| \(201\) Complete - regular                                           | 3615 |
+| \(203\) Sufficient partial interview - no further follow-up possible |   71 |
 
 # HIV
 
@@ -123,7 +201,7 @@ federal_df %>%
   geom_bar(stat = "identity") 
 ```
 
-<img src="EDA_files/figure-gfm/unnamed-chunk-3-1.png" width="90%" />
+<img src="EDA_files/figure-gfm/unnamed-chunk-5-1.png" width="90%" />
 
 ``` r
 #HIV test result
@@ -138,7 +216,7 @@ federal_df%>%
   geom_bar(stat = "identity") 
 ```
 
-<img src="EDA_files/figure-gfm/unnamed-chunk-3-2.png" width="90%" />
+<img src="EDA_files/figure-gfm/unnamed-chunk-5-2.png" width="90%" />
 
 ``` r
 #Ever used a needle to inject drugs
@@ -150,9 +228,9 @@ federal_df %>%
   geom_bar(stat = "identity") 
 ```
 
-<img src="EDA_files/figure-gfm/unnamed-chunk-3-3.png" width="90%" />
+<img src="EDA_files/figure-gfm/unnamed-chunk-5-3.png" width="90%" />
 
-\#Mental Health
+# Mental Health
 
 ``` r
 #ever taken a medication for mental health 
@@ -181,7 +259,7 @@ federal_df %>%
   geom_bar(stat = "identity")
 ```
 
-<img src="EDA_files/figure-gfm/unnamed-chunk-4-1.png" width="90%" />
+<img src="EDA_files/figure-gfm/unnamed-chunk-6-1.png" width="90%" />
 
 ``` r
 # TAKEN MEDICATION FOR A MENTAL CONDITION SINCE ADMISSION
@@ -209,7 +287,7 @@ federal_df %>%
   geom_bar(stat = "identity")
 ```
 
-<img src="EDA_files/figure-gfm/unnamed-chunk-4-2.png" width="90%" />
+<img src="EDA_files/figure-gfm/unnamed-chunk-6-2.png" width="90%" />
 
 ``` r
 # Mental Hosp - year before arrest - MCMH_mhospyr from client
@@ -241,7 +319,7 @@ federal_df %>%
   geom_bar(stat = "identity")
 ```
 
-<img src="EDA_files/figure-gfm/unnamed-chunk-4-3.png" width="90%" />
+<img src="EDA_files/figure-gfm/unnamed-chunk-6-3.png" width="90%" />
 
 ``` r
 # Mental hosp - since admission - MCMH_mhospadm from client
@@ -272,11 +350,10 @@ federal_df %>%
   geom_bar(stat = "identity")
 ```
 
-<img src="EDA_files/figure-gfm/unnamed-chunk-4-4.png" width="90%" />
+<img src="EDA_files/figure-gfm/unnamed-chunk-6-4.png" width="90%" />
 
 ``` r
 # MH Treatment Continuation (one year prior to arrest and since admission)
-# TODO: we can maybe change scale to %, and have line plot to vary the viz
 
 state_tx = state_df %>%
   group_by(MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD) %>%
@@ -286,18 +363,14 @@ state_tx = state_df %>%
     MCMH_MH_TREATMENT_AD = gsub(".* ", "", MCMH_MH_TREATMENT_AD),
     tx_pa_ad = str_c(MCMH_MH_TREATMENT_PA, '/',MCMH_MH_TREATMENT_AD)
   ) %>%
-  ggplot(aes(x = tx_pa_ad, y = n_obs, fill = tx_pa_ad)) +
-  geom_bar(stat = "identity") +
-  guides(fill="none") +
-  labs(
-    title = "State",
-    x = "",
-    y = "Survey Respondents"
-  ) 
+  ungroup() %>%
+  mutate(
+    sum = sum(n_obs),
+    percent = (n_obs/sum) * 100 ) 
 ```
 
-    ## `summarise()` has grouped output by 'MCMH_MH_TREATMENT_PA'. You can override using the
-    ## `.groups` argument.
+    ## `summarise()` has grouped output by 'MCMH_MH_TREATMENT_PA'. You can override
+    ## using the `.groups` argument.
 
 ``` r
 federal_tx = federal_df %>%
@@ -308,25 +381,27 @@ federal_tx = federal_df %>%
     MCMH_MH_TREATMENT_AD = gsub(".* ", "", MCMH_MH_TREATMENT_AD),
     tx_pa_ad = str_c(MCMH_MH_TREATMENT_PA, '/',MCMH_MH_TREATMENT_AD)
   ) %>%
-  ggplot(aes(x = tx_pa_ad, y = n_obs, fill = tx_pa_ad)) +
-  geom_bar(stat = "identity") +
-  guides(fill="none") +
-  labs(
-    title = "Federal",
-    x = "Prior to Arrest/After Admission",
-    y = "Survey Respondents"
-  ) 
+  ungroup() %>%
+  mutate(
+    sum = sum(n_obs),
+    percent = (n_obs/sum) * 100 ) 
 ```
 
-    ## `summarise()` has grouped output by 'MCMH_MH_TREATMENT_PA'. You can override using the
-    ## `.groups` argument.
+    ## `summarise()` has grouped output by 'MCMH_MH_TREATMENT_PA'. You can override
+    ## using the `.groups` argument.
 
 ``` r
-(state_tx / federal_tx) + 
-  plot_annotation(
-  title = 'Mental Health Treatment Continuation',
-  caption = 'Data Source: Bureau of Justice Statistics, Survey of Inmates in State and Federal Correctional Facilities, United States, 2004'
-)
+colors <- c("State Prisons" = "blue", "Federal Prisons" = "red")
+ggplot() + 
+  geom_line(data = state_tx, aes(x = tx_pa_ad, y = percent, group = 1, color = "State Prisons")) + 
+  geom_line(data = federal_tx, aes(x = tx_pa_ad, y = percent, group = 1, color = "Federal Prisons")) +
+  labs(
+    title = "Mental Health Treatment Continuation",
+    x = "1 Year Prior to Arrest/Since Admission",
+    y = "Percent (%) of Survey Respondents",
+    color = "Legend"
+  ) +
+  scale_color_manual(values = colors)
 ```
 
-<img src="EDA_files/figure-gfm/unnamed-chunk-4-5.png" width="90%" />
+<img src="EDA_files/figure-gfm/unnamed-chunk-6-5.png" width="90%" />

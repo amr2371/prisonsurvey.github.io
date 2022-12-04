@@ -45,40 +45,149 @@ state_df <- da04572.0002%>%
 ```
 
 # Demographics
+
+### Federal
 ```{r}
 #Interview outcome
 da04572.0001 %>% 
   count(V0003) %>% 
   rename("Interview Outcome"= V0003) %>%
-  knitr:: kable() 
+  knitr::kable() 
 
 #Sex
 da04572.0001 %>% 
   count(V0004) %>%
   rename("Sex" = V0004) %>%
-  knitr:: kable()
+  knitr::kable()
 
 #US Citizen
 da04572.0001%>% 
   count(V0051) %>%
   rename("US Citizen" = V0051) %>%
-  knitr:: kable()
+  knitr::kable()
 
 #HIGHEST EDUCATION BEFORE ARREST
 da04572.0001%>% 
   count(EDUCATION) %>%
   rename("Highest Education Prior to Arrest" = EDUCATION) %>%
-  knitr:: kable()
+  knitr::kable()
+
+#Age Category 
+federal_df %>%
+  group_by(AGE_CAT) %>%
+  summarise(
+    n_obs = n()
+  ) %>%
+  mutate(
+    AGE_CAT = gsub(".*)", "", AGE_CAT)
+  ) %>%
+  ungroup() %>%
+  ggplot(aes(x = AGE_CAT, y = n_obs)) + 
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+### State
+```{r}
+#Interview outcome
+da04572.0002 %>% 
+  count(V0003) %>% 
+  rename("Interview Outcome"= V0003) %>%
+  knitr::kable() 
+
+#Sex
+da04572.0002 %>% 
+  count(V0004) %>%
+  rename("Sex" = V0004) %>%
+  knitr::kable()
+
+#US Citizen
+da04572.0002 %>% 
+  count(V0051) %>%
+  rename("US Citizen" = V0051) %>%
+  knitr::kable()
+
+#HIGHEST EDUCATION BEFORE ARREST
+da04572.0002 %>% 
+  count(EDUCATION) %>%
+  rename("Highest Education Prior to Arrest" = EDUCATION) %>%
+  knitr::kable()
+
+#Age Category 
+state_df %>%
+  group_by(AGE_CAT) %>%
+  summarise(
+    n_obs = n()
+  ) %>%
+  mutate(
+    AGE_CAT = gsub(".*)", "", AGE_CAT)
+  ) %>%
+  ungroup() %>%
+  ggplot(aes(x = AGE_CAT, y = n_obs)) + 
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
 # Sentencing Variables
+
+### Federal 
 ```{r}
-#Interview outcome
-da04572.0001 %>% 
-  count(V0003) %>% 
-  rename("Interview Outcome"= V0003) %>%
+#Criminal History
+federal_df %>% 
+  count(CH_CRIMHIST) %>% 
+  rename("Criminal Hisotry"= CH_CRIMHIST) %>%
   knitr:: kable() 
 
+#Type of Offense
+federal_df %>% 
+  count(TYPEOFFENSE) %>% 
+  rename("Type of Offense"= TYPEOFFENSE) %>%
+  arrange(desc(n)) %>%
+  knitr:: kable()
+
+#Distribution for number of incarcerations
+federal_df %>%
+  group_by(CH_NUMCAR1) %>%
+  summarise(
+    n_obs = n()
+  ) %>%
+  mutate(
+    CH_NUMCAR1 = gsub(".*)", "", CH_NUMCAR1)
+  ) %>%
+  ungroup() %>%
+  ggplot(aes(x = CH_NUMCAR1, y = n_obs)) + 
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+### State
+```{r}
+#Criminal History
+state_df %>% 
+  count(CH_CRIMHIST) %>% 
+  rename("Criminal Hisotry"= CH_CRIMHIST) %>%
+  knitr:: kable() 
+
+#Type of Offense
+state_df %>% 
+  count(TYPEOFFENSE) %>% 
+  rename("Type of Offense"= TYPEOFFENSE) %>%
+  arrange(desc(n)) %>%
+  knitr:: kable()
+
+#Distribution for number of incarcerations
+state_df %>%
+  group_by(CH_NUMCAR1) %>%
+  summarise(
+    n_obs = n()
+  ) %>%
+  mutate(
+    CH_NUMCAR1 = gsub(".*)", "", CH_NUMCAR1)
+  ) %>%
+  ungroup() %>%
+  ggplot(aes(x = CH_NUMCAR1, y = n_obs)) + 
+  geom_bar(stat = "identity") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
 # HIV 
