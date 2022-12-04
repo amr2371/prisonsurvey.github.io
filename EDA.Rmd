@@ -1,7 +1,5 @@
 ---
 title: "Exploratory Data Analysis"
-author: "Allison Randy-Cofie"
-date: "2022-12-01"
 output: github_document
 ---
 
@@ -9,7 +7,6 @@ output: github_document
 library(tidyverse)
 library(mgcv)
 library(modelr)
-library(patchwork)
 
 library(viridis)
 
@@ -32,8 +29,8 @@ scale_fill_discrete = scale_fill_viridis_d
 theme_set(theme_minimal() + theme(legend.position = "bottom"))
 ```
 
-## Importing the datasets
-```{r}
+```{r, include=FALSE}
+#Importing the datasets
 federal_df <- load("./data/04572-0001-Data.rda") 
 
 federal_df <- da04572.0001%>% 
@@ -47,7 +44,7 @@ state_df <- da04572.0002%>%
 
 ```
 
-## Demographics
+# Demographics
 ```{r}
 #Interview outcome
 da04572.0001 %>% 
@@ -74,6 +71,15 @@ da04572.0001%>%
   knitr:: kable()
 ```
 
+# Sentencing Variables
+```{r}
+#Interview outcome
+da04572.0001 %>% 
+  count(V0003) %>% 
+  rename("Interview Outcome"= V0003) %>%
+  knitr:: kable() 
+
+```
 
 # HIV 
 ```{r}
@@ -113,7 +119,7 @@ federal_df %>%
 
 ```
 
-#Mental Health
+# Mental Health
 ```{r}
 #ever taken a medication for mental health 
 federal_df %>% 
@@ -183,7 +189,6 @@ federal_df %>%
 
 
 # MH Treatment Continuation (one year prior to arrest and since admission)
-# TODO: we can maybe change scale to %, and have line plot to vary the viz
 
 state_tx = state_df %>%
   group_by(MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD) %>%
@@ -193,14 +198,10 @@ state_tx = state_df %>%
     MCMH_MH_TREATMENT_AD = gsub(".* ", "", MCMH_MH_TREATMENT_AD),
     tx_pa_ad = str_c(MCMH_MH_TREATMENT_PA, '/',MCMH_MH_TREATMENT_AD)
   ) %>%
-  ggplot(aes(x = tx_pa_ad, y = n_obs, fill = tx_pa_ad)) +
-  geom_bar(stat = "identity") +
-  guides(fill="none") +
-  labs(
-    title = "State",
-    x = "",
-    y = "Survey Respondents"
-  ) 
+  ungroup() %>%
+  mutate(
+    sum = sum(n_obs),
+    percent = (n_obs/sum) * 100 ) 
 
 federal_tx = federal_df %>%
   group_by(MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD) %>%
@@ -210,20 +211,22 @@ federal_tx = federal_df %>%
     MCMH_MH_TREATMENT_AD = gsub(".* ", "", MCMH_MH_TREATMENT_AD),
     tx_pa_ad = str_c(MCMH_MH_TREATMENT_PA, '/',MCMH_MH_TREATMENT_AD)
   ) %>%
-  ggplot(aes(x = tx_pa_ad, y = n_obs, fill = tx_pa_ad)) +
-  geom_bar(stat = "identity") +
-  guides(fill="none") +
-  labs(
-    title = "Federal",
-    x = "Prior to Arrest/After Admission",
-    y = "Survey Respondents"
-  ) 
+  ungroup() %>%
+  mutate(
+    sum = sum(n_obs),
+    percent = (n_obs/sum) * 100 ) 
 
-(state_tx / federal_tx) + 
-  plot_annotation(
-  title = 'Mental Health Treatment Continuation',
-  caption = 'Data Source: Bureau of Justice Statistics, Survey of Inmates in State and Federal Correctional Facilities, United States, 2004'
-)
+colors <- c("State Prisons" = "blue", "Federal Prisons" = "red")
+ggplot() + 
+  geom_line(data = state_tx, aes(x = tx_pa_ad, y = percent, group = 1, color = "State Prisons")) + 
+  geom_line(data = federal_tx, aes(x = tx_pa_ad, y = percent, group = 1, color = "Federal Prisons")) +
+  labs(
+    title = "Mental Health Treatment Continuation",
+    x = "1 Year Prior to Arrest/Since Admission",
+    y = "Percent (%) of Survey Respondents",
+    color = "Legend"
+  ) +
+  scale_color_manual(values = colors)
 
 ```
 

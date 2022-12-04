@@ -296,8 +296,8 @@ state_tx = state_df %>%
   ) 
 ```
 
-    ## `summarise()` has grouped output by 'MCMH_MH_TREATMENT_PA'. You can override using
-    ## the `.groups` argument.
+    ## `summarise()` has grouped output by 'MCMH_MH_TREATMENT_PA'. You can override using the
+    ## `.groups` argument.
 
 ``` r
 federal_tx = federal_df %>%
@@ -318,8 +318,8 @@ federal_tx = federal_df %>%
   ) 
 ```
 
-    ## `summarise()` has grouped output by 'MCMH_MH_TREATMENT_PA'. You can override using
-    ## the `.groups` argument.
+    ## `summarise()` has grouped output by 'MCMH_MH_TREATMENT_PA'. You can override using the
+    ## `.groups` argument.
 
 ``` r
 (state_tx / federal_tx) + 
