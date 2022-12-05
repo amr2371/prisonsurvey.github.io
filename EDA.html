@@ -707,7 +707,7 @@ federal_df %&gt;%
   ungroup() %&gt;% 
   ggplot(aes(x = V2409, y = n_obs, fill = V2409)) +
   geom_bar(stat = &quot;identity&quot;)</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-5-1.png" width="100%" /></p>
+<p><img src="EDA_files/figure-html/mental_health-1.png" width="100%" /></p>
 <pre class="r"><code># TAKEN MEDICATION FOR A MENTAL CONDITION SINCE ADMISSION
 federal_df %&gt;% 
   group_by(V2412) %&gt;% 
@@ -744,7 +744,7 @@ federal_df %&gt;%
   ungroup() %&gt;% 
   ggplot(aes(x = V2412, y = n_obs, fill = V2412)) +
   geom_bar(stat = &quot;identity&quot;)</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-5-2.png" width="100%" /></p>
+<p><img src="EDA_files/figure-html/mental_health-2.png" width="100%" /></p>
 <pre class="r"><code># Mental Hosp - year before arrest - MCMH_mhospyr from client
 federal_df %&gt;% 
   group_by(MCMH_MHOSPYR) %&gt;% 
@@ -798,7 +798,7 @@ mental hospital</td>
   ungroup() %&gt;% 
   ggplot(aes(x = MCMH_MHOSPYR, y = n_obs, fill = MCMH_MHOSPYR)) +
   geom_bar(stat = &quot;identity&quot;)</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-5-3.png" width="100%" /></p>
+<p><img src="EDA_files/figure-html/mental_health-3.png" width="100%" /></p>
 <pre class="r"><code># Mental hosp - since admission - MCMH_mhospadm from client
 federal_df %&gt;% 
   group_by(MCMH_MHOSPADM) %&gt;% 
@@ -851,7 +851,7 @@ mental hospital</td>
   ungroup() %&gt;% 
   ggplot(aes(x = MCMH_MHOSPADM, y = n_obs, fill = MCMH_MHOSPADM)) +
   geom_bar(stat = &quot;identity&quot;)</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-5-4.png" width="100%" /></p>
+<p><img src="EDA_files/figure-html/mental_health-4.png" width="100%" /></p>
 <pre class="r"><code># MH Treatment Continuation (one year prior to arrest and since admission)
 
 state_tx = state_df %&gt;%
@@ -893,7 +893,7 @@ ggplot() +
     color = &quot;Legend&quot;
   ) +
   scale_color_manual(values = colors)</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-5-5.png" width="100%" /></p>
+<p><img src="EDA_files/figure-html/mental_health-5.png" width="100%" /></p>
 </div>
 
 

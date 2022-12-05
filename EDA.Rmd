@@ -36,7 +36,7 @@ scale_fill_discrete = scale_fill_viridis_d
 theme_set(theme_minimal() + theme(legend.position = "bottom"))
 ```
 
-```{r, include=FALSE}
+```{r import, include=FALSE}
 #Importing the datasets
 federal_df <- load("./data/04572-0001-Data.rda") 
 
@@ -51,7 +51,7 @@ state_df <- da04572.0002 %>%
   mutate(dataset = "State")
 ```
 
-```{r, include=FALSE}
+```{r combine_clean, include=FALSE}
 #Combining datasets, filtering dataset, formatting variables
 total_df = 
   bind_rows(state_df, federal_df) %>% 
@@ -102,7 +102,7 @@ total_df =
 
 # Demographics
 
-```{r}
+```{r demographics}
 #Table 1
 table1(~ V0005 + AGE_CAT + V2982 | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
 
@@ -118,7 +118,7 @@ table1(~ V0005 + AGE_CAT + V2982 | MENTAL_HISTORY_BINARY, data = total_df, overa
 
 # Incarceration-Related Variables
 
-```{r}
+```{r incarceration}
 #Table 1
 table1(~ CH_PRIORSENTENCE_NUM + V1197 + CH_CRIMHIST_COLLAPSED + SES_PARENTS_INCARCERATED + SES_FAMILY_INCARCERATED | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
 
@@ -133,7 +133,7 @@ table1(~ CH_PRIORSENTENCE_NUM + V1197 + CH_CRIMHIST_COLLAPSED + SES_PARENTS_INCA
 
 # Mental Health
 
-```{r}
+```{r mental_health}
 #ever taken a medication for mental health 
 federal_df %>% 
   group_by(V2409) %>% 
