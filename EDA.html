@@ -724,7 +724,7 @@ table1(~ V0005 + AGE_CAT + V2982 + EDUCATION + SES_INCOMEMTH | MENTAL_HISTORY_BI
 <div id="combined" class="section level3">
 <h3>Combined</h3>
 <pre class="r"><code>#Table 1
-table1(~ V0005 + AGE_CAT + V2982 + EDUCATION + SES_INCOMEMTH | MENTAL_HISTORY_BINARY, data = total_df, overall = &quot;Total&quot;)</code></pre>
+table1(~ CH_PRIORSENTENCE_NUM + V1197 + CH_CRIMHIST_COLLAPSED + TYPEOFFENSE | MENTAL_HISTORY_BINARY, data = total_df, overall = &quot;Total&quot;)</code></pre>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
 <tr>
@@ -736,352 +736,256 @@ table1(~ V0005 + AGE_CAT + V2982 + EDUCATION + SES_INCOMEMTH | MENTAL_HISTORY_BI
 </thead>
 <tbody>
 <tr>
-<td class='rowlabel firstrow'>Sex</td>
+<td class='rowlabel firstrow'>CH_PRIORSENTENCE_NUM</td>
 <td class='firstrow'></td>
 <td class='firstrow'></td>
 <td class='firstrow'></td>
 </tr>
 <tr>
-<td class='rowlabel'>Male</td>
-<td>10898 (83.9%)</td>
-<td>3157 (64.6%)</td>
-<td>14055 (78.6%)</td>
+<td class='rowlabel'>(0000000) No prior sentence</td>
+<td>3997 (30.8%)</td>
+<td>1297 (26.6%)</td>
+<td>5294 (29.6%)</td>
 </tr>
 <tr>
-<td class='rowlabel lastrow'>Female</td>
-<td class='lastrow'>2099 (16.1%)</td>
-<td class='lastrow'>1727 (35.4%)</td>
-<td class='lastrow'>3826 (21.4%)</td>
+<td class='rowlabel'>(0000001) One prior sentence</td>
+<td>2048 (15.8%)</td>
+<td>687 (14.1%)</td>
+<td>2735 (15.3%)</td>
 </tr>
 <tr>
-<td class='rowlabel firstrow'>Age Group</td>
+<td class='rowlabel'>(0000002) Two prior sentences</td>
+<td>1998 (15.4%)</td>
+<td>713 (14.6%)</td>
+<td>2711 (15.2%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>(0000003) Three to five prior sentences</td>
+<td>2974 (22.9%)</td>
+<td>1147 (23.5%)</td>
+<td>4121 (23.0%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>(0000004) Six to ten prior sentences</td>
+<td>1302 (10.0%)</td>
+<td>635 (13.0%)</td>
+<td>1937 (10.8%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>(0000005) Eleven or more prior sentences</td>
+<td>543 (4.2%)</td>
+<td>338 (6.9%)</td>
+<td>881 (4.9%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>(9999999) Missing</td>
+<td class='lastrow'>135 (1.0%)</td>
+<td class='lastrow'>67 (1.4%)</td>
+<td class='lastrow'>202 (1.1%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>V1197</td>
 <td class='firstrow'></td>
 <td class='firstrow'></td>
 <td class='firstrow'></td>
 </tr>
 <tr>
-<td class='rowlabel'>< 25 yrs</td>
-<td>2027 (15.6%)</td>
-<td>741 (15.2%)</td>
-<td>2768 (15.5%)</td>
+<td class='rowlabel'>Mean (SD)</td>
+<td>45.3 (197)</td>
+<td>53.2 (212)</td>
+<td>47.4 (202)</td>
 </tr>
 <tr>
-<td class='rowlabel'>25-34</td>
-<td>4409 (33.9%)</td>
-<td>1552 (31.8%)</td>
-<td>5961 (33.3%)</td>
+<td class='rowlabel lastrow'>Median [Min, Max]</td>
+<td class='lastrow'>3.00 [0, 998]</td>
+<td class='lastrow'>3.00 [0, 998]</td>
+<td class='lastrow'>3.00 [0, 998]</td>
 </tr>
 <tr>
-<td class='rowlabel'>35-44</td>
-<td>3930 (30.2%)</td>
-<td>1623 (33.2%)</td>
-<td>5553 (31.1%)</td>
+<td class='rowlabel firstrow'>CH_CRIMHIST_COLLAPSED</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
 </tr>
 <tr>
-<td class='rowlabel'>45-54</td>
-<td>1891 (14.5%)</td>
-<td>756 (15.5%)</td>
-<td>2647 (14.8%)</td>
+<td class='rowlabel'>(0000001) First timers</td>
+<td>4340 (33.4%)</td>
+<td>1419 (29.1%)</td>
+<td>5759 (32.2%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>55-64</td>
-<td>597 (4.6%)</td>
-<td>182 (3.7%)</td>
-<td>779 (4.4%)</td>
+<td class='rowlabel'>(0000002) Recidivist, current or past violent offense</td>
+<td>4676 (36.0%)</td>
+<td>2034 (41.6%)</td>
+<td>6710 (37.5%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>65-96</td>
+<td class='rowlabel'>(0000003) Recidivist, no current or prior violent offense</td>
+<td>3920 (30.2%)</td>
+<td>1416 (29.0%)</td>
+<td>5336 (29.8%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>(9999999) Missing</td>
+<td class='lastrow'>61 (0.5%)</td>
+<td class='lastrow'>15 (0.3%)</td>
+<td class='lastrow'>76 (0.4%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>TYPEOFFENSE</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>(0000001) Murder</td>
+<td>1082 (8.3%)</td>
+<td>446 (9.1%)</td>
+<td>1528 (8.5%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>(0000002) Manslaughter</td>
+<td>189 (1.5%)</td>
+<td>95 (1.9%)</td>
+<td>284 (1.6%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>(0000003) Kidnapping</td>
 <td>143 (1.1%)</td>
-<td>30 (0.6%)</td>
-<td>173 (1.0%)</td>
+<td>62 (1.3%)</td>
+<td>205 (1.1%)</td>
 </tr>
 <tr>
-<td class='rowlabel lastrow'>Unknown</td>
-<td class='lastrow'>0 (0%)</td>
-<td class='lastrow'>0 (0%)</td>
-<td class='lastrow'>0 (0%)</td>
+<td class='rowlabel'>(0000004) Rape</td>
+<td>361 (2.8%)</td>
+<td>178 (3.6%)</td>
+<td>539 (3.0%)</td>
 </tr>
 <tr>
-<td class='rowlabel firstrow'>Race/Ethnicity</td>
-<td class='firstrow'></td>
-<td class='firstrow'></td>
-<td class='firstrow'></td>
+<td class='rowlabel'>(0000005) Other sexual assualt</td>
+<td>606 (4.7%)</td>
+<td>257 (5.3%)</td>
+<td>863 (4.8%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>White non-Hispanic</td>
-<td>3832 (29.5%)</td>
-<td>2456 (50.3%)</td>
-<td>6288 (35.2%)</td>
+<td class='rowlabel'>(0000006) Robbery</td>
+<td>1532 (11.8%)</td>
+<td>549 (11.2%)</td>
+<td>2081 (11.6%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>Black non-Hispanic</td>
-<td>5691 (43.8%)</td>
-<td>1403 (28.7%)</td>
-<td>7094 (39.7%)</td>
+<td class='rowlabel'>(0000007) Assault</td>
+<td>1026 (7.9%)</td>
+<td>455 (9.3%)</td>
+<td>1481 (8.3%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>Hispanic</td>
-<td>2727 (21.0%)</td>
-<td>647 (13.2%)</td>
-<td>3374 (18.9%)</td>
+<td class='rowlabel'>(0000008) Other violent</td>
+<td>91 (0.7%)</td>
+<td>63 (1.3%)</td>
+<td>154 (0.9%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>American Indian, Alaska Native non-Hispanic</td>
-<td>243 (1.9%)</td>
-<td>97 (2.0%)</td>
-<td>340 (1.9%)</td>
+<td class='rowlabel'>(0000009) Burglary</td>
+<td>788 (6.1%)</td>
+<td>314 (6.4%)</td>
+<td>1102 (6.2%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>Asian, Pacific Islander, Native Hawaiian non-Hispanic</td>
-<td>162 (1.2%)</td>
-<td>34 (0.7%)</td>
-<td>196 (1.1%)</td>
+<td class='rowlabel'>(0000010) Larceny</td>
+<td>448 (3.4%)</td>
+<td>220 (4.5%)</td>
+<td>668 (3.7%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>Multiple Races reported, non-Hispanic</td>
-<td>321 (2.5%)</td>
-<td>240 (4.9%)</td>
-<td>561 (3.1%)</td>
+<td class='rowlabel'>(0000011) Mvt</td>
+<td>161 (1.2%)</td>
+<td>78 (1.6%)</td>
+<td>239 (1.3%)</td>
 </tr>
 <tr>
-<td class='rowlabel lastrow'>Missing</td>
-<td class='lastrow'>21 (0.2%)</td>
-<td class='lastrow'>7 (0.1%)</td>
-<td class='lastrow'>28 (0.2%)</td>
+<td class='rowlabel'>(0000012) Arson</td>
+<td>53 (0.4%)</td>
+<td>43 (0.9%)</td>
+<td>96 (0.5%)</td>
 </tr>
 <tr>
-<td class='rowlabel firstrow'>Education</td>
-<td class='firstrow'></td>
-<td class='firstrow'></td>
-<td class='firstrow'></td>
+<td class='rowlabel'>(0000013) Fraud</td>
+<td>621 (4.8%)</td>
+<td>351 (7.2%)</td>
+<td>972 (5.4%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>Never attended or attended kindergarten only</td>
-<td>42 (0.3%)</td>
-<td>14 (0.3%)</td>
-<td>56 (0.3%)</td>
+<td class='rowlabel'>(0000014) Stolen property</td>
+<td>114 (0.9%)</td>
+<td>50 (1.0%)</td>
+<td>164 (0.9%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>First grade</td>
-<td>35 (0.3%)</td>
-<td>8 (0.2%)</td>
-<td>43 (0.2%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Second grade</td>
-<td>25 (0.2%)</td>
-<td>5 (0.1%)</td>
-<td>30 (0.2%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Third grade</td>
-<td>51 (0.4%)</td>
-<td>15 (0.3%)</td>
-<td>66 (0.4%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Fourth grade</td>
-<td>51 (0.4%)</td>
-<td>20 (0.4%)</td>
-<td>71 (0.4%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Fifth grade</td>
-<td>69 (0.5%)</td>
+<td class='rowlabel'>(0000015) Other property</td>
+<td>59 (0.5%)</td>
 <td>26 (0.5%)</td>
-<td>95 (0.5%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Sixth grade</td>
-<td>236 (1.8%)</td>
-<td>81 (1.7%)</td>
-<td>317 (1.8%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Seventh grade</td>
-<td>269 (2.1%)</td>
-<td>132 (2.7%)</td>
-<td>401 (2.2%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Eighth grade</td>
-<td>683 (5.3%)</td>
-<td>334 (6.8%)</td>
-<td>1017 (5.7%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Ninth grade</td>
-<td>1500 (11.5%)</td>
-<td>561 (11.5%)</td>
-<td>2061 (11.5%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Tenth grade</td>
-<td>2074 (16.0%)</td>
-<td>747 (15.3%)</td>
-<td>2821 (15.8%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Eleventh grade</td>
-<td>2467 (19.0%)</td>
-<td>799 (16.4%)</td>
-<td>3266 (18.3%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Twelfth grade</td>
-<td>3323 (25.6%)</td>
-<td>1145 (23.4%)</td>
-<td>4468 (25.0%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>College freshman</td>
-<td>525 (4.0%)</td>
-<td>272 (5.6%)</td>
-<td>797 (4.5%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>College sophomore</td>
-<td>749 (5.8%)</td>
-<td>356 (7.3%)</td>
-<td>1105 (6.2%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>College junior</td>
-<td>200 (1.5%)</td>
-<td>85 (1.7%)</td>
-<td>285 (1.6%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>College senior</td>
-<td>347 (2.7%)</td>
-<td>158 (3.2%)</td>
-<td>505 (2.8%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Graduate school one year</td>
-<td>55 (0.4%)</td>
-<td>30 (0.6%)</td>
 <td>85 (0.5%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>Graduate school two or more years</td>
-<td>187 (1.4%)</td>
-<td>83 (1.7%)</td>
-<td>270 (1.5%)</td>
+<td class='rowlabel'>(0000016) Drug possession</td>
+<td>1156 (8.9%)</td>
+<td>370 (7.6%)</td>
+<td>1526 (8.5%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>Attended school in other country/system not comparable to grades</td>
-<td>70 (0.5%)</td>
-<td>8 (0.2%)</td>
-<td>78 (0.4%)</td>
+<td class='rowlabel'>(0000017) Drug traffic</td>
+<td>2182 (16.8%)</td>
+<td>545 (11.2%)</td>
+<td>2727 (15.3%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>Don't know</td>
-<td>22 (0.2%)</td>
-<td>3 (0.1%)</td>
-<td>25 (0.1%)</td>
+<td class='rowlabel'>(0000018) Other drug</td>
+<td>169 (1.3%)</td>
+<td>59 (1.2%)</td>
+<td>228 (1.3%)</td>
 </tr>
 <tr>
-<td class='rowlabel lastrow'>Missing</td>
-<td class='lastrow'>17 (0.1%)</td>
-<td class='lastrow'>2 (0.0%)</td>
-<td class='lastrow'>19 (0.1%)</td>
+<td class='rowlabel'>(0000019) Weapons</td>
+<td>597 (4.6%)</td>
+<td>185 (3.8%)</td>
+<td>782 (4.4%)</td>
 </tr>
 <tr>
-<td class='rowlabel firstrow'>Monthly Income in Month Before Arrest</td>
-<td class='firstrow'></td>
-<td class='firstrow'></td>
-<td class='firstrow'></td>
+<td class='rowlabel'>(0000020) Dwi</td>
+<td>275 (2.1%)</td>
+<td>84 (1.7%)</td>
+<td>359 (2.0%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>No income</td>
-<td>229 (1.8%)</td>
-<td>114 (2.3%)</td>
-<td>343 (1.9%)</td>
+<td class='rowlabel'>(0000021) Other public order</td>
+<td>1061 (8.2%)</td>
+<td>381 (7.8%)</td>
+<td>1442 (8.1%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>$1 - $199</td>
-<td>416 (3.2%)</td>
-<td>170 (3.5%)</td>
-<td>586 (3.3%)</td>
+<td class='rowlabel'>(0000022) Other</td>
+<td>101 (0.8%)</td>
+<td>26 (0.5%)</td>
+<td>127 (0.7%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>$200 - $399</td>
-<td>835 (6.4%)</td>
-<td>340 (7.0%)</td>
-<td>1175 (6.6%)</td>
+<td class='rowlabel'>(9999997) DK/refused</td>
+<td>9 (0.1%)</td>
+<td>0 (0%)</td>
+<td>9 (0.1%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>$400 - $599</td>
-<td>938 (7.2%)</td>
-<td>500 (10.2%)</td>
-<td>1438 (8.0%)</td>
+<td class='rowlabel'>(9999998) Missing</td>
+<td>48 (0.4%)</td>
+<td>9 (0.2%)</td>
+<td>57 (0.3%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>$600 - $799</td>
-<td>750 (5.8%)</td>
-<td>360 (7.4%)</td>
-<td>1110 (6.2%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>$800 - $999</td>
-<td>869 (6.7%)</td>
-<td>346 (7.1%)</td>
-<td>1215 (6.8%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>$1,000 - $1,199</td>
-<td>1051 (8.1%)</td>
-<td>374 (7.7%)</td>
-<td>1425 (8.0%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>$1,200 - $1,499</td>
-<td>1190 (9.2%)</td>
-<td>363 (7.4%)</td>
-<td>1553 (8.7%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>$1,500 - $1,999</td>
-<td>1016 (7.8%)</td>
-<td>339 (6.9%)</td>
-<td>1355 (7.6%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>$2,000 - $2,499</td>
-<td>964 (7.4%)</td>
-<td>308 (6.3%)</td>
-<td>1272 (7.1%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>$2,500 - $4,999</td>
-<td>1147 (8.8%)</td>
-<td>410 (8.4%)</td>
-<td>1557 (8.7%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>$5,000 - $7,499</td>
-<td>519 (4.0%)</td>
-<td>189 (3.9%)</td>
-<td>708 (4.0%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>$7,500 or more</td>
-<td>872 (6.7%)</td>
-<td>295 (6.0%)</td>
-<td>1167 (6.5%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Don't know</td>
-<td>492 (3.8%)</td>
-<td>148 (3.0%)</td>
-<td>640 (3.6%)</td>
-</tr>
-<tr>
-<td class='rowlabel lastrow'>Missing</td>
-<td class='lastrow'>1709 (13.1%)</td>
-<td class='lastrow'>628 (12.9%)</td>
-<td class='lastrow'>2337 (13.1%)</td>
+<td class='rowlabel lastrow'>(9999999) Blank</td>
+<td class='lastrow'>125 (1.0%)</td>
+<td class='lastrow'>38 (0.8%)</td>
+<td class='lastrow'>163 (0.9%)</td>
 </tr>
 </tbody>
 </table>

@@ -82,12 +82,13 @@ total_df =
 table1(~ V0005 + AGE_CAT + V2982 + EDUCATION + SES_INCOMEMTH | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
 ```
 
+
 # Incarceration-Related Variables
 
 ### Combined
 ```{r}
 #Table 1
-table1(~ V0005 + AGE_CAT + V2982 + EDUCATION + SES_INCOMEMTH | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
+table1(~ CH_PRIORSENTENCE_NUM + V1197 + CH_CRIMHIST_COLLAPSED + TYPEOFFENSE | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
 ```
 
 ### Federal
