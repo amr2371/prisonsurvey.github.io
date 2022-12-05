@@ -13,4 +13,4 @@ navbar:
       href: https://github.com/amr2371/prisonsurvey.github.io
 output:
   html_document:
-    theme: cerulean
+    theme: flatly
