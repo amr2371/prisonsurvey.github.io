@@ -12,15 +12,17 @@ output:
 library(tidyverse)
 library(mgcv)
 library(modelr)
-
 library(viridis)
+library(labelled)
+library(table1)
+
 
 knitr::opts_chunk$set(
 	echo = TRUE,
 	warning = FALSE,
 	fig.width = 8, 
   fig.height = 6,
-  out.width = "90%"
+  out.width = "100%"
 )
 
 options(
@@ -38,117 +40,70 @@ theme_set(theme_minimal() + theme(legend.position = "bottom"))
 #Importing the datasets
 federal_df <- load("./data/04572-0001-Data.rda") 
 
-federal_df <- da04572.0001%>% 
-  select(V2288, V2289, V2290, V2291, MCMH_HIVTEST, MCMH_RSLT_HIV, DRUG_INJECT_CB, V2401, V2402, V2403, V2404, V2405, V2406, V2407, V2409, V2412, MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD, MCMH_MENTAL_HISTORY, V1197, CS_SENTENCEMTH,CH_PRIORSENTENCE, CH_PRIORSENTENCE_NUM, CH_CRIMHIST, CH_CRIMHIST_COLLAPSED, CH_NUMCAR,CH_NUMCAR1, CH_NUMCAR2, CH_NUMCAR3, CH_NUMCAR4, CH_NUMCAR5, MOST_SERIOUS_OFFENSE2, TYPEOFFENSE, V1056, V1057, V1060, V1061, V1325, V0001, V0014, AGE_CAT, V2982, V0005, EDUCATION, SES_INCOMEMTH, DRUG_ANY, DRUG_ANYREG, DRUG_ANYMTH, SES_PHYSSEXABUSED_EVER, SES_PARENTS_INCARCERATED, SES_FAMILY_INCARCERATED, V0105, MCMH_WHEN_DISORDER, MCMH_WHEN_DISORDER2,MCMH_MHOSPYR,MCMH_MHOSPADM,MCMH_MHOSPYRADM,MCMH_SMI)
-
+federal_df <- da04572.0001 %>% 
+  select(V2288, V2289, V2290, V2291, MCMH_HIVTEST, MCMH_RSLT_HIV, DRUG_INJECT_CB, V2401, V2402, V2403, V2404, V2405, V2406, V2407, V2409, V2412, MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD, MCMH_MENTAL_HISTORY, V1197, CS_SENTENCEMTH,CH_PRIORSENTENCE, CH_PRIORSENTENCE_NUM, CH_CRIMHIST, CH_CRIMHIST_COLLAPSED, CH_NUMCAR,CH_NUMCAR1, CH_NUMCAR2, CH_NUMCAR3, CH_NUMCAR4, CH_NUMCAR5, MOST_SERIOUS_OFFENSE2, TYPEOFFENSE, V1056, V1057, V1060, V1061, V1325, V0001, V0014, AGE_CAT, V2982, V0005, EDUCATION, SES_INCOMEMTH, DRUG_ANY, DRUG_ANYREG, DRUG_ANYMTH, SES_PHYSSEXABUSED_EVER, SES_PARENTS_INCARCERATED, SES_FAMILY_INCARCERATED, V0105, MCMH_WHEN_DISORDER, MCMH_WHEN_DISORDER2,MCMH_MHOSPYR,MCMH_MHOSPADM,MCMH_MHOSPYRADM,MCMH_SMI) %>%
+  mutate(dataset = "Federal")
 
 state_df <- load("./data/04572-0002-Data.rda") 
 
-state_df <- da04572.0002%>% 
-   select(V2288, V2289, V2290, V2291, MCMH_HIVTEST, MCMH_RSLT_HIV, DRUG_INJECT_CB, V2401, V2402, V2403, V2404, V2405, V2406, V2407, V2409, V2412, MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD, MCMH_MENTAL_HISTORY, V1197, CS_SENTENCEMTH,CH_PRIORSENTENCE, CH_PRIORSENTENCE_NUM, CH_CRIMHIST, CH_CRIMHIST_COLLAPSED, CH_NUMCAR,CH_NUMCAR1, CH_NUMCAR2, CH_NUMCAR3, CH_NUMCAR4, CH_NUMCAR5, MOST_SERIOUS_OFFENSE2, TYPEOFFENSE, V1056, V1057, V1060, V1061, V1325, V0001, V0014, AGE_CAT, V2982, V0005, EDUCATION, SES_INCOMEMTH, DRUG_ANY, DRUG_ANYREG, DRUG_ANYMTH, SES_PHYSSEXABUSED_EVER, SES_PARENTS_INCARCERATED, SES_FAMILY_INCARCERATED, V0105, MCMH_WHEN_DISORDER, MCMH_WHEN_DISORDER2,MCMH_MHOSPYR,MCMH_MHOSPADM,MCMH_MHOSPYRADM,MCMH_SMI)
+state_df <- da04572.0002 %>% 
+   select(V2288, V2289, V2290, V2291, MCMH_HIVTEST, MCMH_RSLT_HIV, DRUG_INJECT_CB, V2401, V2402, V2403, V2404, V2405, V2406, V2407, V2409, V2412, MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD, MCMH_MENTAL_HISTORY, V1197, CS_SENTENCEMTH,CH_PRIORSENTENCE, CH_PRIORSENTENCE_NUM, CH_CRIMHIST, CH_CRIMHIST_COLLAPSED, CH_NUMCAR,CH_NUMCAR1, CH_NUMCAR2, CH_NUMCAR3, CH_NUMCAR4, CH_NUMCAR5, MOST_SERIOUS_OFFENSE2, TYPEOFFENSE, V1056, V1057, V1060, V1061, V1325, V0001, V0014, AGE_CAT, V2982, V0005, EDUCATION, SES_INCOMEMTH, DRUG_ANY, DRUG_ANYREG, DRUG_ANYMTH, SES_PHYSSEXABUSED_EVER, SES_PARENTS_INCARCERATED, SES_FAMILY_INCARCERATED, V0105, MCMH_WHEN_DISORDER, MCMH_WHEN_DISORDER2,MCMH_MHOSPYR,MCMH_MHOSPADM,MCMH_MHOSPYRADM,MCMH_SMI) %>%
+  mutate(dataset = "State")
+```
 
+```{r, include=FALSE}
+#Combining datasets, filtering dataset, formatting variables
+total_df = 
+  bind_rows(state_df, federal_df) %>%
+  mutate(MENTAL_HISTORY_BINARY = case_when(MCMH_MENTAL_HISTORY == "(0000001) Yes" ~ "1", MCMH_MENTAL_HISTORY == "(0000002) No" ~ "0", MCMH_MENTAL_HISTORY == "(9999997) DK/refused" | MCMH_MENTAL_HISTORY == "(9999999) Blank"  ~ ".")) %>%
+  mutate(MENTAL_HISTORY_BINARY = na_if(MENTAL_HISTORY_BINARY, ".")) %>% 
+  mutate(MENTAL_HISTORY_BINARY = factor(MENTAL_HISTORY_BINARY, 
+    levels = c(0, 1),
+    labels = c("No history of mental health condition(s)", "History of mental health condition(s)")))  %>% 
+  filter(!is.na(MENTAL_HISTORY_BINARY)) %>% 
+  mutate(V0005 = dplyr::recode(V0005, "(1) Male" = "Male", "(2) Female" = "Female")) %>% 
+  mutate(AGE_CAT = dplyr::recode(AGE_CAT, "(1) < 25 yrs" = "< 25 yrs", "(2) 25-34" = "25-34", "(3) 35-44" =  "35-44", "(4) 45-54" = "45-54", "(5) 55-64" = "55-64", "(6) 65-96" = "65-96", "(7) Unknown" = "Unknown")) %>% 
+  mutate(V2982 = dplyr::recode(V2982, "(1) White non-Hispanic" = "White non-Hispanic", "(2) Black non-Hispanic" = "Black non-Hispanic", "(3) Hispanic" = "Hispanic", "(4) American Indian, Alaska Native non-Hispanic" = "American Indian, Alaska Native non-Hispanic", "(5) Asian, Pacific Islander, Native Hawaiian non-Hispanic" = "Asian, Pacific Islander, Native Hawaiian non-Hispanic", "(6) Multiple Races reported, non-Hispanic" = "Multiple Races reported, non-Hispanic", "(8) Other, Uncategorized - Missing" = "NA")) %>% 
+  mutate(V2982 = factor(V2982, exclude = "NA")) %>% 
+  mutate(V2982 = na_if(V2982, "NA")) %>% 
+  mutate(EDUCATION = dplyr::recode(EDUCATION, "(0000000) Never attended or attended kindergarten only" = "Never attended or attended kindergarten only", "(0000001) First grade" = "First grade", "(0000002) Second grade" = "Second grade", "(0000003) Third grade" = "Third grade", "(0000004) Fourth grade" = "Fourth grade", "(0000005) Fifth grade" = "Fifth grade", "(0000006) Sixth grade" = "Sixth grade", "(0000007) Seventh grade" = "Seventh grade", "(0000008) Eighth grade" = "Eighth grade", "(0000009) Ninth grade" = "Ninth grade", "(0000010) Tenth grade" = "Tenth grade", "(0000011) Eleventh grade" = "Eleventh grade", "(0000012) Twelfth grade" = "Twelfth grade", "(0000013) College freshman" = "College freshman", "(0000014) College sophomore" = "College sophomore", "(0000015) College junior" = "College junior", "(0000016) College senior" = "College senior", "(0000017) Graduate school one year" = "Graduate school one year", "(0000018) Graduate school two or more years" = "Graduate school two or more years", "(0000019) Attended school in other country/system not comparable to grades" = "Attended school in other country/system not comparable to grades", "(9999997) Don't know" = "Don't know", "(9999998) Refused" = "NA", "(9999999) Missing" = "NA"))  %>% 
+  mutate(EDUCATION = factor(EDUCATION, exclude = "NA")) %>% 
+  mutate(EDUCATION = na_if(EDUCATION, "NA")) %>% 
+  mutate(SES_INCOMEMTH = dplyr::recode(SES_INCOMEMTH, "(0000000) No income" = "No income", "(0000001) $1 - 199" = "$1 - $199", "(0000002) 200 - 399" = "$200 - $399", "(0000003) 400 - 599" = "$400 - $599", "(0000004) 600 - 799" = "$600 - $799", "(0000005) 800 - 999" = "$800 - $999", "(0000006) 1,000 - 1,199" = "$1,000 - $1,199", "(0000007) 1,200 - 1,499" = "$1,200 - $1,499", "(0000008) 1,500 - 1,999" = "$1,500 - $1,999", "(0000009) 2,000 - 2,499" = "$2,000 - $2,499", "(0000010) 2,500 - 4,999" = "$2,500 - $4,999", "(0000011) 5,000 - 7,499" = "$5,000 - $7,499", "(0000012) 7,500 or more" = "$7,500 or more", "(9999997) Don't know" = "Don't know", "(9999998) Refused" = "NA", "(9999999) Missing" = "NA")) %>% 
+  mutate(SES_INCOMEMTH = factor(SES_INCOMEMTH, exclude = "NA")) %>% 
+  mutate(SES_INCOMEMTH = na_if(SES_INCOMEMTH, "NA")) %>% 
+  set_variable_labels(V0005 = "Sex", AGE_CAT = "Age Group", V2982 = "Race/Ethnicity", EDUCATION = "Education", SES_INCOMEMTH = "Monthly Income in Month Before Arrest") 
 ```
 
 # Demographics
 
+```{r}
+#Table 1
+table1(~ V0005 + AGE_CAT + V2982 + EDUCATION + SES_INCOMEMTH | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
+```
+
+# Incarceration-Related Variables
+
+### Combined
+```{r}
+#Table 1
+table1(~ V0005 + AGE_CAT + V2982 + EDUCATION + SES_INCOMEMTH | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
+```
+
 ### Federal
-```{r}
-#Interview outcome
-da04572.0001 %>% 
-  count(V0003) %>% 
-  rename("Interview Outcome"= V0003) %>%
-  knitr::kable() 
-
-#Sex
-da04572.0001 %>% 
-  count(V0004) %>%
-  rename("Sex" = V0004) %>%
-  knitr::kable()
-
-#US Citizen
-da04572.0001%>% 
-  count(V0051) %>%
-  rename("US Citizen" = V0051) %>%
-  knitr::kable()
-
-#HIGHEST EDUCATION BEFORE ARREST
-da04572.0001%>% 
-  count(EDUCATION) %>%
-  rename("Highest Education Prior to Arrest" = EDUCATION) %>%
-  knitr::kable()
-
-#Age Category 
-federal_df %>%
-  group_by(AGE_CAT) %>%
-  summarise(
-    n_obs = n()
-  ) %>%
-  mutate(
-    AGE_CAT = gsub(".*)", "", AGE_CAT)
-  ) %>%
-  ungroup() %>%
-  ggplot(aes(x = AGE_CAT, y = n_obs)) + 
-  geom_bar(stat = "identity") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-```
-
-### State
-```{r}
-#Interview outcome
-da04572.0002 %>% 
-  count(V0003) %>% 
-  rename("Interview Outcome"= V0003) %>%
-  knitr::kable() 
-
-#Sex
-da04572.0002 %>% 
-  count(V0004) %>%
-  rename("Sex" = V0004) %>%
-  knitr::kable()
-
-#US Citizen
-da04572.0002 %>% 
-  count(V0051) %>%
-  rename("US Citizen" = V0051) %>%
-  knitr::kable()
-
-#HIGHEST EDUCATION BEFORE ARREST
-da04572.0002 %>% 
-  count(EDUCATION) %>%
-  rename("Highest Education Prior to Arrest" = EDUCATION) %>%
-  knitr::kable()
-
-#Age Category 
-state_df %>%
-  group_by(AGE_CAT) %>%
-  summarise(
-    n_obs = n()
-  ) %>%
-  mutate(
-    AGE_CAT = gsub(".*)", "", AGE_CAT)
-  ) %>%
-  ungroup() %>%
-  ggplot(aes(x = AGE_CAT, y = n_obs)) + 
-  geom_bar(stat = "identity") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-```
-
-# Sentencing Variables
-
-### Federal 
 ```{r}
 #Criminal History
 federal_df %>% 
   count(CH_CRIMHIST) %>% 
-  rename("Criminal Hisotry"= CH_CRIMHIST) %>%
-  knitr:: kable() 
+  rename("Criminal Hisotry" = CH_CRIMHIST) %>%
+  knitr::kable() 
 
 #Type of Offense
 federal_df %>% 
   count(TYPEOFFENSE) %>% 
-  rename("Type of Offense"= TYPEOFFENSE) %>%
+  rename("Type of Offense" = TYPEOFFENSE) %>%
   arrange(desc(n)) %>%
-  knitr:: kable()
+  knitr::kable()
 
 #Distribution for number of incarcerations
 federal_df %>%
@@ -170,15 +125,15 @@ federal_df %>%
 #Criminal History
 state_df %>% 
   count(CH_CRIMHIST) %>% 
-  rename("Criminal Hisotry"= CH_CRIMHIST) %>%
-  knitr:: kable() 
+  rename("Criminal Hisotry" = CH_CRIMHIST) %>%
+  knitr::kable() 
 
 #Type of Offense
 state_df %>% 
   count(TYPEOFFENSE) %>% 
-  rename("Type of Offense"= TYPEOFFENSE) %>%
+  rename("Type of Offense" = TYPEOFFENSE) %>%
   arrange(desc(n)) %>%
-  knitr:: kable()
+  knitr::kable()
 
 #Distribution for number of incarcerations
 state_df %>%
@@ -201,7 +156,7 @@ state_df %>%
 federal_df %>% 
   group_by(V2288) %>% 
   summarize(n_obs = n()) %>% 
-  knitr:: kable()
+  knitr::kable()
 
 federal_df %>% 
   group_by( V2288) %>% 
@@ -212,12 +167,12 @@ federal_df %>%
   geom_bar(stat = "identity") 
 
 #HIV test result
-federal_df%>% 
+federal_df %>% 
    group_by(MCMH_RSLT_HIV) %>%
   summarise(n_obs = n()) %>%
    mutate(
     MCMH_RSLT_HIV = fct_reorder(MCMH_RSLT_HIV, n_obs) 
-  )%>% 
+  ) %>% 
   ggplot(aes(x = MCMH_RSLT_HIV, y = n_obs, fill = MCMH_RSLT_HIV)) +
   theme(axis.text.x = element_text(angle = 90, vjust = .5, hjust = 1)) +
   geom_bar(stat = "identity") 
@@ -239,7 +194,7 @@ federal_df %>%
 federal_df %>% 
   group_by(V2409) %>% 
   summarize(n_obs = n()) %>% 
-  knitr:: kable()
+  knitr::kable()
 
 federal_df %>% 
   group_by(V2409) %>% 
@@ -254,7 +209,7 @@ federal_df %>%
 federal_df %>% 
   group_by(V2412) %>% 
   summarize(n_obs = n()) %>% 
-  knitr:: kable()
+  knitr::kable()
 
 federal_df %>% 
   group_by(V2412) %>% 
@@ -270,7 +225,7 @@ federal_df %>%
 federal_df %>% 
   group_by(MCMH_MHOSPYR) %>% 
   summarize(n_obs = n()) %>% 
-  knitr:: kable()
+  knitr::kable()
 
 federal_df %>% 
   group_by(MCMH_MHOSPYR) %>% 
@@ -288,7 +243,7 @@ federal_df %>%
 federal_df %>% 
   group_by(MCMH_MHOSPADM) %>% 
   summarize(n_obs = n()) %>% 
-  knitr:: kable()
+  knitr::kable()
 
 federal_df %>% 
   group_by(MCMH_MHOSPADM) %>% 
@@ -341,6 +296,5 @@ ggplot() +
     color = "Legend"
   ) +
   scale_color_manual(values = colors)
-
 ```
 

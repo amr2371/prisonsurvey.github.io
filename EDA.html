@@ -35,6 +35,7 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/table1-1.0/table1_defaults.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
@@ -354,444 +355,745 @@ div.tocify {
 
 <div id="demographics" class="section level1">
 <h1>Demographics</h1>
+<pre class="r"><code>#Table 1
+table1(~ V0005 + AGE_CAT + V2982 + EDUCATION + SES_INCOMEMTH | MENTAL_HISTORY_BINARY, data = total_df, overall = &quot;Total&quot;)</code></pre>
+<div class="Rtable1"><table class="Rtable1">
+<thead>
+<tr>
+<th class='rowlabel firstrow lastrow'></th>
+<th class='firstrow lastrow'><span class='stratlabel'>No history of mental health condition(s)<br><span class='stratn'>(N=12997)</span></span></th>
+<th class='firstrow lastrow'><span class='stratlabel'>History of mental health condition(s)<br><span class='stratn'>(N=4884)</span></span></th>
+<th class='firstrow lastrow'><span class='stratlabel'>Total<br><span class='stratn'>(N=17881)</span></span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class='rowlabel firstrow'>Sex</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Male</td>
+<td>10898 (83.9%)</td>
+<td>3157 (64.6%)</td>
+<td>14055 (78.6%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Female</td>
+<td class='lastrow'>2099 (16.1%)</td>
+<td class='lastrow'>1727 (35.4%)</td>
+<td class='lastrow'>3826 (21.4%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Age Group</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>< 25 yrs</td>
+<td>2027 (15.6%)</td>
+<td>741 (15.2%)</td>
+<td>2768 (15.5%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>25-34</td>
+<td>4409 (33.9%)</td>
+<td>1552 (31.8%)</td>
+<td>5961 (33.3%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>35-44</td>
+<td>3930 (30.2%)</td>
+<td>1623 (33.2%)</td>
+<td>5553 (31.1%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>45-54</td>
+<td>1891 (14.5%)</td>
+<td>756 (15.5%)</td>
+<td>2647 (14.8%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>55-64</td>
+<td>597 (4.6%)</td>
+<td>182 (3.7%)</td>
+<td>779 (4.4%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>65-96</td>
+<td>143 (1.1%)</td>
+<td>30 (0.6%)</td>
+<td>173 (1.0%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Unknown</td>
+<td class='lastrow'>0 (0%)</td>
+<td class='lastrow'>0 (0%)</td>
+<td class='lastrow'>0 (0%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Race/Ethnicity</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>White non-Hispanic</td>
+<td>3832 (29.5%)</td>
+<td>2456 (50.3%)</td>
+<td>6288 (35.2%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Black non-Hispanic</td>
+<td>5691 (43.8%)</td>
+<td>1403 (28.7%)</td>
+<td>7094 (39.7%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Hispanic</td>
+<td>2727 (21.0%)</td>
+<td>647 (13.2%)</td>
+<td>3374 (18.9%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>American Indian, Alaska Native non-Hispanic</td>
+<td>243 (1.9%)</td>
+<td>97 (2.0%)</td>
+<td>340 (1.9%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Asian, Pacific Islander, Native Hawaiian non-Hispanic</td>
+<td>162 (1.2%)</td>
+<td>34 (0.7%)</td>
+<td>196 (1.1%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Multiple Races reported, non-Hispanic</td>
+<td>321 (2.5%)</td>
+<td>240 (4.9%)</td>
+<td>561 (3.1%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Missing</td>
+<td class='lastrow'>21 (0.2%)</td>
+<td class='lastrow'>7 (0.1%)</td>
+<td class='lastrow'>28 (0.2%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Education</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Never attended or attended kindergarten only</td>
+<td>42 (0.3%)</td>
+<td>14 (0.3%)</td>
+<td>56 (0.3%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>First grade</td>
+<td>35 (0.3%)</td>
+<td>8 (0.2%)</td>
+<td>43 (0.2%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Second grade</td>
+<td>25 (0.2%)</td>
+<td>5 (0.1%)</td>
+<td>30 (0.2%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Third grade</td>
+<td>51 (0.4%)</td>
+<td>15 (0.3%)</td>
+<td>66 (0.4%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Fourth grade</td>
+<td>51 (0.4%)</td>
+<td>20 (0.4%)</td>
+<td>71 (0.4%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Fifth grade</td>
+<td>69 (0.5%)</td>
+<td>26 (0.5%)</td>
+<td>95 (0.5%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Sixth grade</td>
+<td>236 (1.8%)</td>
+<td>81 (1.7%)</td>
+<td>317 (1.8%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Seventh grade</td>
+<td>269 (2.1%)</td>
+<td>132 (2.7%)</td>
+<td>401 (2.2%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Eighth grade</td>
+<td>683 (5.3%)</td>
+<td>334 (6.8%)</td>
+<td>1017 (5.7%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Ninth grade</td>
+<td>1500 (11.5%)</td>
+<td>561 (11.5%)</td>
+<td>2061 (11.5%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Tenth grade</td>
+<td>2074 (16.0%)</td>
+<td>747 (15.3%)</td>
+<td>2821 (15.8%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Eleventh grade</td>
+<td>2467 (19.0%)</td>
+<td>799 (16.4%)</td>
+<td>3266 (18.3%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Twelfth grade</td>
+<td>3323 (25.6%)</td>
+<td>1145 (23.4%)</td>
+<td>4468 (25.0%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>College freshman</td>
+<td>525 (4.0%)</td>
+<td>272 (5.6%)</td>
+<td>797 (4.5%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>College sophomore</td>
+<td>749 (5.8%)</td>
+<td>356 (7.3%)</td>
+<td>1105 (6.2%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>College junior</td>
+<td>200 (1.5%)</td>
+<td>85 (1.7%)</td>
+<td>285 (1.6%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>College senior</td>
+<td>347 (2.7%)</td>
+<td>158 (3.2%)</td>
+<td>505 (2.8%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Graduate school one year</td>
+<td>55 (0.4%)</td>
+<td>30 (0.6%)</td>
+<td>85 (0.5%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Graduate school two or more years</td>
+<td>187 (1.4%)</td>
+<td>83 (1.7%)</td>
+<td>270 (1.5%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Attended school in other country/system not comparable to grades</td>
+<td>70 (0.5%)</td>
+<td>8 (0.2%)</td>
+<td>78 (0.4%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Don't know</td>
+<td>22 (0.2%)</td>
+<td>3 (0.1%)</td>
+<td>25 (0.1%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Missing</td>
+<td class='lastrow'>17 (0.1%)</td>
+<td class='lastrow'>2 (0.0%)</td>
+<td class='lastrow'>19 (0.1%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Monthly Income in Month Before Arrest</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>No income</td>
+<td>229 (1.8%)</td>
+<td>114 (2.3%)</td>
+<td>343 (1.9%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$1 - $199</td>
+<td>416 (3.2%)</td>
+<td>170 (3.5%)</td>
+<td>586 (3.3%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$200 - $399</td>
+<td>835 (6.4%)</td>
+<td>340 (7.0%)</td>
+<td>1175 (6.6%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$400 - $599</td>
+<td>938 (7.2%)</td>
+<td>500 (10.2%)</td>
+<td>1438 (8.0%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$600 - $799</td>
+<td>750 (5.8%)</td>
+<td>360 (7.4%)</td>
+<td>1110 (6.2%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$800 - $999</td>
+<td>869 (6.7%)</td>
+<td>346 (7.1%)</td>
+<td>1215 (6.8%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$1,000 - $1,199</td>
+<td>1051 (8.1%)</td>
+<td>374 (7.7%)</td>
+<td>1425 (8.0%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$1,200 - $1,499</td>
+<td>1190 (9.2%)</td>
+<td>363 (7.4%)</td>
+<td>1553 (8.7%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$1,500 - $1,999</td>
+<td>1016 (7.8%)</td>
+<td>339 (6.9%)</td>
+<td>1355 (7.6%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$2,000 - $2,499</td>
+<td>964 (7.4%)</td>
+<td>308 (6.3%)</td>
+<td>1272 (7.1%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$2,500 - $4,999</td>
+<td>1147 (8.8%)</td>
+<td>410 (8.4%)</td>
+<td>1557 (8.7%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$5,000 - $7,499</td>
+<td>519 (4.0%)</td>
+<td>189 (3.9%)</td>
+<td>708 (4.0%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$7,500 or more</td>
+<td>872 (6.7%)</td>
+<td>295 (6.0%)</td>
+<td>1167 (6.5%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Don't know</td>
+<td>492 (3.8%)</td>
+<td>148 (3.0%)</td>
+<td>640 (3.6%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Missing</td>
+<td class='lastrow'>1709 (13.1%)</td>
+<td class='lastrow'>628 (12.9%)</td>
+<td class='lastrow'>2337 (13.1%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div id="incarceration-related-variables" class="section level1">
+<h1>Incarceration-Related Variables</h1>
+<div id="combined" class="section level3">
+<h3>Combined</h3>
+<pre class="r"><code>#Table 1
+table1(~ V0005 + AGE_CAT + V2982 + EDUCATION + SES_INCOMEMTH | MENTAL_HISTORY_BINARY, data = total_df, overall = &quot;Total&quot;)</code></pre>
+<div class="Rtable1"><table class="Rtable1">
+<thead>
+<tr>
+<th class='rowlabel firstrow lastrow'></th>
+<th class='firstrow lastrow'><span class='stratlabel'>No history of mental health condition(s)<br><span class='stratn'>(N=12997)</span></span></th>
+<th class='firstrow lastrow'><span class='stratlabel'>History of mental health condition(s)<br><span class='stratn'>(N=4884)</span></span></th>
+<th class='firstrow lastrow'><span class='stratlabel'>Total<br><span class='stratn'>(N=17881)</span></span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class='rowlabel firstrow'>Sex</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Male</td>
+<td>10898 (83.9%)</td>
+<td>3157 (64.6%)</td>
+<td>14055 (78.6%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Female</td>
+<td class='lastrow'>2099 (16.1%)</td>
+<td class='lastrow'>1727 (35.4%)</td>
+<td class='lastrow'>3826 (21.4%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Age Group</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>< 25 yrs</td>
+<td>2027 (15.6%)</td>
+<td>741 (15.2%)</td>
+<td>2768 (15.5%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>25-34</td>
+<td>4409 (33.9%)</td>
+<td>1552 (31.8%)</td>
+<td>5961 (33.3%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>35-44</td>
+<td>3930 (30.2%)</td>
+<td>1623 (33.2%)</td>
+<td>5553 (31.1%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>45-54</td>
+<td>1891 (14.5%)</td>
+<td>756 (15.5%)</td>
+<td>2647 (14.8%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>55-64</td>
+<td>597 (4.6%)</td>
+<td>182 (3.7%)</td>
+<td>779 (4.4%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>65-96</td>
+<td>143 (1.1%)</td>
+<td>30 (0.6%)</td>
+<td>173 (1.0%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Unknown</td>
+<td class='lastrow'>0 (0%)</td>
+<td class='lastrow'>0 (0%)</td>
+<td class='lastrow'>0 (0%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Race/Ethnicity</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>White non-Hispanic</td>
+<td>3832 (29.5%)</td>
+<td>2456 (50.3%)</td>
+<td>6288 (35.2%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Black non-Hispanic</td>
+<td>5691 (43.8%)</td>
+<td>1403 (28.7%)</td>
+<td>7094 (39.7%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Hispanic</td>
+<td>2727 (21.0%)</td>
+<td>647 (13.2%)</td>
+<td>3374 (18.9%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>American Indian, Alaska Native non-Hispanic</td>
+<td>243 (1.9%)</td>
+<td>97 (2.0%)</td>
+<td>340 (1.9%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Asian, Pacific Islander, Native Hawaiian non-Hispanic</td>
+<td>162 (1.2%)</td>
+<td>34 (0.7%)</td>
+<td>196 (1.1%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Multiple Races reported, non-Hispanic</td>
+<td>321 (2.5%)</td>
+<td>240 (4.9%)</td>
+<td>561 (3.1%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Missing</td>
+<td class='lastrow'>21 (0.2%)</td>
+<td class='lastrow'>7 (0.1%)</td>
+<td class='lastrow'>28 (0.2%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Education</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Never attended or attended kindergarten only</td>
+<td>42 (0.3%)</td>
+<td>14 (0.3%)</td>
+<td>56 (0.3%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>First grade</td>
+<td>35 (0.3%)</td>
+<td>8 (0.2%)</td>
+<td>43 (0.2%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Second grade</td>
+<td>25 (0.2%)</td>
+<td>5 (0.1%)</td>
+<td>30 (0.2%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Third grade</td>
+<td>51 (0.4%)</td>
+<td>15 (0.3%)</td>
+<td>66 (0.4%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Fourth grade</td>
+<td>51 (0.4%)</td>
+<td>20 (0.4%)</td>
+<td>71 (0.4%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Fifth grade</td>
+<td>69 (0.5%)</td>
+<td>26 (0.5%)</td>
+<td>95 (0.5%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Sixth grade</td>
+<td>236 (1.8%)</td>
+<td>81 (1.7%)</td>
+<td>317 (1.8%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Seventh grade</td>
+<td>269 (2.1%)</td>
+<td>132 (2.7%)</td>
+<td>401 (2.2%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Eighth grade</td>
+<td>683 (5.3%)</td>
+<td>334 (6.8%)</td>
+<td>1017 (5.7%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Ninth grade</td>
+<td>1500 (11.5%)</td>
+<td>561 (11.5%)</td>
+<td>2061 (11.5%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Tenth grade</td>
+<td>2074 (16.0%)</td>
+<td>747 (15.3%)</td>
+<td>2821 (15.8%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Eleventh grade</td>
+<td>2467 (19.0%)</td>
+<td>799 (16.4%)</td>
+<td>3266 (18.3%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Twelfth grade</td>
+<td>3323 (25.6%)</td>
+<td>1145 (23.4%)</td>
+<td>4468 (25.0%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>College freshman</td>
+<td>525 (4.0%)</td>
+<td>272 (5.6%)</td>
+<td>797 (4.5%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>College sophomore</td>
+<td>749 (5.8%)</td>
+<td>356 (7.3%)</td>
+<td>1105 (6.2%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>College junior</td>
+<td>200 (1.5%)</td>
+<td>85 (1.7%)</td>
+<td>285 (1.6%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>College senior</td>
+<td>347 (2.7%)</td>
+<td>158 (3.2%)</td>
+<td>505 (2.8%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Graduate school one year</td>
+<td>55 (0.4%)</td>
+<td>30 (0.6%)</td>
+<td>85 (0.5%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Graduate school two or more years</td>
+<td>187 (1.4%)</td>
+<td>83 (1.7%)</td>
+<td>270 (1.5%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Attended school in other country/system not comparable to grades</td>
+<td>70 (0.5%)</td>
+<td>8 (0.2%)</td>
+<td>78 (0.4%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Don't know</td>
+<td>22 (0.2%)</td>
+<td>3 (0.1%)</td>
+<td>25 (0.1%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Missing</td>
+<td class='lastrow'>17 (0.1%)</td>
+<td class='lastrow'>2 (0.0%)</td>
+<td class='lastrow'>19 (0.1%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Monthly Income in Month Before Arrest</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>No income</td>
+<td>229 (1.8%)</td>
+<td>114 (2.3%)</td>
+<td>343 (1.9%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$1 - $199</td>
+<td>416 (3.2%)</td>
+<td>170 (3.5%)</td>
+<td>586 (3.3%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$200 - $399</td>
+<td>835 (6.4%)</td>
+<td>340 (7.0%)</td>
+<td>1175 (6.6%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$400 - $599</td>
+<td>938 (7.2%)</td>
+<td>500 (10.2%)</td>
+<td>1438 (8.0%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$600 - $799</td>
+<td>750 (5.8%)</td>
+<td>360 (7.4%)</td>
+<td>1110 (6.2%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$800 - $999</td>
+<td>869 (6.7%)</td>
+<td>346 (7.1%)</td>
+<td>1215 (6.8%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$1,000 - $1,199</td>
+<td>1051 (8.1%)</td>
+<td>374 (7.7%)</td>
+<td>1425 (8.0%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$1,200 - $1,499</td>
+<td>1190 (9.2%)</td>
+<td>363 (7.4%)</td>
+<td>1553 (8.7%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$1,500 - $1,999</td>
+<td>1016 (7.8%)</td>
+<td>339 (6.9%)</td>
+<td>1355 (7.6%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$2,000 - $2,499</td>
+<td>964 (7.4%)</td>
+<td>308 (6.3%)</td>
+<td>1272 (7.1%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$2,500 - $4,999</td>
+<td>1147 (8.8%)</td>
+<td>410 (8.4%)</td>
+<td>1557 (8.7%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$5,000 - $7,499</td>
+<td>519 (4.0%)</td>
+<td>189 (3.9%)</td>
+<td>708 (4.0%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>$7,500 or more</td>
+<td>872 (6.7%)</td>
+<td>295 (6.0%)</td>
+<td>1167 (6.5%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>Don't know</td>
+<td>492 (3.8%)</td>
+<td>148 (3.0%)</td>
+<td>640 (3.6%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>Missing</td>
+<td class='lastrow'>1709 (13.1%)</td>
+<td class='lastrow'>628 (12.9%)</td>
+<td class='lastrow'>2337 (13.1%)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div id="federal" class="section level3">
-<h3>Federal</h3>
-<pre class="r"><code>#Interview outcome
-da04572.0001 %&gt;% 
-  count(V0003) %&gt;% 
-  rename(&quot;Interview Outcome&quot;= V0003) %&gt;%
-  knitr::kable() </code></pre>
-<table>
-<colgroup>
-<col width="93%" />
-<col width="6%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Interview Outcome</th>
-<th align="right">n</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">(201) Complete - regular</td>
-<td align="right">3615</td>
-</tr>
-<tr class="even">
-<td align="left">(203) Sufficient partial interview - no further
-follow-up possible</td>
-<td align="right">71</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>#Sex
-da04572.0001 %&gt;% 
-  count(V0004) %&gt;%
-  rename(&quot;Sex&quot; = V0004) %&gt;%
-  knitr::kable()</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Sex</th>
-<th align="right">n</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">(1) Male</td>
-<td align="right">2728</td>
-</tr>
-<tr class="even">
-<td align="left">(2) Female</td>
-<td align="right">958</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>#US Citizen
-da04572.0001%&gt;% 
-  count(V0051) %&gt;%
-  rename(&quot;US Citizen&quot; = V0051) %&gt;%
-  knitr::kable()</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="left">US Citizen</th>
-<th align="right">n</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">(1) Yes</td>
-<td align="right">635</td>
-</tr>
-<tr class="even">
-<td align="left">(2) No</td>
-<td align="right">118</td>
-</tr>
-<tr class="odd">
-<td align="left">(7) Don’t know</td>
-<td align="right">4</td>
-</tr>
-<tr class="even">
-<td align="left">NA</td>
-<td align="right">2929</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>#HIGHEST EDUCATION BEFORE ARREST
-da04572.0001%&gt;% 
-  count(EDUCATION) %&gt;%
-  rename(&quot;Highest Education Prior to Arrest&quot; = EDUCATION) %&gt;%
-  knitr::kable()</code></pre>
-<table>
-<colgroup>
-<col width="94%" />
-<col width="5%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Highest Education Prior to Arrest</th>
-<th align="right">n</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">(0000000) Never attended or attended kindergarten
-only</td>
-<td align="right">15</td>
-</tr>
-<tr class="even">
-<td align="left">(0000001) First grade</td>
-<td align="right">11</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000002) Second grade</td>
-<td align="right">12</td>
-</tr>
-<tr class="even">
-<td align="left">(0000003) Third grade</td>
-<td align="right">15</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000004) Fourth grade</td>
-<td align="right">21</td>
-</tr>
-<tr class="even">
-<td align="left">(0000005) Fifth grade</td>
-<td align="right">25</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000006) Sixth grade</td>
-<td align="right">86</td>
-</tr>
-<tr class="even">
-<td align="left">(0000007) Seventh grade</td>
-<td align="right">66</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000008) Eighth grade</td>
-<td align="right">170</td>
-</tr>
-<tr class="even">
-<td align="left">(0000009) Ninth grade</td>
-<td align="right">330</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000010) Tenth grade</td>
-<td align="right">439</td>
-</tr>
-<tr class="even">
-<td align="left">(0000011) Eleventh grade</td>
-<td align="right">508</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000012) Twelfth grade</td>
-<td align="right">912</td>
-</tr>
-<tr class="even">
-<td align="left">(0000013) College freshman</td>
-<td align="right">214</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000014) College sophomore</td>
-<td align="right">324</td>
-</tr>
-<tr class="even">
-<td align="left">(0000015) College junior</td>
-<td align="right">96</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000016) College senior</td>
-<td align="right">195</td>
-</tr>
-<tr class="even">
-<td align="left">(0000017) Graduate school one year</td>
-<td align="right">35</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000018) Graduate school two or more years</td>
-<td align="right">132</td>
-</tr>
-<tr class="even">
-<td align="left">(0000019) Attended school in other country/system not
-comparable to grades</td>
-<td align="right">35</td>
-</tr>
-<tr class="odd">
-<td align="left">(9999997) Don’t know</td>
-<td align="right">8</td>
-</tr>
-<tr class="even">
-<td align="left">(9999998) Refused</td>
-<td align="right">12</td>
-</tr>
-<tr class="odd">
-<td align="left">(9999999) Missing</td>
-<td align="right">25</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>#Age Category 
-federal_df %&gt;%
-  group_by(AGE_CAT) %&gt;%
-  summarise(
-    n_obs = n()
-  ) %&gt;%
-  mutate(
-    AGE_CAT = gsub(&quot;.*)&quot;, &quot;&quot;, AGE_CAT)
-  ) %&gt;%
-  ungroup() %&gt;%
-  ggplot(aes(x = AGE_CAT, y = n_obs)) + 
-  geom_bar(stat = &quot;identity&quot;) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-2-1.png" width="90%" /></p>
-</div>
-<div id="state" class="section level3">
-<h3>State</h3>
-<pre class="r"><code>#Interview outcome
-da04572.0002 %&gt;% 
-  count(V0003) %&gt;% 
-  rename(&quot;Interview Outcome&quot;= V0003) %&gt;%
-  knitr::kable() </code></pre>
-<table>
-<colgroup>
-<col width="91%" />
-<col width="8%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Interview Outcome</th>
-<th align="right">n</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">(201) Complete - regular</td>
-<td align="right">14321</td>
-</tr>
-<tr class="even">
-<td align="left">(203) Sufficient partial interview - no further
-follow-up possible</td>
-<td align="right">178</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>#Sex
-da04572.0002 %&gt;% 
-  count(V0004) %&gt;%
-  rename(&quot;Sex&quot; = V0004) %&gt;%
-  knitr::kable()</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Sex</th>
-<th align="right">n</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">(1) Male</td>
-<td align="right">11569</td>
-</tr>
-<tr class="even">
-<td align="left">(2) Female</td>
-<td align="right">2930</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>#US Citizen
-da04572.0002 %&gt;% 
-  count(V0051) %&gt;%
-  rename(&quot;US Citizen&quot; = V0051) %&gt;%
-  knitr::kable()</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="left">US Citizen</th>
-<th align="right">n</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">(1) Yes</td>
-<td align="right">851</td>
-</tr>
-<tr class="even">
-<td align="left">(2) No</td>
-<td align="right">213</td>
-</tr>
-<tr class="odd">
-<td align="left">(7) Don’t know</td>
-<td align="right">10</td>
-</tr>
-<tr class="even">
-<td align="left">(8) Refused</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">NA</td>
-<td align="right">13424</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>#HIGHEST EDUCATION BEFORE ARREST
-da04572.0002 %&gt;% 
-  count(EDUCATION) %&gt;%
-  rename(&quot;Highest Education Prior to Arrest&quot; = EDUCATION) %&gt;%
-  knitr::kable()</code></pre>
-<table>
-<colgroup>
-<col width="93%" />
-<col width="6%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Highest Education Prior to Arrest</th>
-<th align="right">n</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">(0000000) Never attended or attended kindergarten
-only</td>
-<td align="right">41</td>
-</tr>
-<tr class="even">
-<td align="left">(0000001) First grade</td>
-<td align="right">32</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000002) Second grade</td>
-<td align="right">19</td>
-</tr>
-<tr class="even">
-<td align="left">(0000003) Third grade</td>
-<td align="right">54</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000004) Fourth grade</td>
-<td align="right">50</td>
-</tr>
-<tr class="even">
-<td align="left">(0000005) Fifth grade</td>
-<td align="right">74</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000006) Sixth grade</td>
-<td align="right">234</td>
-</tr>
-<tr class="even">
-<td align="left">(0000007) Seventh grade</td>
-<td align="right">341</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000008) Eighth grade</td>
-<td align="right">856</td>
-</tr>
-<tr class="even">
-<td align="left">(0000009) Ninth grade</td>
-<td align="right">1754</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000010) Tenth grade</td>
-<td align="right">2424</td>
-</tr>
-<tr class="even">
-<td align="left">(0000011) Eleventh grade</td>
-<td align="right">2781</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000012) Twelfth grade</td>
-<td align="right">3598</td>
-</tr>
-<tr class="even">
-<td align="left">(0000013) College freshman</td>
-<td align="right">586</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000014) College sophomore</td>
-<td align="right">788</td>
-</tr>
-<tr class="even">
-<td align="left">(0000015) College junior</td>
-<td align="right">192</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000016) College senior</td>
-<td align="right">313</td>
-</tr>
-<tr class="even">
-<td align="left">(0000017) Graduate school one year</td>
-<td align="right">50</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000018) Graduate school two or more years</td>
-<td align="right">140</td>
-</tr>
-<tr class="even">
-<td align="left">(0000019) Attended school in other country/system not
-comparable to grades</td>
-<td align="right">45</td>
-</tr>
-<tr class="odd">
-<td align="left">(9999997) Don’t know</td>
-<td align="right">24</td>
-</tr>
-<tr class="even">
-<td align="left">(9999998) Refused</td>
-<td align="right">44</td>
-</tr>
-<tr class="odd">
-<td align="left">(9999999) Missing</td>
-<td align="right">59</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>#Age Category 
-state_df %&gt;%
-  group_by(AGE_CAT) %&gt;%
-  summarise(
-    n_obs = n()
-  ) %&gt;%
-  mutate(
-    AGE_CAT = gsub(&quot;.*)&quot;, &quot;&quot;, AGE_CAT)
-  ) %&gt;%
-  ungroup() %&gt;%
-  ggplot(aes(x = AGE_CAT, y = n_obs)) + 
-  geom_bar(stat = &quot;identity&quot;) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-3-1.png" width="90%" /></p>
-</div>
-</div>
-<div id="sentencing-variables" class="section level1">
-<h1>Sentencing Variables</h1>
-<div id="federal-1" class="section level3">
 <h3>Federal</h3>
 <pre class="r"><code>#Criminal History
 federal_df %&gt;% 
   count(CH_CRIMHIST) %&gt;% 
-  rename(&quot;Criminal Hisotry&quot;= CH_CRIMHIST) %&gt;%
-  knitr:: kable() </code></pre>
+  rename(&quot;Criminal Hisotry&quot; = CH_CRIMHIST) %&gt;%
+  knitr::kable() </code></pre>
 <table>
 <colgroup>
 <col width="95%" />
@@ -857,9 +1159,9 @@ violent or only minor or drugs</td>
 <pre class="r"><code>#Type of Offense
 federal_df %&gt;% 
   count(TYPEOFFENSE) %&gt;% 
-  rename(&quot;Type of Offense&quot;= TYPEOFFENSE) %&gt;%
+  rename(&quot;Type of Offense&quot; = TYPEOFFENSE) %&gt;%
   arrange(desc(n)) %&gt;%
-  knitr:: kable()</code></pre>
+  knitr::kable()</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -983,15 +1285,15 @@ federal_df %&gt;%
   ggplot(aes(x = CH_NUMCAR1, y = n_obs)) + 
   geom_bar(stat = &quot;identity&quot;) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-4-1.png" width="90%" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-5-1.png" width="100%" /></p>
 </div>
-<div id="state-1" class="section level3">
+<div id="state" class="section level3">
 <h3>State</h3>
 <pre class="r"><code>#Criminal History
 state_df %&gt;% 
   count(CH_CRIMHIST) %&gt;% 
-  rename(&quot;Criminal Hisotry&quot;= CH_CRIMHIST) %&gt;%
-  knitr:: kable() </code></pre>
+  rename(&quot;Criminal Hisotry&quot; = CH_CRIMHIST) %&gt;%
+  knitr::kable() </code></pre>
 <table>
 <colgroup>
 <col width="94%" />
@@ -1057,9 +1359,9 @@ violent or only minor or drugs</td>
 <pre class="r"><code>#Type of Offense
 state_df %&gt;% 
   count(TYPEOFFENSE) %&gt;% 
-  rename(&quot;Type of Offense&quot;= TYPEOFFENSE) %&gt;%
+  rename(&quot;Type of Offense&quot; = TYPEOFFENSE) %&gt;%
   arrange(desc(n)) %&gt;%
-  knitr:: kable()</code></pre>
+  knitr::kable()</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -1183,7 +1485,7 @@ state_df %&gt;%
   ggplot(aes(x = CH_NUMCAR1, y = n_obs)) + 
   geom_bar(stat = &quot;identity&quot;) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-5-1.png" width="90%" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-6-1.png" width="100%" /></p>
 </div>
 </div>
 <div id="hiv" class="section level1">
@@ -1192,7 +1494,7 @@ state_df %&gt;%
 federal_df %&gt;% 
   group_by(V2288) %&gt;% 
   summarize(n_obs = n()) %&gt;% 
-  knitr:: kable()</code></pre>
+  knitr::kable()</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -1230,18 +1532,18 @@ federal_df %&gt;%
   ggplot(aes(x = V2288, y = n_obs, fill = V2288)) +
   theme(axis.text.x = element_text(angle = 90, vjust = .5, hjust = 1)) +
   geom_bar(stat = &quot;identity&quot;) </code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-6-1.png" width="90%" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-7-1.png" width="100%" /></p>
 <pre class="r"><code>#HIV test result
-federal_df%&gt;% 
+federal_df %&gt;% 
    group_by(MCMH_RSLT_HIV) %&gt;%
   summarise(n_obs = n()) %&gt;%
    mutate(
     MCMH_RSLT_HIV = fct_reorder(MCMH_RSLT_HIV, n_obs) 
-  )%&gt;% 
+  ) %&gt;% 
   ggplot(aes(x = MCMH_RSLT_HIV, y = n_obs, fill = MCMH_RSLT_HIV)) +
   theme(axis.text.x = element_text(angle = 90, vjust = .5, hjust = 1)) +
   geom_bar(stat = &quot;identity&quot;) </code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-6-2.png" width="90%" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-7-2.png" width="100%" /></p>
 <pre class="r"><code>#Ever used a needle to inject drugs
 federal_df %&gt;% 
   group_by(DRUG_INJECT_CB) %&gt;% 
@@ -1249,7 +1551,7 @@ federal_df %&gt;%
   ungroup() %&gt;% 
   ggplot(aes(x = DRUG_INJECT_CB, y = n_obs, fill = DRUG_INJECT_CB)) +
   geom_bar(stat = &quot;identity&quot;) </code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-6-3.png" width="90%" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-7-3.png" width="100%" /></p>
 </div>
 <div id="mental-health" class="section level1">
 <h1>Mental Health</h1>
@@ -1257,7 +1559,7 @@ federal_df %&gt;%
 federal_df %&gt;% 
   group_by(V2409) %&gt;% 
   summarize(n_obs = n()) %&gt;% 
-  knitr:: kable()</code></pre>
+  knitr::kable()</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -1296,12 +1598,12 @@ federal_df %&gt;%
   ungroup() %&gt;% 
   ggplot(aes(x = V2409, y = n_obs, fill = V2409)) +
   geom_bar(stat = &quot;identity&quot;)</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-7-1.png" width="90%" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-8-1.png" width="100%" /></p>
 <pre class="r"><code># TAKEN MEDICATION FOR A MENTAL CONDITION SINCE ADMISSION
 federal_df %&gt;% 
   group_by(V2412) %&gt;% 
   summarize(n_obs = n()) %&gt;% 
-  knitr:: kable()</code></pre>
+  knitr::kable()</code></pre>
 <table>
 <thead>
 <tr class="header">
@@ -1333,12 +1635,12 @@ federal_df %&gt;%
   ungroup() %&gt;% 
   ggplot(aes(x = V2412, y = n_obs, fill = V2412)) +
   geom_bar(stat = &quot;identity&quot;)</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-7-2.png" width="90%" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-8-2.png" width="100%" /></p>
 <pre class="r"><code># Mental Hosp - year before arrest - MCMH_mhospyr from client
 federal_df %&gt;% 
   group_by(MCMH_MHOSPYR) %&gt;% 
   summarize(n_obs = n()) %&gt;% 
-  knitr:: kable()</code></pre>
+  knitr::kable()</code></pre>
 <table>
 <colgroup>
 <col width="93%" />
@@ -1387,12 +1689,12 @@ mental hospital</td>
   ungroup() %&gt;% 
   ggplot(aes(x = MCMH_MHOSPYR, y = n_obs, fill = MCMH_MHOSPYR)) +
   geom_bar(stat = &quot;identity&quot;)</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-7-3.png" width="90%" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-8-3.png" width="100%" /></p>
 <pre class="r"><code># Mental hosp - since admission - MCMH_mhospadm from client
 federal_df %&gt;% 
   group_by(MCMH_MHOSPADM) %&gt;% 
   summarize(n_obs = n()) %&gt;% 
-  knitr:: kable()</code></pre>
+  knitr::kable()</code></pre>
 <table>
 <colgroup>
 <col width="91%" />
@@ -1440,7 +1742,7 @@ mental hospital</td>
   ungroup() %&gt;% 
   ggplot(aes(x = MCMH_MHOSPADM, y = n_obs, fill = MCMH_MHOSPADM)) +
   geom_bar(stat = &quot;identity&quot;)</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-7-4.png" width="90%" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-8-4.png" width="100%" /></p>
 <pre class="r"><code># MH Treatment Continuation (one year prior to arrest and since admission)
 
 state_tx = state_df %&gt;%
@@ -1482,7 +1784,7 @@ ggplot() +
     color = &quot;Legend&quot;
   ) +
   scale_color_manual(values = colors)</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-7-5.png" width="90%" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-8-5.png" width="100%" /></p>
 </div>
 
 
