@@ -356,7 +356,7 @@ div.tocify {
 <div id="demographics" class="section level1">
 <h1>Demographics</h1>
 <pre class="r"><code>#Table 1
-table1(~ V0005 + AGE_CAT + V2982 + EDUCATION + SES_INCOMEMTH | MENTAL_HISTORY_BINARY, data = total_df, overall = &quot;Total&quot;)</code></pre>
+table1(~ V0005 + AGE_CAT + V2982 | MENTAL_HISTORY_BINARY, data = total_df, overall = &quot;Total&quot;)</code></pre>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
 <tr>
@@ -481,250 +481,19 @@ table1(~ V0005 + AGE_CAT + V2982 + EDUCATION + SES_INCOMEMTH | MENTAL_HISTORY_BI
 <td class='lastrow'>7 (0.1%)</td>
 <td class='lastrow'>28 (0.2%)</td>
 </tr>
-<tr>
-<td class='rowlabel firstrow'>Education</td>
-<td class='firstrow'></td>
-<td class='firstrow'></td>
-<td class='firstrow'></td>
-</tr>
-<tr>
-<td class='rowlabel'>Never attended or attended kindergarten only</td>
-<td>42 (0.3%)</td>
-<td>14 (0.3%)</td>
-<td>56 (0.3%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>First grade</td>
-<td>35 (0.3%)</td>
-<td>8 (0.2%)</td>
-<td>43 (0.2%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Second grade</td>
-<td>25 (0.2%)</td>
-<td>5 (0.1%)</td>
-<td>30 (0.2%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Third grade</td>
-<td>51 (0.4%)</td>
-<td>15 (0.3%)</td>
-<td>66 (0.4%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Fourth grade</td>
-<td>51 (0.4%)</td>
-<td>20 (0.4%)</td>
-<td>71 (0.4%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Fifth grade</td>
-<td>69 (0.5%)</td>
-<td>26 (0.5%)</td>
-<td>95 (0.5%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Sixth grade</td>
-<td>236 (1.8%)</td>
-<td>81 (1.7%)</td>
-<td>317 (1.8%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Seventh grade</td>
-<td>269 (2.1%)</td>
-<td>132 (2.7%)</td>
-<td>401 (2.2%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Eighth grade</td>
-<td>683 (5.3%)</td>
-<td>334 (6.8%)</td>
-<td>1017 (5.7%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Ninth grade</td>
-<td>1500 (11.5%)</td>
-<td>561 (11.5%)</td>
-<td>2061 (11.5%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Tenth grade</td>
-<td>2074 (16.0%)</td>
-<td>747 (15.3%)</td>
-<td>2821 (15.8%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Eleventh grade</td>
-<td>2467 (19.0%)</td>
-<td>799 (16.4%)</td>
-<td>3266 (18.3%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Twelfth grade</td>
-<td>3323 (25.6%)</td>
-<td>1145 (23.4%)</td>
-<td>4468 (25.0%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>College freshman</td>
-<td>525 (4.0%)</td>
-<td>272 (5.6%)</td>
-<td>797 (4.5%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>College sophomore</td>
-<td>749 (5.8%)</td>
-<td>356 (7.3%)</td>
-<td>1105 (6.2%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>College junior</td>
-<td>200 (1.5%)</td>
-<td>85 (1.7%)</td>
-<td>285 (1.6%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>College senior</td>
-<td>347 (2.7%)</td>
-<td>158 (3.2%)</td>
-<td>505 (2.8%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Graduate school one year</td>
-<td>55 (0.4%)</td>
-<td>30 (0.6%)</td>
-<td>85 (0.5%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Graduate school two or more years</td>
-<td>187 (1.4%)</td>
-<td>83 (1.7%)</td>
-<td>270 (1.5%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Attended school in other country/system not comparable to grades</td>
-<td>70 (0.5%)</td>
-<td>8 (0.2%)</td>
-<td>78 (0.4%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Don't know</td>
-<td>22 (0.2%)</td>
-<td>3 (0.1%)</td>
-<td>25 (0.1%)</td>
-</tr>
-<tr>
-<td class='rowlabel lastrow'>Missing</td>
-<td class='lastrow'>17 (0.1%)</td>
-<td class='lastrow'>2 (0.0%)</td>
-<td class='lastrow'>19 (0.1%)</td>
-</tr>
-<tr>
-<td class='rowlabel firstrow'>Monthly Income in Month Before Arrest</td>
-<td class='firstrow'></td>
-<td class='firstrow'></td>
-<td class='firstrow'></td>
-</tr>
-<tr>
-<td class='rowlabel'>No income</td>
-<td>229 (1.8%)</td>
-<td>114 (2.3%)</td>
-<td>343 (1.9%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>$1 - $199</td>
-<td>416 (3.2%)</td>
-<td>170 (3.5%)</td>
-<td>586 (3.3%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>$200 - $399</td>
-<td>835 (6.4%)</td>
-<td>340 (7.0%)</td>
-<td>1175 (6.6%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>$400 - $599</td>
-<td>938 (7.2%)</td>
-<td>500 (10.2%)</td>
-<td>1438 (8.0%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>$600 - $799</td>
-<td>750 (5.8%)</td>
-<td>360 (7.4%)</td>
-<td>1110 (6.2%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>$800 - $999</td>
-<td>869 (6.7%)</td>
-<td>346 (7.1%)</td>
-<td>1215 (6.8%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>$1,000 - $1,199</td>
-<td>1051 (8.1%)</td>
-<td>374 (7.7%)</td>
-<td>1425 (8.0%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>$1,200 - $1,499</td>
-<td>1190 (9.2%)</td>
-<td>363 (7.4%)</td>
-<td>1553 (8.7%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>$1,500 - $1,999</td>
-<td>1016 (7.8%)</td>
-<td>339 (6.9%)</td>
-<td>1355 (7.6%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>$2,000 - $2,499</td>
-<td>964 (7.4%)</td>
-<td>308 (6.3%)</td>
-<td>1272 (7.1%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>$2,500 - $4,999</td>
-<td>1147 (8.8%)</td>
-<td>410 (8.4%)</td>
-<td>1557 (8.7%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>$5,000 - $7,499</td>
-<td>519 (4.0%)</td>
-<td>189 (3.9%)</td>
-<td>708 (4.0%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>$7,500 or more</td>
-<td>872 (6.7%)</td>
-<td>295 (6.0%)</td>
-<td>1167 (6.5%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>Don't know</td>
-<td>492 (3.8%)</td>
-<td>148 (3.0%)</td>
-<td>640 (3.6%)</td>
-</tr>
-<tr>
-<td class='rowlabel lastrow'>Missing</td>
-<td class='lastrow'>1709 (13.1%)</td>
-<td class='lastrow'>628 (12.9%)</td>
-<td class='lastrow'>2337 (13.1%)</td>
-</tr>
 </tbody>
 </table>
 </div>
+<pre class="r"><code>#BAR GRAPH FOR EDUCATION
+
+
+
+#BAR GRAPH FOR SES_INCOMEMTH</code></pre>
 </div>
 <div id="incarceration-related-variables" class="section level1">
 <h1>Incarceration-Related Variables</h1>
-<div id="combined" class="section level3">
-<h3>Combined</h3>
 <pre class="r"><code>#Table 1
-table1(~ CH_PRIORSENTENCE_NUM + V1197 + CH_CRIMHIST_COLLAPSED + TYPEOFFENSE | MENTAL_HISTORY_BINARY, data = total_df, overall = &quot;Total&quot;)</code></pre>
+table1(~ CH_PRIORSENTENCE_NUM + V1197 + CH_CRIMHIST_COLLAPSED + SES_PARENTS_INCARCERATED + SES_FAMILY_INCARCERATED | MENTAL_HISTORY_BINARY, data = total_df, overall = &quot;Total&quot;)</code></pre>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
 <tr>
@@ -736,726 +505,162 @@ table1(~ CH_PRIORSENTENCE_NUM + V1197 + CH_CRIMHIST_COLLAPSED + TYPEOFFENSE | ME
 </thead>
 <tbody>
 <tr>
-<td class='rowlabel firstrow'>CH_PRIORSENTENCE_NUM</td>
+<td class='rowlabel firstrow'>Number of Prior Sentences</td>
 <td class='firstrow'></td>
 <td class='firstrow'></td>
 <td class='firstrow'></td>
 </tr>
 <tr>
-<td class='rowlabel'>(0000000) No prior sentence</td>
+<td class='rowlabel'>No prior sentence</td>
 <td>3997 (30.8%)</td>
 <td>1297 (26.6%)</td>
 <td>5294 (29.6%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>(0000001) One prior sentence</td>
+<td class='rowlabel'>One prior sentence</td>
 <td>2048 (15.8%)</td>
 <td>687 (14.1%)</td>
 <td>2735 (15.3%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>(0000002) Two prior sentences</td>
+<td class='rowlabel'>Two prior sentences</td>
 <td>1998 (15.4%)</td>
 <td>713 (14.6%)</td>
 <td>2711 (15.2%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>(0000003) Three to five prior sentences</td>
+<td class='rowlabel'>Three to five prior sentences</td>
 <td>2974 (22.9%)</td>
 <td>1147 (23.5%)</td>
 <td>4121 (23.0%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>(0000004) Six to ten prior sentences</td>
+<td class='rowlabel'>Six to ten prior sentences</td>
 <td>1302 (10.0%)</td>
 <td>635 (13.0%)</td>
 <td>1937 (10.8%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>(0000005) Eleven or more prior sentences</td>
+<td class='rowlabel'>Eleven or more prior sentences</td>
 <td>543 (4.2%)</td>
 <td>338 (6.9%)</td>
 <td>881 (4.9%)</td>
 </tr>
 <tr>
-<td class='rowlabel lastrow'>(9999999) Missing</td>
+<td class='rowlabel lastrow'>Missing</td>
 <td class='lastrow'>135 (1.0%)</td>
 <td class='lastrow'>67 (1.4%)</td>
 <td class='lastrow'>202 (1.1%)</td>
 </tr>
 <tr>
-<td class='rowlabel firstrow'>V1197</td>
+<td class='rowlabel firstrow'>Number of Prior Arrests</td>
 <td class='firstrow'></td>
 <td class='firstrow'></td>
 <td class='firstrow'></td>
 </tr>
 <tr>
 <td class='rowlabel'>Mean (SD)</td>
-<td>45.3 (197)</td>
-<td>53.2 (212)</td>
-<td>47.4 (202)</td>
+<td>4.39 (7.24)</td>
+<td>5.45 (8.59)</td>
+<td>4.68 (7.64)</td>
 </tr>
 <tr>
-<td class='rowlabel lastrow'>Median [Min, Max]</td>
-<td class='lastrow'>3.00 [0, 998]</td>
-<td class='lastrow'>3.00 [0, 998]</td>
-<td class='lastrow'>3.00 [0, 998]</td>
+<td class='rowlabel'>Median [Min, Max]</td>
+<td>2.00 [0, 99.0]</td>
+<td>3.00 [0, 99.0]</td>
+<td>2.00 [0, 99.0]</td>
 </tr>
 <tr>
-<td class='rowlabel firstrow'>CH_CRIMHIST_COLLAPSED</td>
+<td class='rowlabel lastrow'>Missing</td>
+<td class='lastrow'>535 (4.1%)</td>
+<td class='lastrow'>235 (4.8%)</td>
+<td class='lastrow'>770 (4.3%)</td>
+</tr>
+<tr>
+<td class='rowlabel firstrow'>Collapsed Criminal History</td>
 <td class='firstrow'></td>
 <td class='firstrow'></td>
 <td class='firstrow'></td>
 </tr>
 <tr>
-<td class='rowlabel'>(0000001) First timers</td>
+<td class='rowlabel'>First timers</td>
 <td>4340 (33.4%)</td>
 <td>1419 (29.1%)</td>
 <td>5759 (32.2%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>(0000002) Recidivist, current or past violent offense</td>
+<td class='rowlabel'>Recidivist, current or past violent offense</td>
 <td>4676 (36.0%)</td>
 <td>2034 (41.6%)</td>
 <td>6710 (37.5%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>(0000003) Recidivist, no current or prior violent offense</td>
+<td class='rowlabel'>Recidivist, no current or prior violent offense</td>
 <td>3920 (30.2%)</td>
 <td>1416 (29.0%)</td>
 <td>5336 (29.8%)</td>
 </tr>
 <tr>
-<td class='rowlabel lastrow'>(9999999) Missing</td>
+<td class='rowlabel lastrow'>Missing</td>
 <td class='lastrow'>61 (0.5%)</td>
 <td class='lastrow'>15 (0.3%)</td>
 <td class='lastrow'>76 (0.4%)</td>
 </tr>
 <tr>
-<td class='rowlabel firstrow'>TYPEOFFENSE</td>
+<td class='rowlabel firstrow'>Parents Been Incarcerated</td>
 <td class='firstrow'></td>
 <td class='firstrow'></td>
 <td class='firstrow'></td>
 </tr>
 <tr>
-<td class='rowlabel'>(0000001) Murder</td>
-<td>1082 (8.3%)</td>
-<td>446 (9.1%)</td>
-<td>1528 (8.5%)</td>
+<td class='rowlabel'>Yes</td>
+<td>2310 (17.8%)</td>
+<td>1195 (24.5%)</td>
+<td>3505 (19.6%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>(0000002) Manslaughter</td>
-<td>189 (1.5%)</td>
-<td>95 (1.9%)</td>
-<td>284 (1.6%)</td>
+<td class='rowlabel'>No</td>
+<td>10534 (81.0%)</td>
+<td>3625 (74.2%)</td>
+<td>14159 (79.2%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>(0000003) Kidnapping</td>
-<td>143 (1.1%)</td>
-<td>62 (1.3%)</td>
-<td>205 (1.1%)</td>
+<td class='rowlabel lastrow'>Missing</td>
+<td class='lastrow'>153 (1.2%)</td>
+<td class='lastrow'>64 (1.3%)</td>
+<td class='lastrow'>217 (1.2%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>(0000004) Rape</td>
-<td>361 (2.8%)</td>
-<td>178 (3.6%)</td>
-<td>539 (3.0%)</td>
+<td class='rowlabel firstrow'>Children, Siblings, or Spouse Been Incarcerated</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
 </tr>
 <tr>
-<td class='rowlabel'>(0000005) Other sexual assualt</td>
-<td>606 (4.7%)</td>
-<td>257 (5.3%)</td>
-<td>863 (4.8%)</td>
+<td class='rowlabel'>Yes</td>
+<td>4737 (36.4%)</td>
+<td>1991 (40.8%)</td>
+<td>6728 (37.6%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>(0000006) Robbery</td>
-<td>1532 (11.8%)</td>
-<td>549 (11.2%)</td>
-<td>2081 (11.6%)</td>
+<td class='rowlabel'>No</td>
+<td>8118 (62.5%)</td>
+<td>2836 (58.1%)</td>
+<td>10954 (61.3%)</td>
 </tr>
 <tr>
-<td class='rowlabel'>(0000007) Assault</td>
-<td>1026 (7.9%)</td>
-<td>455 (9.3%)</td>
-<td>1481 (8.3%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>(0000008) Other violent</td>
-<td>91 (0.7%)</td>
-<td>63 (1.3%)</td>
-<td>154 (0.9%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>(0000009) Burglary</td>
-<td>788 (6.1%)</td>
-<td>314 (6.4%)</td>
-<td>1102 (6.2%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>(0000010) Larceny</td>
-<td>448 (3.4%)</td>
-<td>220 (4.5%)</td>
-<td>668 (3.7%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>(0000011) Mvt</td>
-<td>161 (1.2%)</td>
-<td>78 (1.6%)</td>
-<td>239 (1.3%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>(0000012) Arson</td>
-<td>53 (0.4%)</td>
-<td>43 (0.9%)</td>
-<td>96 (0.5%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>(0000013) Fraud</td>
-<td>621 (4.8%)</td>
-<td>351 (7.2%)</td>
-<td>972 (5.4%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>(0000014) Stolen property</td>
-<td>114 (0.9%)</td>
-<td>50 (1.0%)</td>
-<td>164 (0.9%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>(0000015) Other property</td>
-<td>59 (0.5%)</td>
-<td>26 (0.5%)</td>
-<td>85 (0.5%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>(0000016) Drug possession</td>
-<td>1156 (8.9%)</td>
-<td>370 (7.6%)</td>
-<td>1526 (8.5%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>(0000017) Drug traffic</td>
-<td>2182 (16.8%)</td>
-<td>545 (11.2%)</td>
-<td>2727 (15.3%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>(0000018) Other drug</td>
-<td>169 (1.3%)</td>
-<td>59 (1.2%)</td>
-<td>228 (1.3%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>(0000019) Weapons</td>
-<td>597 (4.6%)</td>
-<td>185 (3.8%)</td>
-<td>782 (4.4%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>(0000020) Dwi</td>
-<td>275 (2.1%)</td>
-<td>84 (1.7%)</td>
-<td>359 (2.0%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>(0000021) Other public order</td>
-<td>1061 (8.2%)</td>
-<td>381 (7.8%)</td>
-<td>1442 (8.1%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>(0000022) Other</td>
-<td>101 (0.8%)</td>
-<td>26 (0.5%)</td>
-<td>127 (0.7%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>(9999997) DK/refused</td>
-<td>9 (0.1%)</td>
-<td>0 (0%)</td>
-<td>9 (0.1%)</td>
-</tr>
-<tr>
-<td class='rowlabel'>(9999998) Missing</td>
-<td>48 (0.4%)</td>
-<td>9 (0.2%)</td>
-<td>57 (0.3%)</td>
-</tr>
-<tr>
-<td class='rowlabel lastrow'>(9999999) Blank</td>
-<td class='lastrow'>125 (1.0%)</td>
-<td class='lastrow'>38 (0.8%)</td>
-<td class='lastrow'>163 (0.9%)</td>
+<td class='rowlabel lastrow'>Missing</td>
+<td class='lastrow'>142 (1.1%)</td>
+<td class='lastrow'>57 (1.2%)</td>
+<td class='lastrow'>199 (1.1%)</td>
 </tr>
 </tbody>
 </table>
 </div>
-</div>
-<div id="federal" class="section level3">
-<h3>Federal</h3>
-<pre class="r"><code>#Criminal History
-federal_df %&gt;% 
-  count(CH_CRIMHIST) %&gt;% 
-  rename(&quot;Criminal Hisotry&quot; = CH_CRIMHIST) %&gt;%
-  knitr::kable() </code></pre>
-<table>
-<colgroup>
-<col width="95%" />
-<col width="4%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Criminal Hisotry</th>
-<th align="right">n</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">(0000001) First timer, current violent offense</td>
-<td align="right">328</td>
-</tr>
-<tr class="even">
-<td align="left">(0000002) First timer, current drug offense</td>
-<td align="right">536</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000003) First timer, current other offense</td>
-<td align="right">714</td>
-</tr>
-<tr class="even">
-<td align="left">(0000004) Recidivist, current and prior violent</td>
-<td align="right">246</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000005) Recidivist, current violent offense but not
-prior</td>
-<td align="right">227</td>
-</tr>
-<tr class="even">
-<td align="left">(0000006) Recidivist, current nonviolent offense but
-prior violent</td>
-<td align="right">449</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000007) Recidivist, current and priors only
-drugs</td>
-<td align="right">183</td>
-</tr>
-<tr class="even">
-<td align="left">(0000008) Recidivist, prior minor offenses only</td>
-<td align="right">14</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000009) Recidivist, prior minor offenses only</td>
-<td align="right">28</td>
-</tr>
-<tr class="even">
-<td align="left">(0000010) Recidivist, priors any offenses other than
-violent or only minor or drugs</td>
-<td align="right">936</td>
-</tr>
-<tr class="odd">
-<td align="left">(9999999) Missing</td>
-<td align="right">25</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>#Type of Offense
-federal_df %&gt;% 
-  count(TYPEOFFENSE) %&gt;% 
-  rename(&quot;Type of Offense&quot; = TYPEOFFENSE) %&gt;%
-  arrange(desc(n)) %&gt;%
-  knitr::kable()</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Type of Offense</th>
-<th align="right">n</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">(0000017) Drug traffic</td>
-<td align="right">1029</td>
-</tr>
-<tr class="even">
-<td align="left">(0000021) Other public order</td>
-<td align="right">497</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000019) Weapons</td>
-<td align="right">483</td>
-</tr>
-<tr class="even">
-<td align="left">(0000006) Robbery</td>
-<td align="right">425</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000013) Fraud</td>
-<td align="right">383</td>
-</tr>
-<tr class="even">
-<td align="left">(0000016) Drug possession</td>
-<td align="right">207</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000022) Other</td>
-<td align="right">102</td>
-</tr>
-<tr class="even">
-<td align="left">(0000007) Assault</td>
-<td align="right">95</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000018) Other drug</td>
-<td align="right">95</td>
-</tr>
-<tr class="even">
-<td align="left">(0000001) Murder</td>
-<td align="right">87</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000005) Other sexual assualt</td>
-<td align="right">32</td>
-</tr>
-<tr class="even">
-<td align="left">(0000010) Larceny</td>
-<td align="right">31</td>
-</tr>
-<tr class="odd">
-<td align="left">(9999998) Missing</td>
-<td align="right">28</td>
-</tr>
-<tr class="even">
-<td align="left">(0000014) Stolen property</td>
-<td align="right">25</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000002) Manslaughter</td>
-<td align="right">24</td>
-</tr>
-<tr class="even">
-<td align="left">(0000003) Kidnapping</td>
-<td align="right">24</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000009) Burglary</td>
-<td align="right">23</td>
-</tr>
-<tr class="even">
-<td align="left">(9999999) Blank</td>
-<td align="right">23</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000008) Other violent</td>
-<td align="right">18</td>
-</tr>
-<tr class="even">
-<td align="left">(0000011) Mvt</td>
-<td align="right">13</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000004) Rape</td>
-<td align="right">10</td>
-</tr>
-<tr class="even">
-<td align="left">(0000020) Dwi</td>
-<td align="right">10</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000012) Arson</td>
-<td align="right">8</td>
-</tr>
-<tr class="even">
-<td align="left">(0000015) Other property</td>
-<td align="right">7</td>
-</tr>
-<tr class="odd">
-<td align="left">(9999997) DK/refused</td>
-<td align="right">7</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>#Distribution for number of incarcerations
-federal_df %&gt;%
-  group_by(CH_NUMCAR1) %&gt;%
-  summarise(
-    n_obs = n()
-  ) %&gt;%
-  mutate(
-    CH_NUMCAR1 = gsub(&quot;.*)&quot;, &quot;&quot;, CH_NUMCAR1)
-  ) %&gt;%
-  ungroup() %&gt;%
-  ggplot(aes(x = CH_NUMCAR1, y = n_obs)) + 
-  geom_bar(stat = &quot;identity&quot;) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-5-1.png" width="100%" /></p>
-</div>
-<div id="state" class="section level3">
-<h3>State</h3>
-<pre class="r"><code>#Criminal History
-state_df %&gt;% 
-  count(CH_CRIMHIST) %&gt;% 
-  rename(&quot;Criminal Hisotry&quot; = CH_CRIMHIST) %&gt;%
-  knitr::kable() </code></pre>
-<table>
-<colgroup>
-<col width="94%" />
-<col width="5%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">Criminal Hisotry</th>
-<th align="right">n</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">(0000001) First timer, current violent offense</td>
-<td align="right">2667</td>
-</tr>
-<tr class="even">
-<td align="left">(0000002) First timer, current drug offense</td>
-<td align="right">771</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000003) First timer, current other offense</td>
-<td align="right">889</td>
-</tr>
-<tr class="even">
-<td align="left">(0000004) Recidivist, current and prior violent</td>
-<td align="right">2062</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000005) Recidivist, current violent offense but not
-prior</td>
-<td align="right">2238</td>
-</tr>
-<tr class="even">
-<td align="left">(0000006) Recidivist, current nonviolent offense but
-prior violent</td>
-<td align="right">1576</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000007) Recidivist, current and priors only
-drugs</td>
-<td align="right">549</td>
-</tr>
-<tr class="even">
-<td align="left">(0000008) Recidivist, prior minor offenses only</td>
-<td align="right">47</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000009) Recidivist, prior minor offenses only</td>
-<td align="right">51</td>
-</tr>
-<tr class="even">
-<td align="left">(0000010) Recidivist, priors any offenses other than
-violent or only minor or drugs</td>
-<td align="right">3586</td>
-</tr>
-<tr class="odd">
-<td align="left">(9999999) Missing</td>
-<td align="right">63</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>#Type of Offense
-state_df %&gt;% 
-  count(TYPEOFFENSE) %&gt;% 
-  rename(&quot;Type of Offense&quot; = TYPEOFFENSE) %&gt;%
-  arrange(desc(n)) %&gt;%
-  knitr::kable()</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="left">Type of Offense</th>
-<th align="right">n</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">(0000017) Drug traffic</td>
-<td align="right">1758</td>
-</tr>
-<tr class="even">
-<td align="left">(0000006) Robbery</td>
-<td align="right">1700</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000001) Murder</td>
-<td align="right">1466</td>
-</tr>
-<tr class="even">
-<td align="left">(0000007) Assault</td>
-<td align="right">1408</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000016) Drug possession</td>
-<td align="right">1341</td>
-</tr>
-<tr class="even">
-<td align="left">(0000009) Burglary</td>
-<td align="right">1091</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000021) Other public order</td>
-<td align="right">966</td>
-</tr>
-<tr class="even">
-<td align="left">(0000005) Other sexual assualt</td>
-<td align="right">837</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000010) Larceny</td>
-<td align="right">648</td>
-</tr>
-<tr class="even">
-<td align="left">(0000013) Fraud</td>
-<td align="right">598</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000004) Rape</td>
-<td align="right">536</td>
-</tr>
-<tr class="even">
-<td align="left">(0000020) Dwi</td>
-<td align="right">352</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000019) Weapons</td>
-<td align="right">315</td>
-</tr>
-<tr class="even">
-<td align="left">(0000002) Manslaughter</td>
-<td align="right">265</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000011) Mvt</td>
-<td align="right">226</td>
-</tr>
-<tr class="even">
-<td align="left">(0000003) Kidnapping</td>
-<td align="right">183</td>
-</tr>
-<tr class="odd">
-<td align="left">(9999999) Blank</td>
-<td align="right">155</td>
-</tr>
-<tr class="even">
-<td align="left">(0000014) Stolen property</td>
-<td align="right">143</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000008) Other violent</td>
-<td align="right">140</td>
-</tr>
-<tr class="even">
-<td align="left">(0000018) Other drug</td>
-<td align="right">139</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000012) Arson</td>
-<td align="right">88</td>
-</tr>
-<tr class="even">
-<td align="left">(0000015) Other property</td>
-<td align="right">81</td>
-</tr>
-<tr class="odd">
-<td align="left">(9999998) Missing</td>
-<td align="right">35</td>
-</tr>
-<tr class="even">
-<td align="left">(0000022) Other</td>
-<td align="right">26</td>
-</tr>
-<tr class="odd">
-<td align="left">(9999997) DK/refused</td>
-<td align="right">2</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>#Distribution for number of incarcerations
-state_df %&gt;%
-  group_by(CH_NUMCAR1) %&gt;%
-  summarise(
-    n_obs = n()
-  ) %&gt;%
-  mutate(
-    CH_NUMCAR1 = gsub(&quot;.*)&quot;, &quot;&quot;, CH_NUMCAR1)
-  ) %&gt;%
-  ungroup() %&gt;%
-  ggplot(aes(x = CH_NUMCAR1, y = n_obs)) + 
-  geom_bar(stat = &quot;identity&quot;) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-6-1.png" width="100%" /></p>
-</div>
-</div>
-<div id="hiv" class="section level1">
-<h1>HIV</h1>
-<pre class="r"><code>#HIV tested
-federal_df %&gt;% 
-  group_by(V2288) %&gt;% 
-  summarize(n_obs = n()) %&gt;% 
-  knitr::kable()</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="left">V2288</th>
-<th align="right">n_obs</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">(1) Yes</td>
-<td align="right">2673</td>
-</tr>
-<tr class="even">
-<td align="left">(2) No</td>
-<td align="right">298</td>
-</tr>
-<tr class="odd">
-<td align="left">(7) Don’t know</td>
-<td align="right">398</td>
-</tr>
-<tr class="even">
-<td align="left">(8) Refused</td>
-<td align="right">1</td>
-</tr>
-<tr class="odd">
-<td align="left">NA</td>
-<td align="right">316</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>federal_df %&gt;% 
-  group_by( V2288) %&gt;% 
-  summarize(n_obs = n()) %&gt;% 
-  ungroup() %&gt;% 
-  ggplot(aes(x = V2288, y = n_obs, fill = V2288)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = .5, hjust = 1)) +
-  geom_bar(stat = &quot;identity&quot;) </code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-7-1.png" width="100%" /></p>
-<pre class="r"><code>#HIV test result
-federal_df %&gt;% 
-   group_by(MCMH_RSLT_HIV) %&gt;%
-  summarise(n_obs = n()) %&gt;%
-   mutate(
-    MCMH_RSLT_HIV = fct_reorder(MCMH_RSLT_HIV, n_obs) 
-  ) %&gt;% 
-  ggplot(aes(x = MCMH_RSLT_HIV, y = n_obs, fill = MCMH_RSLT_HIV)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = .5, hjust = 1)) +
-  geom_bar(stat = &quot;identity&quot;) </code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-7-2.png" width="100%" /></p>
-<pre class="r"><code>#Ever used a needle to inject drugs
-federal_df %&gt;% 
-  group_by(DRUG_INJECT_CB) %&gt;% 
-  summarize(n_obs = n()) %&gt;% 
-  ungroup() %&gt;% 
-  ggplot(aes(x = DRUG_INJECT_CB, y = n_obs, fill = DRUG_INJECT_CB)) +
-  geom_bar(stat = &quot;identity&quot;) </code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-7-3.png" width="100%" /></p>
+<pre class="r"><code>#BAR GRAPH FOR TYPEOFOFFENSE
+
+
+#DENSITY PLOT FOR V1197</code></pre>
 </div>
 <div id="mental-health" class="section level1">
 <h1>Mental Health</h1>
@@ -1502,7 +707,7 @@ federal_df %&gt;%
   ungroup() %&gt;% 
   ggplot(aes(x = V2409, y = n_obs, fill = V2409)) +
   geom_bar(stat = &quot;identity&quot;)</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-8-1.png" width="100%" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-5-1.png" width="100%" /></p>
 <pre class="r"><code># TAKEN MEDICATION FOR A MENTAL CONDITION SINCE ADMISSION
 federal_df %&gt;% 
   group_by(V2412) %&gt;% 
@@ -1539,7 +744,7 @@ federal_df %&gt;%
   ungroup() %&gt;% 
   ggplot(aes(x = V2412, y = n_obs, fill = V2412)) +
   geom_bar(stat = &quot;identity&quot;)</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-8-2.png" width="100%" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-5-2.png" width="100%" /></p>
 <pre class="r"><code># Mental Hosp - year before arrest - MCMH_mhospyr from client
 federal_df %&gt;% 
   group_by(MCMH_MHOSPYR) %&gt;% 
@@ -1593,7 +798,7 @@ mental hospital</td>
   ungroup() %&gt;% 
   ggplot(aes(x = MCMH_MHOSPYR, y = n_obs, fill = MCMH_MHOSPYR)) +
   geom_bar(stat = &quot;identity&quot;)</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-8-3.png" width="100%" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-5-3.png" width="100%" /></p>
 <pre class="r"><code># Mental hosp - since admission - MCMH_mhospadm from client
 federal_df %&gt;% 
   group_by(MCMH_MHOSPADM) %&gt;% 
@@ -1646,7 +851,7 @@ mental hospital</td>
   ungroup() %&gt;% 
   ggplot(aes(x = MCMH_MHOSPADM, y = n_obs, fill = MCMH_MHOSPADM)) +
   geom_bar(stat = &quot;identity&quot;)</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-8-4.png" width="100%" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-5-4.png" width="100%" /></p>
 <pre class="r"><code># MH Treatment Continuation (one year prior to arrest and since admission)
 
 state_tx = state_df %&gt;%
@@ -1688,7 +893,7 @@ ggplot() +
     color = &quot;Legend&quot;
   ) +
   scale_color_manual(values = colors)</code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-8-5.png" width="100%" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-5-5.png" width="100%" /></p>
 </div>
 
 

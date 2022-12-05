@@ -54,142 +54,85 @@ state_df <- da04572.0002 %>%
 ```{r, include=FALSE}
 #Combining datasets, filtering dataset, formatting variables
 total_df = 
-  bind_rows(state_df, federal_df) %>%
-  mutate(MENTAL_HISTORY_BINARY = case_when(MCMH_MENTAL_HISTORY == "(0000001) Yes" ~ "1", MCMH_MENTAL_HISTORY == "(0000002) No" ~ "0", MCMH_MENTAL_HISTORY == "(9999997) DK/refused" | MCMH_MENTAL_HISTORY == "(9999999) Blank"  ~ ".")) %>%
-  mutate(MENTAL_HISTORY_BINARY = na_if(MENTAL_HISTORY_BINARY, ".")) %>% 
-  mutate(MENTAL_HISTORY_BINARY = factor(MENTAL_HISTORY_BINARY, 
-    levels = c(0, 1),
-    labels = c("No history of mental health condition(s)", "History of mental health condition(s)")))  %>% 
+  bind_rows(state_df, federal_df) %>% 
+  mutate(
+    dataset = as.factor(dataset)) %>%
+  mutate(
+    MENTAL_HISTORY_BINARY = case_when(MCMH_MENTAL_HISTORY == "(0000001) Yes" ~ "1", MCMH_MENTAL_HISTORY == "(0000002) No" ~ "0", MCMH_MENTAL_HISTORY == "(9999997) DK/refused" | MCMH_MENTAL_HISTORY == "(9999999) Blank"  ~ ".")) %>%
+  mutate(
+    MENTAL_HISTORY_BINARY = na_if(MENTAL_HISTORY_BINARY, "."), 
+    MENTAL_HISTORY_BINARY = factor(MENTAL_HISTORY_BINARY, 
+      levels = c(0, 1),
+      labels = c("No history of mental health condition(s)", "History of mental health condition(s)")))  %>% 
   filter(!is.na(MENTAL_HISTORY_BINARY)) %>% 
   mutate(V0005 = dplyr::recode(V0005, "(1) Male" = "Male", "(2) Female" = "Female")) %>% 
   mutate(AGE_CAT = dplyr::recode(AGE_CAT, "(1) < 25 yrs" = "< 25 yrs", "(2) 25-34" = "25-34", "(3) 35-44" =  "35-44", "(4) 45-54" = "45-54", "(5) 55-64" = "55-64", "(6) 65-96" = "65-96", "(7) Unknown" = "Unknown")) %>% 
-  mutate(V2982 = dplyr::recode(V2982, "(1) White non-Hispanic" = "White non-Hispanic", "(2) Black non-Hispanic" = "Black non-Hispanic", "(3) Hispanic" = "Hispanic", "(4) American Indian, Alaska Native non-Hispanic" = "American Indian, Alaska Native non-Hispanic", "(5) Asian, Pacific Islander, Native Hawaiian non-Hispanic" = "Asian, Pacific Islander, Native Hawaiian non-Hispanic", "(6) Multiple Races reported, non-Hispanic" = "Multiple Races reported, non-Hispanic", "(8) Other, Uncategorized - Missing" = "NA")) %>% 
-  mutate(V2982 = factor(V2982, exclude = "NA")) %>% 
-  mutate(V2982 = na_if(V2982, "NA")) %>% 
-  mutate(EDUCATION = dplyr::recode(EDUCATION, "(0000000) Never attended or attended kindergarten only" = "Never attended or attended kindergarten only", "(0000001) First grade" = "First grade", "(0000002) Second grade" = "Second grade", "(0000003) Third grade" = "Third grade", "(0000004) Fourth grade" = "Fourth grade", "(0000005) Fifth grade" = "Fifth grade", "(0000006) Sixth grade" = "Sixth grade", "(0000007) Seventh grade" = "Seventh grade", "(0000008) Eighth grade" = "Eighth grade", "(0000009) Ninth grade" = "Ninth grade", "(0000010) Tenth grade" = "Tenth grade", "(0000011) Eleventh grade" = "Eleventh grade", "(0000012) Twelfth grade" = "Twelfth grade", "(0000013) College freshman" = "College freshman", "(0000014) College sophomore" = "College sophomore", "(0000015) College junior" = "College junior", "(0000016) College senior" = "College senior", "(0000017) Graduate school one year" = "Graduate school one year", "(0000018) Graduate school two or more years" = "Graduate school two or more years", "(0000019) Attended school in other country/system not comparable to grades" = "Attended school in other country/system not comparable to grades", "(9999997) Don't know" = "Don't know", "(9999998) Refused" = "NA", "(9999999) Missing" = "NA"))  %>% 
-  mutate(EDUCATION = factor(EDUCATION, exclude = "NA")) %>% 
-  mutate(EDUCATION = na_if(EDUCATION, "NA")) %>% 
-  mutate(SES_INCOMEMTH = dplyr::recode(SES_INCOMEMTH, "(0000000) No income" = "No income", "(0000001) $1 - 199" = "$1 - $199", "(0000002) 200 - 399" = "$200 - $399", "(0000003) 400 - 599" = "$400 - $599", "(0000004) 600 - 799" = "$600 - $799", "(0000005) 800 - 999" = "$800 - $999", "(0000006) 1,000 - 1,199" = "$1,000 - $1,199", "(0000007) 1,200 - 1,499" = "$1,200 - $1,499", "(0000008) 1,500 - 1,999" = "$1,500 - $1,999", "(0000009) 2,000 - 2,499" = "$2,000 - $2,499", "(0000010) 2,500 - 4,999" = "$2,500 - $4,999", "(0000011) 5,000 - 7,499" = "$5,000 - $7,499", "(0000012) 7,500 or more" = "$7,500 or more", "(9999997) Don't know" = "Don't know", "(9999998) Refused" = "NA", "(9999999) Missing" = "NA")) %>% 
-  mutate(SES_INCOMEMTH = factor(SES_INCOMEMTH, exclude = "NA")) %>% 
-  mutate(SES_INCOMEMTH = na_if(SES_INCOMEMTH, "NA")) %>% 
-  set_variable_labels(V0005 = "Sex", AGE_CAT = "Age Group", V2982 = "Race/Ethnicity", EDUCATION = "Education", SES_INCOMEMTH = "Monthly Income in Month Before Arrest") 
+  mutate(
+    V2982 = dplyr::recode(V2982, "(1) White non-Hispanic" = "White non-Hispanic", "(2) Black non-Hispanic" = "Black non-Hispanic", "(3) Hispanic" = "Hispanic", "(4) American Indian, Alaska Native non-Hispanic" = "American Indian, Alaska Native non-Hispanic", "(5) Asian, Pacific Islander, Native Hawaiian non-Hispanic" = "Asian, Pacific Islander, Native Hawaiian non-Hispanic", "(6) Multiple Races reported, non-Hispanic" = "Multiple Races reported, non-Hispanic", "(8) Other, Uncategorized - Missing" = "NA"), 
+    V2982 = factor(V2982, exclude = "NA"), 
+    V2982 = na_if(V2982, "NA")) %>% 
+  mutate(
+    EDUCATION = dplyr::recode(EDUCATION, "(0000000) Never attended or attended kindergarten only" = "Never attended or attended kindergarten only", "(0000001) First grade" = "First grade", "(0000002) Second grade" = "Second grade", "(0000003) Third grade" = "Third grade", "(0000004) Fourth grade" = "Fourth grade", "(0000005) Fifth grade" = "Fifth grade", "(0000006) Sixth grade" = "Sixth grade", "(0000007) Seventh grade" = "Seventh grade", "(0000008) Eighth grade" = "Eighth grade", "(0000009) Ninth grade" = "Ninth grade", "(0000010) Tenth grade" = "Tenth grade", "(0000011) Eleventh grade" = "Eleventh grade", "(0000012) Twelfth grade" = "Twelfth grade", "(0000013) College freshman" = "College freshman", "(0000014) College sophomore" = "College sophomore", "(0000015) College junior" = "College junior", "(0000016) College senior" = "College senior", "(0000017) Graduate school one year" = "Graduate school one year", "(0000018) Graduate school two or more years" = "Graduate school two or more years", "(0000019) Attended school in other country/system not comparable to grades" = "Attended school in other country/system not comparable to grades", "(9999997) Don't know" = "Don't know", "(9999998) Refused" = "NA", "(9999999) Missing" = "NA"), 
+    EDUCATION = factor(EDUCATION, exclude = "NA"), 
+    EDUCATION = na_if(EDUCATION, "NA")) %>% 
+  mutate(
+    SES_INCOMEMTH = dplyr::recode(SES_INCOMEMTH, "(0000000) No income" = "No income", "(0000001) $1 - 199" = "$1 - $199", "(0000002) 200 - 399" = "$200 - $399", "(0000003) 400 - 599" = "$400 - $599", "(0000004) 600 - 799" = "$600 - $799", "(0000005) 800 - 999" = "$800 - $999", "(0000006) 1,000 - 1,199" = "$1,000 - $1,199", "(0000007) 1,200 - 1,499" = "$1,200 - $1,499", "(0000008) 1,500 - 1,999" = "$1,500 - $1,999", "(0000009) 2,000 - 2,499" = "$2,000 - $2,499", "(0000010) 2,500 - 4,999" = "$2,500 - $4,999", "(0000011) 5,000 - 7,499" = "$5,000 - $7,499", "(0000012) 7,500 or more" = "$7,500 or more", "(9999997) Don't know" = "Don't know", "(9999998) Refused" = "NA", "(9999999) Missing" = "NA"), 
+    SES_INCOMEMTH = factor(SES_INCOMEMTH, exclude = "NA"), 
+    SES_INCOMEMTH = na_if(SES_INCOMEMTH, "NA")) %>% 
+  mutate(
+    CH_PRIORSENTENCE_NUM = dplyr::recode(CH_PRIORSENTENCE_NUM, "(0000000) No prior sentence" = "No prior sentence", "(0000001) One prior sentence" = "One prior sentence", "(0000002) Two prior sentences" = "Two prior sentences", "(0000003) Three to five prior sentences" = "Three to five prior sentences", "(0000004) Six to ten prior sentences" = "Six to ten prior sentences", "(0000005) Eleven or more prior sentences" = "Eleven or more prior sentences", "(9999999) Missing" = "NA"), 
+    CH_PRIORSENTENCE_NUM = factor(CH_PRIORSENTENCE_NUM, exclude = "NA"), 
+    CH_PRIORSENTENCE_NUM = na_if(CH_PRIORSENTENCE_NUM, "NA")) %>% 
+    mutate(
+    V1197 = ifelse(V1197 <= 996, V1197, NA)) %>% 
+  mutate(
+    CH_CRIMHIST_COLLAPSED = dplyr::recode(CH_CRIMHIST_COLLAPSED, "(0000001) First timers" = "First timers", "(0000002) Recidivist, current or past violent offense" = "Recidivist, current or past violent offense", "(0000003) Recidivist, no current or prior violent offense" = "Recidivist, no current or prior violent offense", "(9999999) Missing" = "NA"), 
+    CH_CRIMHIST_COLLAPSED = factor(CH_CRIMHIST_COLLAPSED, exclude = "NA"), 
+    CH_CRIMHIST_COLLAPSED = na_if(CH_CRIMHIST_COLLAPSED, "NA")) %>% 
+  mutate(
+    SES_PARENTS_INCARCERATED = dplyr::recode(SES_PARENTS_INCARCERATED, "(0000001) Yes" = "Yes", "(0000002) No" = "No","(9999997) Don't know" = "NA", "(9999998) Refused" = "NA", "(9999999) Missing" = "NA"), 
+    SES_PARENTS_INCARCERATED = factor(SES_PARENTS_INCARCERATED, exclude = "NA"), 
+    SES_PARENTS_INCARCERATED = na_if(SES_PARENTS_INCARCERATED, "NA")) %>% 
+  mutate(
+    SES_FAMILY_INCARCERATED = dplyr::recode(SES_FAMILY_INCARCERATED, "(0000001) Yes" = "Yes", "(0000002) No" = "No","(9999997) Don't know" = "NA", "(9999998) Refused" = "NA", "(9999999) Missing" = "NA"), 
+    SES_FAMILY_INCARCERATED = factor(SES_FAMILY_INCARCERATED, exclude = "NA"), 
+    SES_FAMILY_INCARCERATED = na_if(SES_FAMILY_INCARCERATED, "NA")) %>% 
+  set_variable_labels(dataset = "Dataset", MENTAL_HISTORY_BINARY = "Binary Mental Health History", V0005 = "Sex", AGE_CAT = "Age Group", V2982 = "Race/Ethnicity", EDUCATION = "Education", SES_INCOMEMTH = "Monthly Income in Month Before Arrest", CH_PRIORSENTENCE_NUM = "Number of Prior Sentences", V1197 = "Number of Prior Arrests", CH_CRIMHIST_COLLAPSED = "Collapsed Criminal History", TYPEOFFENSE = "Type of Offense", SES_PARENTS_INCARCERATED = "Parents Been Incarcerated", SES_FAMILY_INCARCERATED = "Children, Siblings, or Spouse Been Incarcerated")
 ```
 
 # Demographics
 
 ```{r}
 #Table 1
-table1(~ V0005 + AGE_CAT + V2982 + EDUCATION + SES_INCOMEMTH | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
+table1(~ V0005 + AGE_CAT + V2982 | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
+
+#BAR GRAPH FOR EDUCATION
+
+
+
+#BAR GRAPH FOR SES_INCOMEMTH
+
+
 ```
 
 
 # Incarceration-Related Variables
 
-### Combined
 ```{r}
 #Table 1
-table1(~ CH_PRIORSENTENCE_NUM + V1197 + CH_CRIMHIST_COLLAPSED + TYPEOFFENSE | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
+table1(~ CH_PRIORSENTENCE_NUM + V1197 + CH_CRIMHIST_COLLAPSED + SES_PARENTS_INCARCERATED + SES_FAMILY_INCARCERATED | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
+
+#BAR GRAPH FOR TYPEOFOFFENSE
+
+
+#DENSITY PLOT FOR V1197
+
+
 ```
 
-### Federal
-```{r}
-#Criminal History
-federal_df %>% 
-  count(CH_CRIMHIST) %>% 
-  rename("Criminal Hisotry" = CH_CRIMHIST) %>%
-  knitr::kable() 
-
-#Type of Offense
-federal_df %>% 
-  count(TYPEOFFENSE) %>% 
-  rename("Type of Offense" = TYPEOFFENSE) %>%
-  arrange(desc(n)) %>%
-  knitr::kable()
-
-#Distribution for number of incarcerations
-federal_df %>%
-  group_by(CH_NUMCAR1) %>%
-  summarise(
-    n_obs = n()
-  ) %>%
-  mutate(
-    CH_NUMCAR1 = gsub(".*)", "", CH_NUMCAR1)
-  ) %>%
-  ungroup() %>%
-  ggplot(aes(x = CH_NUMCAR1, y = n_obs)) + 
-  geom_bar(stat = "identity") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-```
-
-### State
-```{r}
-#Criminal History
-state_df %>% 
-  count(CH_CRIMHIST) %>% 
-  rename("Criminal Hisotry" = CH_CRIMHIST) %>%
-  knitr::kable() 
-
-#Type of Offense
-state_df %>% 
-  count(TYPEOFFENSE) %>% 
-  rename("Type of Offense" = TYPEOFFENSE) %>%
-  arrange(desc(n)) %>%
-  knitr::kable()
-
-#Distribution for number of incarcerations
-state_df %>%
-  group_by(CH_NUMCAR1) %>%
-  summarise(
-    n_obs = n()
-  ) %>%
-  mutate(
-    CH_NUMCAR1 = gsub(".*)", "", CH_NUMCAR1)
-  ) %>%
-  ungroup() %>%
-  ggplot(aes(x = CH_NUMCAR1, y = n_obs)) + 
-  geom_bar(stat = "identity") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
-```
-
-# HIV 
-```{r}
-#HIV tested
-federal_df %>% 
-  group_by(V2288) %>% 
-  summarize(n_obs = n()) %>% 
-  knitr::kable()
-
-federal_df %>% 
-  group_by( V2288) %>% 
-  summarize(n_obs = n()) %>% 
-  ungroup() %>% 
-  ggplot(aes(x = V2288, y = n_obs, fill = V2288)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = .5, hjust = 1)) +
-  geom_bar(stat = "identity") 
-
-#HIV test result
-federal_df %>% 
-   group_by(MCMH_RSLT_HIV) %>%
-  summarise(n_obs = n()) %>%
-   mutate(
-    MCMH_RSLT_HIV = fct_reorder(MCMH_RSLT_HIV, n_obs) 
-  ) %>% 
-  ggplot(aes(x = MCMH_RSLT_HIV, y = n_obs, fill = MCMH_RSLT_HIV)) +
-  theme(axis.text.x = element_text(angle = 90, vjust = .5, hjust = 1)) +
-  geom_bar(stat = "identity") 
-
-
-#Ever used a needle to inject drugs
-federal_df %>% 
-  group_by(DRUG_INJECT_CB) %>% 
-  summarize(n_obs = n()) %>% 
-  ungroup() %>% 
-  ggplot(aes(x = DRUG_INJECT_CB, y = n_obs, fill = DRUG_INJECT_CB)) +
-  geom_bar(stat = "identity") 
-
-```
 
 # Mental Health
+
 ```{r}
 #ever taken a medication for mental health 
 federal_df %>% 
