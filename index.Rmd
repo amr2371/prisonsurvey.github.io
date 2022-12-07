@@ -29,6 +29,11 @@ In the [Exploratory Analysis](EDA.html), you will find:
 * Demographics for survey respondents 
 * Overview of the two primary health variables, HIV and Mental Health
 
+On the [Statistical Analysis](stat_tests.html)page, you can find:
+* Hypothesis Testing
+* Regression Analyses
+* Model Selection
+
 Our [full project report](project_report.html) includes a comprehensive review of all topics and analyses.
 
 ## Collaborators

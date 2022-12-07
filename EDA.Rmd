@@ -131,6 +131,17 @@ table1(~ CH_PRIORSENTENCE_NUM + V1197 + CH_CRIMHIST_COLLAPSED + SES_PARENTS_INCA
 ```
 
 
+# HIV
+
+Our initial interest was in HIV prevalence and predictors in the prison system. We performed some exploratory analyses:
+```{r HIV counts}
+state_df %>%
+  group_by(MCMH_RSLT_HIV)%>%
+  summarise(count = n()) %>%
+  mutate(percent = (count / sum(count))) %>%
+  knitr::kable()
+```
+
 # Mental Health
 
 ```{r mental_health}
