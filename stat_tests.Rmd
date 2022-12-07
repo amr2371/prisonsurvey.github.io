@@ -74,5 +74,25 @@ z_test$p.value
 The p-value is **0.001135**
 
 At a significance level of 0.05, we *REJECT* the null hypothesis and conclude that the proportion of HIV+ inmates with a mental health diagnosis *IS NOT EQUAL* to the proportion of HIV- inmates with a mental health diagnosis.
-```
 
+
+### Is Mental Health Associated with Prior Arrest History?
+
+### One-Way ANOVA:
+
+**Hypotheses**
+
+H0: The mean sentence length is equal across races
+
+H1: The mean sentence length is unequal across races
+
+```{r anova}
+anova_df = federal_df %>%
+  group_by(V2982) %>%
+  filter(CS_SENTENCEMTH < 1200)%>%
+  summarize(sentence_length = mean(CS_SENTENCEMTH))
+
+
+fit_race_sentence = lm(sentence_length ~ V2982, data = anova_df)
+anova(fit_race_sentence) %>% knitr::kable(caption = "One-way ANOVA of Race and Sentence Length")
+```
