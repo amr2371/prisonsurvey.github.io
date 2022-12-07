@@ -55,14 +55,24 @@ state_df %>%
   knitr::kable()
 
 #YES; About 40% of those diagnoses with HIV have a mental health disorder, while about 29% without HIV have a mental health disorder
+```
 
-#Is this difference significance?
+### Is this difference significance?: 2 proportion z-test
 
-#2 proportion z-test
+**Hypotheses:**
+
+H0: The proportion of HIV+ inmates with a mental health diagnosis *IS EQUAL* to the proportion of HIV- inmates with a mental health diagnosis.
+
+H1: The proportion of HIV+ inmates with a mental health diagnosis *IS NOT EQUAL* to the proportion of HIV- inmates with a mental health diagnosis.
+
+```{r 2 prop z test}
 z_test <- prop.test(x = c(78, 3348), n = c(193, 11399))
 
 z_test$p.value
+```
 
-# The p-value is 0.001135
+The p-value is **0.001135**
+
+At a significance level of 0.05, we *REJECT* the null hypothesis and conclude that the proportion of HIV+ inmates with a mental health diagnosis *IS NOT EQUAL* to the proportion of HIV- inmates with a mental health diagnosis.
 ```
 

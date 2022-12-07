@@ -549,16 +549,27 @@ unknown</td>
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>#YES; About 40% of those diagnoses with HIV have a mental health disorder, while about 29% without HIV have a mental health disorder
-
-#Is this difference significance?
-
-#2 proportion z-test
-z_test &lt;- prop.test(x = c(78, 3348), n = c(193, 11399))
+<pre class="r"><code>#YES; About 40% of those diagnoses with HIV have a mental health disorder, while about 29% without HIV have a mental health disorder</code></pre>
+<div id="is-this-difference-significance-2-proportion-z-test"
+class="section level3">
+<h3>Is this difference significance?: 2 proportion z-test</h3>
+<p><strong>Hypotheses:</strong></p>
+<p>H0: The proportion of HIV+ inmates with a mental health diagnosis
+<em>IS EQUAL</em> to the proportion of HIV- inmates with a mental health
+diagnosis.</p>
+<p>H1: The proportion of HIV+ inmates with a mental health diagnosis
+<em>IS NOT EQUAL</em> to the proportion of HIV- inmates with a mental
+health diagnosis.</p>
+<pre class="r"><code>z_test &lt;- prop.test(x = c(78, 3348), n = c(193, 11399))
 
 z_test$p.value</code></pre>
 <pre><code>## [1] 0.001135034</code></pre>
-<pre class="r"><code># The p-value is 0.001135</code></pre>
+<p>The p-value is <strong>0.001135</strong></p>
+<p>At a significance level of 0.05, we <em>REJECT</em> the null
+hypothesis and conclude that the proportion of HIV+ inmates with a
+mental health diagnosis <em>IS NOT EQUAL</em> to the proportion of HIV-
+inmates with a mental health diagnosis. ```</p>
+</div>
 </div>
 
 
