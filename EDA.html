@@ -946,6 +946,83 @@ ggplot() +
   ) +
   scale_color_manual(values = colors)</code></pre>
 <p><img src="EDA_files/figure-html/mental_health-5.png" width="100%" /></p>
+<p>#Associations Between HIV &amp; Mental Health</p>
+<pre class="r"><code>#Overall 
+total_df %&gt;%
+  group_by(MCMH_RSLT_HIV)%&gt;%
+  summarise(count = n()) %&gt;%
+  mutate(percent = (count / sum(count))) %&gt;%
+  knitr::kable()</code></pre>
+<table>
+<colgroup>
+<col width="77%" />
+<col width="8%" />
+<col width="14%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">MCMH_RSLT_HIV</th>
+<th align="right">count</th>
+<th align="right">percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(0000001) At least one positive test</td>
+<td align="right">228</td>
+<td align="right">0.0127510</td>
+</tr>
+<tr class="even">
+<td align="left">(0000002) At least one negative and the other
+unknown</td>
+<td align="right">14252</td>
+<td align="right">0.7970471</td>
+</tr>
+<tr class="odd">
+<td align="left">(9999999) Missing</td>
+<td align="right">3401</td>
+<td align="right">0.1902019</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#Graph state vs. Prison
+federal_bar = 
+  federal_df %&gt;%
+  group_by(MCMH_RSLT_HIV, MCMH_MENTAL_HISTORY)%&gt;%
+  summarise(count = n()) %&gt;%
+  mutate(percent = (count / sum(count))) %&gt;%
+      filter(MCMH_RSLT_HIV != &quot;(9999999) Missing&quot;,
+           MCMH_MENTAL_HISTORY == &quot;(0000001) Yes&quot;) %&gt;%
+  mutate(HIV_status = recode(MCMH_RSLT_HIV, 
+      &quot;(0000001) At least one positive test&quot; = &quot;Positive&quot;, 
+      &quot;(0000002) At least one negative and the other unknown&quot; = &quot;Negative&quot;)) %&gt;%
+  ggplot(aes(x = HIV_status, y = percent)) +
+  geom_bar(stat = &quot;identity&quot;, fill = &quot;steelblue&quot;) +
+  labs(title=&quot;Federal&quot;,
+        x =&quot;HIV Status&quot;, y = &quot;Percent with Mental Health Disorder&quot;) +
+  ylim(0, 0.5)</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;MCMH_RSLT_HIV&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<pre class="r"><code>state_bar = 
+  state_df %&gt;%
+  group_by(MCMH_RSLT_HIV, MCMH_MENTAL_HISTORY)%&gt;%
+  summarise(count = n()) %&gt;%
+  mutate(percent = (count / sum(count))) %&gt;%
+      filter(MCMH_RSLT_HIV != &quot;(9999999) Missing&quot;,
+           MCMH_MENTAL_HISTORY == &quot;(0000001) Yes&quot;) %&gt;%
+  mutate(HIV_status = recode(MCMH_RSLT_HIV, 
+      &quot;(0000001) At least one positive test&quot; = &quot;Positive&quot;, 
+      &quot;(0000002) At least one negative and the other unknown&quot; = &quot;Negative&quot;)) %&gt;%
+  ggplot(aes(x = HIV_status, y = percent)) +
+  geom_bar(stat = &quot;identity&quot;, fill = &quot;red&quot;) +
+  labs(title=&quot;State&quot;,
+        x =&quot;HIV Status&quot;, y = &quot;Percent with Mental Health Disorder&quot;) +
+  ylim(0, 0.5)</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;MCMH_RSLT_HIV&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<pre class="r"><code>#Mental Health Disorder Prevalence by HIV Status at the Federal &amp; State Levels(2004)
+federal_bar + state_bar</code></pre>
+<p><img src="EDA_files/figure-html/hiv%20mh-1.png" width="100%" /></p>
 </div>
 
 

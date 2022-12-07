@@ -362,7 +362,204 @@ div.tocify {
 </div>
 
 
+<div id="are-mental-health-diagnoses-associated-with-hiv-status"
+class="section level2">
+<h2>Are Mental Health Diagnoses Associated with HIV Status?</h2>
+<pre class="r"><code>#Are mental health disorders more prevalent among those with HIV?
 
+#Federal:
+federal_df %&gt;%
+  group_by(MCMH_RSLT_HIV, MCMH_MENTAL_HISTORY)%&gt;%
+  summarise(count = n()) %&gt;%
+  mutate(percent = (count / sum(count))) %&gt;%
+  knitr::kable()</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;MCMH_RSLT_HIV&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<table>
+<colgroup>
+<col width="59%" />
+<col width="23%" />
+<col width="6%" />
+<col width="10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">MCMH_RSLT_HIV</th>
+<th align="left">MCMH_MENTAL_HISTORY</th>
+<th align="right">count</th>
+<th align="right">percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(0000001) At least one positive test</td>
+<td align="left">(0000001) Yes</td>
+<td align="right">6</td>
+<td align="right">0.1714286</td>
+</tr>
+<tr class="even">
+<td align="left">(0000001) At least one positive test</td>
+<td align="left">(0000002) No</td>
+<td align="right">29</td>
+<td align="right">0.8285714</td>
+</tr>
+<tr class="odd">
+<td align="left">(0000002) At least one negative and the other
+unknown</td>
+<td align="left">(0000001) Yes</td>
+<td align="right">628</td>
+<td align="right">0.2158817</td>
+</tr>
+<tr class="even">
+<td align="left">(0000002) At least one negative and the other
+unknown</td>
+<td align="left">(0000002) No</td>
+<td align="right">2261</td>
+<td align="right">0.7772430</td>
+</tr>
+<tr class="odd">
+<td align="left">(0000002) At least one negative and the other
+unknown</td>
+<td align="left">(9999997) DK/refused</td>
+<td align="right">14</td>
+<td align="right">0.0048127</td>
+</tr>
+<tr class="even">
+<td align="left">(0000002) At least one negative and the other
+unknown</td>
+<td align="left">(9999999) Blank</td>
+<td align="right">6</td>
+<td align="right">0.0020626</td>
+</tr>
+<tr class="odd">
+<td align="left">(9999999) Missing</td>
+<td align="left">(0000001) Yes</td>
+<td align="right">126</td>
+<td align="right">0.1698113</td>
+</tr>
+<tr class="even">
+<td align="left">(9999999) Missing</td>
+<td align="left">(0000002) No</td>
+<td align="right">539</td>
+<td align="right">0.7264151</td>
+</tr>
+<tr class="odd">
+<td align="left">(9999999) Missing</td>
+<td align="left">(9999997) DK/refused</td>
+<td align="right">29</td>
+<td align="right">0.0390836</td>
+</tr>
+<tr class="even">
+<td align="left">(9999999) Missing</td>
+<td align="left">(9999999) Blank</td>
+<td align="right">48</td>
+<td align="right">0.0646900</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#NO; About 17% of inmates with HIV have a mental health disorder while 22% of inmates without HIV have a mental health disorder
+
+#State:
+state_df %&gt;%
+  group_by(MCMH_RSLT_HIV, MCMH_MENTAL_HISTORY)%&gt;%
+  summarise(count = n()) %&gt;%
+  mutate(percent = (count / sum(count))) %&gt;%
+  knitr::kable()</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;MCMH_RSLT_HIV&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<table>
+<colgroup>
+<col width="59%" />
+<col width="23%" />
+<col width="6%" />
+<col width="10%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">MCMH_RSLT_HIV</th>
+<th align="left">MCMH_MENTAL_HISTORY</th>
+<th align="right">count</th>
+<th align="right">percent</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(0000001) At least one positive test</td>
+<td align="left">(0000001) Yes</td>
+<td align="right">78</td>
+<td align="right">0.4041451</td>
+</tr>
+<tr class="even">
+<td align="left">(0000001) At least one positive test</td>
+<td align="left">(0000002) No</td>
+<td align="right">115</td>
+<td align="right">0.5958549</td>
+</tr>
+<tr class="odd">
+<td align="left">(0000002) At least one negative and the other
+unknown</td>
+<td align="left">(0000001) Yes</td>
+<td align="right">3348</td>
+<td align="right">0.2937100</td>
+</tr>
+<tr class="even">
+<td align="left">(0000002) At least one negative and the other
+unknown</td>
+<td align="left">(0000002) No</td>
+<td align="right">8015</td>
+<td align="right">0.7031319</td>
+</tr>
+<tr class="odd">
+<td align="left">(0000002) At least one negative and the other
+unknown</td>
+<td align="left">(9999997) DK/refused</td>
+<td align="right">25</td>
+<td align="right">0.0021932</td>
+</tr>
+<tr class="even">
+<td align="left">(0000002) At least one negative and the other
+unknown</td>
+<td align="left">(9999999) Blank</td>
+<td align="right">11</td>
+<td align="right">0.0009650</td>
+</tr>
+<tr class="odd">
+<td align="left">(9999999) Missing</td>
+<td align="left">(0000001) Yes</td>
+<td align="right">698</td>
+<td align="right">0.2401101</td>
+</tr>
+<tr class="even">
+<td align="left">(9999999) Missing</td>
+<td align="left">(0000002) No</td>
+<td align="right">2038</td>
+<td align="right">0.7010664</td>
+</tr>
+<tr class="odd">
+<td align="left">(9999999) Missing</td>
+<td align="left">(9999997) DK/refused</td>
+<td align="right">65</td>
+<td align="right">0.0223598</td>
+</tr>
+<tr class="even">
+<td align="left">(9999999) Missing</td>
+<td align="left">(9999999) Blank</td>
+<td align="right">106</td>
+<td align="right">0.0364637</td>
+</tr>
+</tbody>
+</table>
+<pre class="r"><code>#YES; About 40% of those diagnoses with HIV have a mental health disorder, while about 29% without HIV have a mental health disorder
+
+#Is this difference significance?
+
+#2 proportion z-test
+z_test &lt;- prop.test(x = c(78, 3348), n = c(193, 11399))
+
+z_test$p.value</code></pre>
+<pre><code>## [1] 0.001135034</code></pre>
+<pre class="r"><code># The p-value is 0.001135</code></pre>
+</div>
 
 
 

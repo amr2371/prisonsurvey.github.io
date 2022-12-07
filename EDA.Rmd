@@ -15,6 +15,7 @@ library(modelr)
 library(viridis)
 library(labelled)
 library(table1)
+library(patchwork)
 
 
 knitr::opts_chunk$set(
@@ -253,3 +254,50 @@ ggplot() +
   scale_color_manual(values = colors)
 ```
 
+#Associations Between HIV & Mental Health
+
+```{r hiv mh}
+
+#Overall 
+total_df %>%
+  group_by(MCMH_RSLT_HIV)%>%
+  summarise(count = n()) %>%
+  mutate(percent = (count / sum(count))) %>%
+  knitr::kable()
+
+#Graph state vs. Prison
+federal_bar = 
+  federal_df %>%
+  group_by(MCMH_RSLT_HIV, MCMH_MENTAL_HISTORY)%>%
+  summarise(count = n()) %>%
+  mutate(percent = (count / sum(count))) %>%
+      filter(MCMH_RSLT_HIV != "(9999999) Missing",
+           MCMH_MENTAL_HISTORY == "(0000001) Yes") %>%
+  mutate(HIV_status = recode(MCMH_RSLT_HIV, 
+      "(0000001) At least one positive test" = "Positive", 
+      "(0000002) At least one negative and the other unknown" = "Negative")) %>%
+  ggplot(aes(x = HIV_status, y = percent)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(title="Federal",
+        x ="HIV Status", y = "Percent with Mental Health Disorder") +
+  ylim(0, 0.5)
+
+state_bar = 
+  state_df %>%
+  group_by(MCMH_RSLT_HIV, MCMH_MENTAL_HISTORY)%>%
+  summarise(count = n()) %>%
+  mutate(percent = (count / sum(count))) %>%
+      filter(MCMH_RSLT_HIV != "(9999999) Missing",
+           MCMH_MENTAL_HISTORY == "(0000001) Yes") %>%
+  mutate(HIV_status = recode(MCMH_RSLT_HIV, 
+      "(0000001) At least one positive test" = "Positive", 
+      "(0000002) At least one negative and the other unknown" = "Negative")) %>%
+  ggplot(aes(x = HIV_status, y = percent)) +
+  geom_bar(stat = "identity", fill = "red") +
+  labs(title="State",
+        x ="HIV Status", y = "Percent with Mental Health Disorder") +
+  ylim(0, 0.5)
+
+#Mental Health Disorder Prevalence by HIV Status at the Federal & State Levels(2004)
+federal_bar + state_bar
+```

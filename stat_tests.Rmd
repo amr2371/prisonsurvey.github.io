@@ -35,3 +35,34 @@ scale_fill_discrete = scale_fill_viridis_d
 theme_set(theme_minimal() + theme(legend.position = "bottom"))
 ```
 
+## Are Mental Health Diagnoses Associated with HIV Status?
+```{r z test}
+#Are mental health disorders more prevalent among those with HIV?
+
+#Federal:
+federal_df %>%
+  group_by(MCMH_RSLT_HIV, MCMH_MENTAL_HISTORY)%>%
+  summarise(count = n()) %>%
+  mutate(percent = (count / sum(count))) %>%
+  knitr::kable()
+#NO; About 17% of inmates with HIV have a mental health disorder while 22% of inmates without HIV have a mental health disorder
+
+#State:
+state_df %>%
+  group_by(MCMH_RSLT_HIV, MCMH_MENTAL_HISTORY)%>%
+  summarise(count = n()) %>%
+  mutate(percent = (count / sum(count))) %>%
+  knitr::kable()
+
+#YES; About 40% of those diagnoses with HIV have a mental health disorder, while about 29% without HIV have a mental health disorder
+
+#Is this difference significance?
+
+#2 proportion z-test
+z_test <- prop.test(x = c(78, 3348), n = c(193, 11399))
+
+z_test$p.value
+
+# The p-value is 0.001135
+```
+
