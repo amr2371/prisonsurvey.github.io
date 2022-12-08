@@ -115,10 +115,16 @@ Let's look at the following variables as potential predictors of an inmate's men
 model_df =
   total_df %>%
   select(mh_history = MCMH_MENTAL_HISTORY, num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV) %>%
-  filter(mh_history == c("(0000001) Yes", "(0000002) No"), hiv != "(9999999) Missing", abuse != "(9999999) Missing")
+  filter(mh_history == c("(0000001) Yes", "(0000002) No"), hiv != "(9999999) Missing", abuse != "(9999999) Missing") %>%
+  mutate(mh_history = recode(mh_history, "(0000002) No" = 0, "(0000001) Yes" = 1)) %>%
+  mutate(mh_history = as.numeric(mh_history))
+  
 
 full_model = glm(mh_history ~ num_arrests + sentence_length + age + race + sex + abuse + hiv, data = model_df, family = "binomial")
 
 full_model %>%
-  broom::tidy()
+  broom::tidy()%>%
+  knitr::kable()
 ```
+
+Fitting a logistic regression model
