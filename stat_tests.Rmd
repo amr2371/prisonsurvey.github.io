@@ -35,7 +35,7 @@ scale_fill_discrete = scale_fill_viridis_d
 theme_set(theme_minimal() + theme(legend.position = "bottom"))
 ```
 
-## Are Mental Health Diagnoses Associated with HIV Status?
+### Is Mental Health Associated with HIV Status?
 ```{r z test}
 #Are mental health disorders more prevalent among those with HIV?
 
@@ -57,7 +57,7 @@ state_df %>%
 #YES; About 40% of those diagnoses with HIV have a mental health disorder, while about 29% without HIV have a mental health disorder
 ```
 
-### Is this difference significance?: 2 proportion z-test
+#### Is this difference significance?: 2 proportion z-test
 
 **Hypotheses:**
 
@@ -78,7 +78,7 @@ At a significance level of 0.05, we *REJECT* the null hypothesis and conclude th
 
 ### Is Mental Health Associated with Prior Arrest History?
 
-### One-Way ANOVA:
+#### One-Way ANOVA:
 
 **Hypotheses**
 
@@ -96,3 +96,10 @@ anova_df = federal_df %>%
 fit_race_sentence = lm(sentence_length ~ V2982, data = anova_df)
 anova(fit_race_sentence) %>% knitr::kable(caption = "One-way ANOVA of Race and Sentence Length")
 ```
+
+### What are the best predictors of mental health status?
+
+#### Model Selection
+
+Let's look at the following variables as potential predictors of an inmate's mental health status:
+
