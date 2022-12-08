@@ -103,3 +103,15 @@ anova(fit_race_sentence) %>% knitr::kable(caption = "One-way ANOVA of Race and S
 
 Let's look at the following variables as potential predictors of an inmate's mental health status:
 
+- sentence length 
+- number of arrests
+- age
+- race
+- sex
+- physical/sexual abuse
+- HIV status
+
+```{r model selection}
+total_df %>%
+  select(num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV)
+```
