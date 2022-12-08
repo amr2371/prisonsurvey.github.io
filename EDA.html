@@ -719,13 +719,13 @@ unknown</td>
 <pre class="r"><code>#ever taken a medication for mental health 
 federal_df %&gt;% 
   group_by(V2409) %&gt;% 
-  summarize(n_obs = n()) %&gt;% 
+  summarize(count = n()) %&gt;% 
   knitr::kable()</code></pre>
 <table>
 <thead>
 <tr class="header">
 <th align="left">V2409</th>
-<th align="right">n_obs</th>
+<th align="right">count</th>
 </tr>
 </thead>
 <tbody>

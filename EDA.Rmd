@@ -149,7 +149,7 @@ state_df %>%
 #ever taken a medication for mental health 
 federal_df %>% 
   group_by(V2409) %>% 
-  summarize(n_obs = n()) %>% 
+  summarize(count = n()) %>% 
   knitr::kable()
 
 federal_df %>% 
