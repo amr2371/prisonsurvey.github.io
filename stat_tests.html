@@ -362,9 +362,9 @@ div.tocify {
 </div>
 
 
-<div id="are-mental-health-diagnoses-associated-with-hiv-status"
-class="section level2">
-<h2>Are Mental Health Diagnoses Associated with HIV Status?</h2>
+<div id="is-mental-health-associated-with-hiv-status"
+class="section level3">
+<h3>Is Mental Health Associated with HIV Status?</h3>
 <pre class="r"><code>#Are mental health disorders more prevalent among those with HIV?
 
 #Federal:
@@ -551,8 +551,8 @@ unknown</td>
 </table>
 <pre class="r"><code>#YES; About 40% of those diagnoses with HIV have a mental health disorder, while about 29% without HIV have a mental health disorder</code></pre>
 <div id="is-this-difference-significance-2-proportion-z-test"
-class="section level3">
-<h3>Is this difference significance?: 2 proportion z-test</h3>
+class="section level4">
+<h4>Is this difference significance?: 2 proportion z-test</h4>
 <p><strong>Hypotheses:</strong></p>
 <p>H0: The proportion of HIV+ inmates with a mental health diagnosis
 <em>IS EQUAL</em> to the proportion of HIV- inmates with a mental health
@@ -570,12 +570,12 @@ hypothesis and conclude that the proportion of HIV+ inmates with a
 mental health diagnosis <em>IS NOT EQUAL</em> to the proportion of HIV-
 inmates with a mental health diagnosis.</p>
 </div>
+</div>
 <div id="is-mental-health-associated-with-prior-arrest-history"
 class="section level3">
 <h3>Is Mental Health Associated with Prior Arrest History?</h3>
-</div>
-<div id="one-way-anova" class="section level3">
-<h3>One-Way ANOVA:</h3>
+<div id="one-way-anova" class="section level4">
+<h4>One-Way ANOVA:</h4>
 <p><strong>Hypotheses</strong></p>
 <p>H0: The mean sentence length is equal across races</p>
 <p>H1: The mean sentence length is unequal across races</p>
@@ -618,6 +618,53 @@ anova(fit_race_sentence) %&gt;% knitr::kable(caption = &quot;One-way ANOVA of Ra
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div id="what-are-the-best-predictors-of-mental-health-status"
+class="section level3">
+<h3>What are the best predictors of mental health status?</h3>
+<div id="model-selection" class="section level4">
+<h4>Model Selection</h4>
+<p>Let’s look at the following variables as potential predictors of an
+inmate’s mental health status:</p>
+<ul>
+<li>sentence length</li>
+<li>number of arrests</li>
+<li>age</li>
+<li>race</li>
+<li>sex</li>
+<li>physical/sexual abuse</li>
+<li>HIV status</li>
+</ul>
+<pre class="r"><code>model_df =
+  total_df %&gt;%
+  select(mh_history = MCMH_MENTAL_HISTORY, num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV) %&gt;%
+  filter(mh_history == c(&quot;(0000001) Yes&quot;, &quot;(0000002) No&quot;)) 
+
+full_model = glm(mh_history ~ num_arrests + sentence_length + age + race + sex + abuse + hiv, data = model_df, family = &quot;binomial&quot;)
+
+full_model %&gt;%
+  broom::tidy()</code></pre>
+<pre><code>## # A tibble: 16 × 5
+##    term                                        estimate std.e…¹ stati…²  p.value
+##    &lt;chr&gt;                                          &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;
+##  1 (Intercept)                                 -6.05e-1 2.59e-1  -2.33  1.97e- 2
+##  2 num_arrests                                 -1.65e-2 3.28e-3  -5.04  4.65e- 7
+##  3 sentence_length                             -9.90e-9 1.60e-8  -0.618 5.36e- 1
+##  4 age                                          3.80e-3 2.51e-3   1.51  1.30e- 1
+##  5 raceBlack non-Hispanic                       7.74e-1 6.04e-2  12.8   1.17e-37
+##  6 raceHispanic                                 8.79e-1 7.84e-2  11.2   3.44e-29
+##  7 raceAmerican Indian, Alaska Native non-His…  7.24e-1 1.95e-1   3.72  1.98e- 4
+##  8 raceAsian, Pacific Islander, Native Hawaii…  1.25e+0 3.23e-1   3.88  1.06e- 4
+##  9 raceMultiple Races reported, non-Hispanic    6.63e-2 1.41e-1   0.469 6.39e- 1
+## 10 sexFemale                                   -4.56e-1 6.61e-2  -6.90  5.17e-12
+## 11 abuse(0000002) Sexually only                -1.01e-1 1.23e-1  -0.820 4.12e- 1
+## 12 abuse(0000003) Both physically and sexuall… -5.37e-1 1.07e-1  -5.03  5.02e- 7
+## 13 abuse(0000004) Not abused                    1.03e+0 7.49e-2  13.8   2.13e-43
+## 14 abuse(9999999) Missing                      -5.17e-1 3.51e-1  -1.47  1.41e- 1
+## 15 hiv(0000002) At least one negative and the…  5.02e-1 2.26e-1   2.22  2.64e- 2
+## 16 hiv(9999999) Missing                         6.14e-1 2.33e-1   2.64  8.38e- 3
+## # … with abbreviated variable names ¹​std.error, ²​statistic</code></pre>
 </div>
 </div>
 
