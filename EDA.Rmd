@@ -108,11 +108,28 @@ total_df =
 table1(~ V0005 + AGE_CAT + V2982 | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
 
 #BAR GRAPH FOR EDUCATION
-
-
+total_df %>% 
+  group_by(EDUCATION, MENTAL_HISTORY_BINARY) %>% 
+  summarize(count = n()) %>% 
+   mutate(
+    EDUCATION = fct_reorder(EDUCATION, count)) %>% 
+  rename(MH_History = MENTAL_HISTORY_BINARY) %>%
+  ungroup() %>% 
+  ggplot(aes(x = EDUCATION, y = count, fill = MH_History)) +
+  geom_bar(position = "dodge", stat = "identity") + 
+  theme(axis.text.x = element_text(angle=45, hjust=1))
 
 #BAR GRAPH FOR SES_INCOMEMTH
-
+total_df %>% 
+  group_by(SES_INCOMEMTH, MENTAL_HISTORY_BINARY) %>% 
+  summarize(count = n()) %>% 
+   mutate(
+    SES_INCOMEMTH = fct_reorder(SES_INCOMEMTH, count)) %>% 
+  rename(MH_History = MENTAL_HISTORY_BINARY) %>%
+  ungroup() %>% 
+  ggplot(aes(x = SES_INCOMEMTH, y = count, fill = MH_History)) +
+  geom_bar(position = "dodge", stat = "identity") + 
+  theme(axis.text.x = element_text(angle=45, hjust=1))
 
 ```
 
@@ -123,11 +140,21 @@ table1(~ V0005 + AGE_CAT + V2982 | MENTAL_HISTORY_BINARY, data = total_df, overa
 #Table 1
 table1(~ CH_PRIORSENTENCE_NUM + V1197 + CH_CRIMHIST_COLLAPSED + SES_PARENTS_INCARCERATED + SES_FAMILY_INCARCERATED | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
 
-#BAR GRAPH FOR TYPEOFOFFENSE
-
+#BAR GRAPH FOR TYPEOFFENSE
+total_df %>% 
+  group_by(TYPEOFFENSE, MENTAL_HISTORY_BINARY) %>% 
+  summarize(count = n()) %>% 
+   mutate(
+    TYPEOFFENSE = gsub(".*)", "", TYPEOFFENSE)) %>% 
+  rename(MH_History = MENTAL_HISTORY_BINARY) %>%
+  ungroup() %>% 
+  ggplot(aes(x = TYPEOFFENSE, y = count, fill = MH_History)) +
+  geom_bar(position = "dodge", stat = "identity") + 
+  theme(axis.text.x = element_text(angle=45, hjust=1))
 
 #DENSITY PLOT FOR V1197
-
+ggplot(data = total_df, aes(x = V1197)) +
+  geom_density(aes(color = MENTAL_HISTORY_BINARY))
 
 ```
 
