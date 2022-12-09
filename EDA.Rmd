@@ -3,7 +3,6 @@ title: "Exploratory Data Analysis"
 output: 
   html_document:
     toc: true
-    code_folding: hide
     toc_float: true
     theme: flatly
 ---
@@ -105,33 +104,15 @@ total_df =
 # Demographics
 
 ```{r demographics}
-#Demographics Table
+#Table 1
 table1(~ V0005 + AGE_CAT + V2982 | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
 
 #BAR GRAPH FOR EDUCATION
-total_df %>% 
-  group_by(EDUCATION, MENTAL_HISTORY_BINARY) %>% 
-  summarize(count = n()) %>% 
-   mutate(
-    EDUCATION = fct_reorder(EDUCATION, count)) %>% 
-  rename(MH_History = MENTAL_HISTORY_BINARY) %>%
-  ungroup() %>% 
-  ggplot(aes(x = EDUCATION, y = count, fill = MH_History)) +
-  geom_bar(position = "dodge", stat = "identity") + 
-  theme(axis.text.x = element_text(angle=45, hjust=1))
+
+
 
 #BAR GRAPH FOR SES_INCOMEMTH
-total_df %>% 
-  group_by(SES_INCOMEMTH, MENTAL_HISTORY_BINARY) %>% 
-  summarize(count = n()) %>% 
-   mutate(
-    SES_INCOMEMTH = fct_reorder(SES_INCOMEMTH, count)) %>% 
-  rename(MH_History = MENTAL_HISTORY_BINARY) %>%
-  ungroup() %>% 
-  ggplot(aes(x = SES_INCOMEMTH, y = count, fill = MH_History)) +
-  geom_bar(position = "dodge", stat = "identity") + 
-  theme(axis.text.x = element_text(angle=45, hjust=1)) +
-   labs(x = "Monthly Income in Month Before Arrest")
+
 
 ```
 
@@ -139,125 +120,99 @@ total_df %>%
 # Incarceration-Related Variables
 
 ```{r incarceration}
-#Incarceration table
+#Table 1
 table1(~ CH_PRIORSENTENCE_NUM + V1197 + CH_CRIMHIST_COLLAPSED + SES_PARENTS_INCARCERATED + SES_FAMILY_INCARCERATED | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
 
-#BAR GRAPH FOR TYPEOFFENSE
-total_df %>% 
-  group_by(TYPEOFFENSE, MENTAL_HISTORY_BINARY) %>% 
-  summarize(count = n()) %>% 
-   mutate(
-    TYPEOFFENSE = gsub(".*)", "", TYPEOFFENSE)) %>% 
-  rename(MH_History = MENTAL_HISTORY_BINARY) %>%
-  ungroup() %>% 
-  ggplot(aes(x = TYPEOFFENSE, y = count, fill = MH_History)) +
-  geom_col(position = "dodge", stat = "identity") + 
-  theme(axis.text.x = element_text(angle=45, hjust=1)) +
-   labs(x = "Type of Offense") 
+#BAR GRAPH FOR TYPEOFOFFENSE
+
 
 #DENSITY PLOT FOR V1197
-ggplot(data = total_df, aes(x = V1197)) +
-  geom_density(aes(color = MENTAL_HISTORY_BINARY)) +
-  labs(x = "Number of Prior Arrests")
 
+
+```
+
+
+# HIV
+
+Our initial interest was in HIV prevalence and predictors in the prison system. We performed some exploratory analyses:
+```{r HIV counts}
+state_df %>%
+  group_by(MCMH_RSLT_HIV)%>%
+  summarise(count = n()) %>%
+  mutate(percent = (count / sum(count))) %>%
+  knitr::kable()
 ```
 
 # Mental Health
 
+```{r mental_health}
+#ever taken a medication for mental health 
+federal_df %>% 
+  group_by(V2409) %>% 
+  summarize(n_obs = n()) %>% 
+  knitr::kable()
 
-### Medication
-
-```{r MH_med}
-#Ever taken a medication for mental health 
-
-# federal_df %>% 
-#   group_by(V2409) %>% 
-#   summarize(count = n()) %>% 
-#   rename('Ever taken a mental health medication' = V2409) %>%
-#   knitr::kable()
-
-total_df %>% 
-  filter(V2409 == "(1) Yes" | V2409 == "(2) No" | V2409 == "(7) Don't know") %>%
-  group_by(V2409, dataset) %>% 
-  summarize(count = n()) %>% 
+federal_df %>% 
+  group_by(V2409) %>% 
+  summarize(n_obs = n()) %>% 
    mutate(
-    V2409 = fct_reorder(V2409, count)) %>% 
+    V2409 = fct_reorder(V2409, n_obs)) %>% 
   ungroup() %>% 
-  ggplot(aes(x = V2409, y = count, fill = dataset)) +
-  geom_bar(position = "dodge", stat = "identity") + 
-  theme(legend.title=element_blank()) +
-  labs(x = "Ever taken medication for mental health") 
-
+  ggplot(aes(x = V2409, y = n_obs, fill = V2409)) +
+  geom_bar(stat = "identity")
 
 # TAKEN MEDICATION FOR A MENTAL CONDITION SINCE ADMISSION
+federal_df %>% 
+  group_by(V2412) %>% 
+  summarize(n_obs = n()) %>% 
+  knitr::kable()
 
-# federal_df %>% 
-#   group_by(V2412) %>% 
-#   summarize(n_obs = n()) %>% 
-#   knitr::kable()
-
-total_df %>% 
-  group_by(V2412, dataset) %>% 
-  summarize(count = n()) %>% 
+federal_df %>% 
+  group_by(V2412) %>% 
+  summarize(n_obs = n()) %>% 
   drop_na() %>% 
    mutate(
-    V2412 = fct_reorder(V2412, count)) %>% 
+    V2412 = fct_reorder(V2412, n_obs)) %>% 
   ungroup() %>% 
-  ggplot(aes(x = V2412, y = count, fill = dataset)) +
-  geom_bar(position = "dodge", stat = "identity") + 
-  theme(legend.title=element_blank()) +
-  labs(x = "Taken medication for mental health since admission") 
-```
+  ggplot(aes(x = V2412, y = n_obs, fill = V2412)) +
+  geom_bar(stat = "identity")
 
-### Hospitalization
-
-```{r MH_hosp}
 # Mental Hosp - year before arrest - MCMH_mhospyr from client
-# federal_df %>% 
-#   group_by(MCMH_MHOSPYR) %>% 
-#   summarize(n_obs = n()) %>% 
-#   knitr::kable()
+federal_df %>% 
+  group_by(MCMH_MHOSPYR) %>% 
+  summarize(n_obs = n()) %>% 
+  knitr::kable()
 
-total_df %>% 
-  group_by(MCMH_MHOSPYR, dataset) %>% 
-  summarize(count = n()) %>% 
+federal_df %>% 
+  group_by(MCMH_MHOSPYR) %>% 
+  summarize(n_obs = n()) %>% 
   filter(MCMH_MHOSPYR %in% c("(0000004) No, never admitted to stayed overnight at mental hospital","(0000001) Yes, admitted to mental hospital during the 12 months before arrest",
-  "(0000002) No, was not admitted to mental hospital during the 12 months before arrest")) %>%
+  "(0000002) No, was not admitted to mental hospital during the 12 months before arrest")) %>% 
   drop_na() %>% 
    mutate(
-    MCMH_MHOSPYR = fct_reorder(MCMH_MHOSPYR, count),
-    MCMH_MHOSPYR = str_sub(MCMH_MHOSPYR, 10)
-    ) %>% 
+    MCMH_MHOSPYR = fct_reorder(MCMH_MHOSPYR, n_obs)) %>% 
   ungroup() %>% 
-  ggplot(aes(x = MCMH_MHOSPYR, y = count, fill = dataset)) +
-  geom_bar(position = "dodge", stat = "identity") + 
-  theme(axis.text.x = element_text(angle=45, hjust=1), legend.title=element_blank()) +
-  labs(x = "Hospitalized for mental health, in the year before arrest") 
+  ggplot(aes(x = MCMH_MHOSPYR, y = n_obs, fill = MCMH_MHOSPYR)) +
+  geom_bar(stat = "identity")
 
 # Mental hosp - since admission - MCMH_mhospadm from client
-# federal_df %>% 
-#   group_by(MCMH_MHOSPADM) %>% 
-#   summarize(n_obs = n()) %>% 
-#   knitr::kable()
+federal_df %>% 
+  group_by(MCMH_MHOSPADM) %>% 
+  summarize(n_obs = n()) %>% 
+  knitr::kable()
 
-total_df %>% 
-  group_by(MCMH_MHOSPADM, dataset) %>% 
-  summarize(count = n()) %>% 
+federal_df %>% 
+  group_by(MCMH_MHOSPADM) %>% 
+  summarize(n_obs = n()) %>% 
     filter(!MCMH_MHOSPADM %in% c("(9999999) Missing","(9999998) DK/refused")) %>% 
   drop_na() %>% 
    mutate(
-    MCMH_MHOSPADM = fct_reorder(MCMH_MHOSPADM, count),
-    MCMH_MHOSPADM = str_sub(MCMH_MHOSPADM, 10)) %>% 
+    MCMH_MHOSPADM = fct_reorder(MCMH_MHOSPADM, n_obs)) %>% 
   ungroup() %>% 
-  ggplot(aes(x = MCMH_MHOSPADM, y = count, fill = dataset)) +
-  geom_bar(position = "dodge", stat = "identity") + 
-  theme(axis.text.x = element_text(angle=45, hjust=1), legend.title=element_blank()) +
-  labs(x = "Hospitalized for mental health, since admission") 
-```
+  ggplot(aes(x = MCMH_MHOSPADM, y = n_obs, fill = MCMH_MHOSPADM)) +
+  geom_bar(stat = "identity")
 
-### Treatment Continuation
 
-```{r MH_tx_cont}
 # MH Treatment Continuation (one year prior to arrest and since admission)
 
 state_tx = state_df %>%
@@ -291,30 +246,24 @@ ggplot() +
   geom_line(data = state_tx, aes(x = tx_pa_ad, y = percent, group = 1, color = "State Prisons")) + 
   geom_line(data = federal_tx, aes(x = tx_pa_ad, y = percent, group = 1, color = "Federal Prisons")) +
   labs(
+    title = "Mental Health Treatment Continuation",
     x = "1 Year Prior to Arrest/Since Admission",
     y = "Percent (%) of Survey Respondents",
-    color = ""
+    color = "Legend"
   ) +
   scale_color_manual(values = colors)
 ```
 
-# HIV
-
-```{r HIV}
-table1(~ MCMH_RSLT_HIV | dataset, data = total_df, overall = "Total")
-
-```
-
-# HIV & Mental Health
+#Associations Between HIV & Mental Health
 
 ```{r hiv mh}
 
 #Overall 
-# total_df %>%
-#   group_by(MCMH_RSLT_HIV)%>%
-#   summarise(count = n()) %>%
-#   mutate(percent = (count / sum(count))) %>%
-#   knitr::kable()
+total_df %>%
+  group_by(MCMH_RSLT_HIV)%>%
+  summarise(count = n()) %>%
+  mutate(percent = (count / sum(count))) %>%
+  knitr::kable()
 
 #Graph state vs. Prison
 federal_bar = 

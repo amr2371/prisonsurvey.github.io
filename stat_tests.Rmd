@@ -3,7 +3,6 @@ title: "Statical Analysis"
 output: 
   html_document:
     toc: true
-    code_folding: hide
     toc_float: true
     theme: flatly
 ---
@@ -113,19 +112,6 @@ Let's look at the following variables as potential predictors of an inmate's men
 - HIV status
 
 ```{r model selection}
-model_df =
-  total_df %>%
-  select(mh_history = MCMH_MENTAL_HISTORY, num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV) %>%
-  filter(mh_history == c("(0000001) Yes", "(0000002) No"), hiv != "(9999999) Missing", abuse != "(9999999) Missing") %>%
-  mutate(mh_history = recode(mh_history, "(0000002) No" = 0, "(0000001) Yes" = 1)) %>%
-  mutate(mh_history = as.numeric(mh_history))
-  
-
-full_model = glm(mh_history ~ num_arrests + sentence_length + age + race + sex + abuse + hiv, data = model_df, family = "binomial")
-
-full_model %>%
-  broom::tidy()%>%
-  knitr::kable()
+total_df %>%
+  select(num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV)
 ```
-
-Fitting a logistic regression model
