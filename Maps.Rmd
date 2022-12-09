@@ -27,7 +27,7 @@ A large number of respondents who reported to have had a history with at least o
 
 ## Mental Health Treatment Prior to Arrest
 
-Again, California and Texas lead the way with a large number of respondents haveing received some form of mental health treatment prior to arrest. 
+Again, California and Texas lead the way with a large number of respondents having received some form of mental health treatment prior to arrest. 
 
 ![](mapping/MH_tx_prior.png)
 
