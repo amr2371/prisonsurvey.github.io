@@ -33,6 +33,7 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/table1-1.0/table1_defaults.css" rel="stylesheet" />
@@ -229,6 +230,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -355,6 +359,14 @@ div.tocify {
 </div><!--/.navbar -->
 
 <div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
 
@@ -701,8 +713,8 @@ total_df %&gt;%
   ggplot(aes(x = TYPEOFFENSE, y = count, fill = MH_History)) +
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
   theme(axis.text.x = element_text(angle=45, hjust=1))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;TYPEOFFENSE&#39;. You can override using the `.groups`
-## argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;TYPEOFFENSE&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <p><img src="EDA_files/figure-html/incarceration-1.png" width="100%" /></p>
 <pre class="r"><code>#DENSITY PLOT FOR V1197
 ggplot(data = total_df, aes(x = V1197)) +
@@ -983,7 +995,9 @@ ggplot() +
   ) +
   scale_color_manual(values = colors)</code></pre>
 <p><img src="EDA_files/figure-html/mental_health-5.png" width="100%" /></p>
-<p>#Associations Between HIV &amp; Mental Health</p>
+</div>
+<div id="associations-between-hiv-mental-health" class="section level1">
+<h1>Associations Between HIV &amp; Mental Health</h1>
 <pre class="r"><code>#Overall 
 total_df %&gt;%
   group_by(MCMH_RSLT_HIV)%&gt;%
@@ -1097,6 +1111,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 <script>
 $(document).ready(function ()  {

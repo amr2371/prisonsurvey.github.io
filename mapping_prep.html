@@ -11,7 +11,7 @@
 
 
 
-<title>Health of Incarcerated Individuals in State &amp; Federal Correctional Facilities, 2003-2004</title>
+<title>Prep for Mapping</title>
 
 <script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -29,11 +29,7 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
@@ -229,73 +225,7 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
-
-
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
 
 
 
@@ -305,16 +235,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -359,77 +279,23 @@ div.tocify {
 
 <div id="header">
 
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
 
 
-
-<h1 class="title toc-ignore">Health of Incarcerated Individuals in State
-&amp; Federal Correctional Facilities, 2003-2004</h1>
+<h1 class="title toc-ignore">Prep for Mapping</h1>
 
 </div>
 
 
-<div id="introduction" class="section level2">
-<h2>Introduction</h2>
-<p>The prevalence of mass incarceration in the United States has grown
-drastically, driving severe disparities in individual and community
-health that persist over time. Incarcerated individuals have a higher
-risk of HIV, as well as mental health and substance use disorders, with
-little access to quality treatment despite prisons being required to
-provide healthcare (Wildeman &amp; Wang, 2017). In 2003 and 2004, the
-United States Bureau of Justice Statistics conducted a nationally
-representative survey to collect a variety of information, including
-current and past incarceration history and health status, on those
-incarcerated in federal and state prisons. This analysis will provide an
-overview on the differences in health status among incarcerated
-populations in both federal and state prison systems, specifically
-related to variables for HIV and Mental Health.</p>
-</div>
-<div id="screencast" class="section level2">
-<h2>Screencast</h2>
-<p>Link Here</p>
-</div>
-<div id="website-overview" class="section level2">
-<h2>Website Overview</h2>
-<p>On the <a href="about.html">About Page</a>, you will find information
-related to:</p>
-<ul>
-<li>Link to the Data Source</li>
-<li>Software used to create the website and run the analyses</li>
-<li>R Packages used to create the website and run the analyses</li>
-<li>References</li>
-</ul>
-<p>In the <a href="EDA.html">Exploratory Analysis</a>, you will
-find:</p>
-<ul>
-<li>Demographics for survey respondents</li>
-<li>Overview of the two primary health variables, HIV and Mental
-Health</li>
-</ul>
-<p>On the <a href="stat_tests.html">Statistical Analysis</a>page, you
-can find: * Hypothesis Testing * Regression Analyses * Model
-Selection</p>
-<p>Our <a href="project_report.html">full project report</a> includes a
-comprehensive review of all topics and analyses.</p>
-</div>
-<div id="collaborators" class="section level2">
-<h2>Collaborators</h2>
-<p>Mackenzie Frost (maf2311)</p>
-<p>Allison Randy-Cofie (amr2371)</p>
-<p>Shritama Ray (sr3861)</p>
-<p>Anna Zavodszky (amz2148)</p>
-</div>
+<pre class="r"><code>total_df %&gt;% 
+  group_by(V1056) %&gt;% 
+  summarize(count = n()) %&gt;% 
+   mutate(
+    V1056 = fct_reorder(V1056, count)) %&gt;% 
+  rename(Residence_at_arrest = V1056) %&gt;%
+  write.csv(&quot;~/Desktop/prisonsurvey.github.io/mapping.csv&quot;, row.names=TRUE)</code></pre>
 
 
 
-</div>
-</div>
 
 </div>
 
@@ -461,41 +327,7 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
-});
-</script>
 
-<script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
