@@ -377,19 +377,24 @@ div.tocify {
 </div>
 
 
-<pre class="r"><code>total_df %&gt;% 
-  group_by(V1056) %&gt;% 
-  summarize(
-    count = n(),
-    HIV = sum(MCMH_RSLT_HIV == &quot;(0000001) At least one positive test&quot;),
-    MH_Status = sum(MENTAL_HISTORY_BINARY == &quot;History of mental health condition(s)&quot;),
-    MH_Treat_Prior = sum(MCMH_MH_TREATMENT_PA == &quot;(1) Yes&quot;),
-    MH_Treat_Admission = sum(MCMH_MH_TREATMENT_AD == &quot;(1) Yes&quot;)) %&gt;%
-   mutate(
-    V1056 = fct_reorder(V1056, count),
-    V1056 = str_sub(V1056, 6)) %&gt;% 
-  rename(Residence_at_arrest = V1056) %&gt;%
-  write.csv(&quot;./mapping.csv&quot;, row.names=TRUE)</code></pre>
+<div id="hiv-status" class="section level2">
+<h2>HIV Status</h2>
+<p><img src="mapping/HIV.png" /></p>
+</div>
+<div id="mental-health-status" class="section level2">
+<h2>Mental Health Status</h2>
+<p><img src="mapping/MH_status.png" /></p>
+</div>
+<div id="mental-health-treatment-prior-to-arrest"
+class="section level2">
+<h2>Mental Health Treatment Prior to Arrest</h2>
+<p><img src="mapping/MH_tx_prior.png" /></p>
+</div>
+<div id="mental-health-treatment-after-admission"
+class="section level2">
+<h2>Mental Health Treatment After Admission</h2>
+<p><img src="mapping/MH_tx_after.png" /></p>
+</div>
 
 
 

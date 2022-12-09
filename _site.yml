@@ -10,7 +10,7 @@ navbar:
     - text: "Statistical Analysis"
       href: stat_tests.html
     - text: "Spatial Analysis"
-      href: mapping_prep.html 
+      href: Maps.html 
     - text: "Project Report"
       href: project_report.html
     - icon: fa-github fa-lg

@@ -345,7 +345,7 @@ div.tocify {
   <a href="stat_tests.html">Statistical Analysis</a>
 </li>
 <li>
-  <a href="mapping_prep.html">Spatial Analysis</a>
+  <a href="Maps.html">Spatial Analysis</a>
 </li>
 <li>
   <a href="project_report.html">Project Report</a>
@@ -534,8 +534,8 @@ total_df %&gt;%
   ggplot(aes(x = SES_INCOMEMTH, y = count, fill = MH_History)) +
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
   theme(axis.text.x = element_text(angle=45, hjust=1))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;SES_INCOMEMTH&#39;. You can override using the
-## `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;SES_INCOMEMTH&#39;. You can override using the `.groups`
+## argument.</code></pre>
 <p><img src="EDA_files/figure-html/demographics-2.png" width="100%" /></p>
 </div>
 <div id="incarceration-related-variables" class="section level1">
@@ -970,8 +970,8 @@ state_tx = state_df %&gt;%
   mutate(
     sum = sum(n_obs),
     percent = (n_obs/sum) * 100 ) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;MCMH_MH_TREATMENT_PA&#39;. You can override
-## using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;MCMH_MH_TREATMENT_PA&#39;. You can override using the `.groups`
+## argument.</code></pre>
 <pre class="r"><code>federal_tx = federal_df %&gt;%
   group_by(MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD) %&gt;%
   summarize(n_obs = n()) %&gt;%
@@ -984,8 +984,8 @@ state_tx = state_df %&gt;%
   mutate(
     sum = sum(n_obs),
     percent = (n_obs/sum) * 100 ) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;MCMH_MH_TREATMENT_PA&#39;. You can override
-## using the `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;MCMH_MH_TREATMENT_PA&#39;. You can override using the `.groups`
+## argument.</code></pre>
 <pre class="r"><code>colors &lt;- c(&quot;State Prisons&quot; = &quot;blue&quot;, &quot;Federal Prisons&quot; = &quot;red&quot;)
 ggplot() + 
   geom_line(data = state_tx, aes(x = tx_pa_ad, y = percent, group = 1, color = &quot;State Prisons&quot;)) + 
@@ -1055,8 +1055,8 @@ federal_bar =
   labs(title=&quot;Federal&quot;,
         x =&quot;HIV Status&quot;, y = &quot;Percent with Mental Health Disorder&quot;) +
   ylim(0, 0.5)</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;MCMH_RSLT_HIV&#39;. You can override using the
-## `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;MCMH_RSLT_HIV&#39;. You can override using the `.groups`
+## argument.</code></pre>
 <pre class="r"><code>state_bar = 
   state_df %&gt;%
   group_by(MCMH_RSLT_HIV, MCMH_MENTAL_HISTORY)%&gt;%
@@ -1072,8 +1072,8 @@ federal_bar =
   labs(title=&quot;State&quot;,
         x =&quot;HIV Status&quot;, y = &quot;Percent with Mental Health Disorder&quot;) +
   ylim(0, 0.5)</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;MCMH_RSLT_HIV&#39;. You can override using the
-## `.groups` argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;MCMH_RSLT_HIV&#39;. You can override using the `.groups`
+## argument.</code></pre>
 <pre class="r"><code>#Mental Health Disorder Prevalence by HIV Status at the Federal &amp; State Levels(2004)
 federal_bar + state_bar</code></pre>
 <p><img src="EDA_files/figure-html/hiv%20mh-1.png" width="100%" /></p>

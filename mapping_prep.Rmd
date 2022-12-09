@@ -43,6 +43,8 @@ total_df %>%
   group_by(V1056) %>% 
   summarize(
     count = n(),
+    HIV = sum(MCMH_RSLT_HIV == "(0000001) At least one positive test"),
+    MH_Status = sum(MENTAL_HISTORY_BINARY == "History of mental health condition(s)"),
     MH_Treat_Prior = sum(MCMH_MH_TREATMENT_PA == "(1) Yes"),
     MH_Treat_Admission = sum(MCMH_MH_TREATMENT_AD == "(1) Yes")) %>%
    mutate(
