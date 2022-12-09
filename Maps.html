@@ -11,7 +11,7 @@
 
 
 
-<title>About this project</title>
+<title>Mapping</title>
 
 <script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -372,37 +372,48 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">About this project</h1>
+<h1 class="title toc-ignore">Mapping</h1>
 
 </div>
 
 
-<div id="data-source" class="section level3">
-<h3>Data Source</h3>
-<p>The dataset used for this analysis can be found <a
-href="https://www.icpsr.umich.edu/web/NACJD/studies/4572">here</a>. The
-demographic breakdown for the survey population can be found in the <a
-href="EDA.html">Exploratory Analysis</a>. Cartographic boundary files
-for the spatial analyses can be downloaded on the <a
-href="https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html">US
-Census Bureau</a> website.</p>
+<p>All maps represent the variable grouped by the participant’s state of
+residence upon arrest, for respondents from both federal and state
+prisons.These spatial analyses may be heavily impacted by the
+distribution of large facilities in the prison system.</p>
+<p>The graduated color scale represents values corresponding to the
+number of respondents who reported ‘Yes’ to each variable. Categories
+were determined by quantiles with 5 groups. Maps were created by doing a
+spatial join in QGIS at the state level.</p>
+<div id="hiv-status" class="section level2">
+<h2>HIV Status</h2>
+<p>Based on state of residence upon arrest, it appears that a high
+proportion of respondents with at least one positive HIV test were form
+California, Texas, Florida, and states in the Northeast.</p>
+<p><img src="mapping/HIV.png" /></p>
 </div>
-<div id="software-and-r-packages" class="section level3">
-<h3>Software and R Packages</h3>
-<p>All analyses and website development were conducted in RStudio, and
-the source code is publicly available on <a
-href="https://github.com/amr2371/prisonsurvey.github.io">Github</a>. The
-following RStudio libraries were loaded for this analysis: tidyverse,
-mgcv, modelr, patchwork, and viridis. Spatial analyses were created with
-QGIS.</p>
+<div id="mental-health-history" class="section level2">
+<h2>Mental Health History</h2>
+<p>A large number of respondents who reported to have had a history with
+at least one mental health condition come from California and Texas.</p>
+<p><img src="mapping/MH_status.png" /></p>
 </div>
-<div id="references" class="section level3">
-<h3>References</h3>
-<p>Wildeman, C., &amp; Wang, E. A. (2017). Mass incarceration, public
-health, and widening inequality in the USA. The Lancet, 389(10077),
-1464-1474. <a
-href="https://www.sciencedirect.com/science/article/pii/S0140673617302593?casa_token=1xD25QzmMjoAAAAA:FJ80W6OM0S_SidWPgQPcI8ooIsqB3WrWfRiDAaidhwMSdTbxU23bqw-upyTzm1QU6eQMfH4Y">online
-article</a></p>
+<div id="mental-health-treatment-prior-to-arrest"
+class="section level2">
+<h2>Mental Health Treatment Prior to Arrest</h2>
+<p>Again, California and Texas lead the way with a large number of
+respondents haveing received some form of mental health treatment prior
+to arrest.</p>
+<p><img src="mapping/MH_tx_prior.png" /></p>
+</div>
+<div id="mental-health-treatment-after-admission"
+class="section level2">
+<h2>Mental Health Treatment After Admission</h2>
+<p>Interestingly, though the highest proportion of respondents who
+received some form of mental health treatment after admission come from
+California and Texas, there is an increase, compared to before arrest,
+for states in the Eastern Region.</p>
+<p><img src="mapping/MH_tx_after.png" /></p>
 </div>
 
 

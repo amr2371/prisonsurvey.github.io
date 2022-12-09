@@ -33,6 +33,7 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
@@ -228,6 +229,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -340,6 +344,9 @@ div.tocify {
   <a href="stat_tests.html">Statistical Analysis</a>
 </li>
 <li>
+  <a href="Maps.html">Spatial Analysis</a>
+</li>
+<li>
   <a href="project_report.html">Project Report</a>
 </li>
 <li>
@@ -354,6 +361,14 @@ div.tocify {
 </div><!--/.navbar -->
 
 <div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
 
@@ -638,6 +653,7 @@ inmate’s mental health status:</p>
 <li>physical/sexual abuse</li>
 <li>HIV status</li>
 </ul>
+<<<<<<< HEAD
 <pre class="r"><code>total_df %&gt;%
   select(num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV)</code></pre>
 <pre><code>##       num_arrests sentence_length age
@@ -57785,6 +57801,142 @@ inmate’s mental health status:</p>
 ## 14284                                     (9999999) Missing
 ## 14285                                     (9999999) Missing
 ##  [ reached &#39;max&#39; / getOption(&quot;max.print&quot;) -- omitted 3596 rows ]</code></pre>
+=======
+<pre class="r"><code>model_df =
+  total_df %&gt;%
+  select(mh_history = MCMH_MENTAL_HISTORY, num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV) %&gt;%
+  filter(mh_history == c(&quot;(0000001) Yes&quot;, &quot;(0000002) No&quot;), hiv != &quot;(9999999) Missing&quot;, abuse != &quot;(9999999) Missing&quot;) %&gt;%
+  mutate(mh_history = recode(mh_history, &quot;(0000002) No&quot; = 0, &quot;(0000001) Yes&quot; = 1)) %&gt;%
+  mutate(mh_history = as.numeric(mh_history))
+  
+
+full_model = glm(mh_history ~ num_arrests + sentence_length + age + race + sex + abuse + hiv, data = model_df, family = &quot;binomial&quot;)
+
+full_model %&gt;%
+  broom::tidy()%&gt;%
+  knitr::kable()</code></pre>
+<table style="width:100%;">
+<colgroup>
+<col width="57%" />
+<col width="10%" />
+<col width="9%" />
+<col width="11%" />
+<col width="9%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">estimate</th>
+<th align="right">std.error</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="right">0.6531966</td>
+<td align="right">0.2679918</td>
+<td align="right">2.4373753</td>
+<td align="right">0.0147943</td>
+</tr>
+<tr class="even">
+<td align="left">num_arrests</td>
+<td align="right">0.0173807</td>
+<td align="right">0.0035418</td>
+<td align="right">4.9073507</td>
+<td align="right">0.0000009</td>
+</tr>
+<tr class="odd">
+<td align="left">sentence_length</td>
+<td align="right">0.0000000</td>
+<td align="right">0.0000000</td>
+<td align="right">0.2467504</td>
+<td align="right">0.8051014</td>
+</tr>
+<tr class="even">
+<td align="left">age</td>
+<td align="right">-0.0056526</td>
+<td align="right">0.0028533</td>
+<td align="right">-1.9811037</td>
+<td align="right">0.0475796</td>
+</tr>
+<tr class="odd">
+<td align="left">raceBlack non-Hispanic</td>
+<td align="right">-0.7550554</td>
+<td align="right">0.0660124</td>
+<td align="right">-11.4380823</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">raceHispanic</td>
+<td align="right">-0.8939898</td>
+<td align="right">0.0889254</td>
+<td align="right">-10.0532522</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">raceAmerican Indian, Alaska Native non-Hispanic</td>
+<td align="right">-0.7332177</td>
+<td align="right">0.2280892</td>
+<td align="right">-3.2146096</td>
+<td align="right">0.0013062</td>
+</tr>
+<tr class="even">
+<td align="left">raceAsian, Pacific Islander, Native Hawaiian
+non-Hispanic</td>
+<td align="right">-1.0877158</td>
+<td align="right">0.3623678</td>
+<td align="right">-3.0016902</td>
+<td align="right">0.0026849</td>
+</tr>
+<tr class="odd">
+<td align="left">raceMultiple Races reported, non-Hispanic</td>
+<td align="right">0.0309649</td>
+<td align="right">0.1547654</td>
+<td align="right">0.2000765</td>
+<td align="right">0.8414208</td>
+</tr>
+<tr class="even">
+<td align="left">sexFemale</td>
+<td align="right">0.4227606</td>
+<td align="right">0.0720433</td>
+<td align="right">5.8681500</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">abuse(0000002) Sexually only</td>
+<td align="right">0.1516370</td>
+<td align="right">0.1352828</td>
+<td align="right">1.1208885</td>
+<td align="right">0.2623353</td>
+</tr>
+<tr class="even">
+<td align="left">abuse(0000003) Both physically and sexually abused</td>
+<td align="right">0.6350910</td>
+<td align="right">0.1161263</td>
+<td align="right">5.4689693</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">abuse(0000004) Not abused</td>
+<td align="right">-1.0311640</td>
+<td align="right">0.0823748</td>
+<td align="right">-12.5179599</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">hiv(0000002) At least one negative and the other
+unknown</td>
+<td align="right">-0.5035315</td>
+<td align="right">0.2267190</td>
+<td align="right">-2.2209491</td>
+<td align="right">0.0263544</td>
+</tr>
+</tbody>
+</table>
+<p>Fitting a logistic regression model</p>
+>>>>>>> 1a54a708dd74c7da2951964d818832703af06193
 </div>
 </div>
 
@@ -57823,6 +57975,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 <script>
 $(document).ready(function ()  {
