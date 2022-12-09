@@ -380,7 +380,7 @@ div.tocify {
 
 <div id="demographics" class="section level1">
 <h1>Demographics</h1>
-<pre class="r"><code>#Table 1
+<pre class="r"><code>#Demographics Table
 table1(~ V0005 + AGE_CAT + V2982 | MENTAL_HISTORY_BINARY, data = total_df, overall = &quot;Total&quot;)</code></pre>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
@@ -533,14 +533,15 @@ total_df %&gt;%
   ungroup() %&gt;% 
   ggplot(aes(x = SES_INCOMEMTH, y = count, fill = MH_History)) +
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
-  theme(axis.text.x = element_text(angle=45, hjust=1))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;SES_INCOMEMTH&#39;. You can override using the `.groups`
-## argument.</code></pre>
+  theme(axis.text.x = element_text(angle=45, hjust=1)) +
+   labs(x = &quot;Monthly Income in Month Before Arrest&quot;)</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;SES_INCOMEMTH&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <p><img src="EDA_files/figure-html/demographics-2.png" width="100%" /></p>
 </div>
 <div id="incarceration-related-variables" class="section level1">
 <h1>Incarceration-Related Variables</h1>
-<pre class="r"><code>#Table 1
+<pre class="r"><code>#Incarceration table
 table1(~ CH_PRIORSENTENCE_NUM + V1197 + CH_CRIMHIST_COLLAPSED + SES_PARENTS_INCARCERATED + SES_FAMILY_INCARCERATED | MENTAL_HISTORY_BINARY, data = total_df, overall = &quot;Total&quot;)</code></pre>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
@@ -714,248 +715,117 @@ total_df %&gt;%
   rename(MH_History = MENTAL_HISTORY_BINARY) %&gt;%
   ungroup() %&gt;% 
   ggplot(aes(x = TYPEOFFENSE, y = count, fill = MH_History)) +
-  geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
-  theme(axis.text.x = element_text(angle=45, hjust=1))</code></pre>
+  geom_col(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
+  theme(axis.text.x = element_text(angle=45, hjust=1)) +
+   labs(x = &quot;Type of Offense&quot;) </code></pre>
 <pre><code>## `summarise()` has grouped output by &#39;TYPEOFFENSE&#39;. You can override using the
 ## `.groups` argument.</code></pre>
 <p><img src="EDA_files/figure-html/incarceration-1.png" width="100%" /></p>
 <pre class="r"><code>#DENSITY PLOT FOR V1197
 ggplot(data = total_df, aes(x = V1197)) +
-  geom_density(aes(color = MENTAL_HISTORY_BINARY))</code></pre>
+  geom_density(aes(color = MENTAL_HISTORY_BINARY)) +
+  labs(x = &quot;Number of Prior Arrests&quot;)</code></pre>
 <p><img src="EDA_files/figure-html/incarceration-2.png" width="100%" /></p>
-</div>
-<div id="hiv" class="section level1">
-<h1>HIV</h1>
-<p>Our initial interest was in HIV prevalence and predictors in the
-prison system. We performed some exploratory analyses:</p>
-<pre class="r"><code>state_df %&gt;%
-  group_by(MCMH_RSLT_HIV)%&gt;%
-  summarise(count = n()) %&gt;%
-  mutate(percent = (count / sum(count))) %&gt;%
-  knitr::kable()</code></pre>
-<table>
-<colgroup>
-<col width="77%" />
-<col width="8%" />
-<col width="14%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">MCMH_RSLT_HIV</th>
-<th align="right">count</th>
-<th align="right">percent</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">(0000001) At least one positive test</td>
-<td align="right">193</td>
-<td align="right">0.0133113</td>
-</tr>
-<tr class="even">
-<td align="left">(0000002) At least one negative and the other
-unknown</td>
-<td align="right">11399</td>
-<td align="right">0.7861922</td>
-</tr>
-<tr class="odd">
-<td align="left">(9999999) Missing</td>
-<td align="right">2907</td>
-<td align="right">0.2004966</td>
-</tr>
-</tbody>
-</table>
 </div>
 <div id="mental-health" class="section level1">
 <h1>Mental Health</h1>
-<pre class="r"><code>#ever taken a medication for mental health 
-federal_df %&gt;% 
-  group_by(V2409) %&gt;% 
+<div id="medication" class="section level3">
+<h3>Medication</h3>
+<pre class="r"><code>#Ever taken a medication for mental health 
+
+# federal_df %&gt;% 
+#   group_by(V2409) %&gt;% 
+#   summarize(count = n()) %&gt;% 
+#   rename(&#39;Ever taken a mental health medication&#39; = V2409) %&gt;%
+#   knitr::kable()
+
+total_df %&gt;% 
+  filter(V2409 == &quot;(1) Yes&quot; | V2409 == &quot;(2) No&quot; | V2409 == &quot;(7) Don&#39;t know&quot;) %&gt;%
+  group_by(V2409, dataset) %&gt;% 
   summarize(count = n()) %&gt;% 
-  knitr::kable()</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="left">V2409</th>
-<th align="right">count</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">(1) Yes</td>
-<td align="right">704</td>
-</tr>
-<tr class="even">
-<td align="left">(2) No</td>
-<td align="right">2887</td>
-</tr>
-<tr class="odd">
-<td align="left">(7) Don’t know</td>
-<td align="right">9</td>
-</tr>
-<tr class="even">
-<td align="left">(8) Refused</td>
-<td align="right">30</td>
-</tr>
-<tr class="odd">
-<td align="left">NA</td>
-<td align="right">56</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>federal_df %&gt;% 
-  group_by(V2409) %&gt;% 
-  summarize(n_obs = n()) %&gt;% 
    mutate(
-    V2409 = fct_reorder(V2409, n_obs)) %&gt;% 
+    V2409 = fct_reorder(V2409, count)) %&gt;% 
   ungroup() %&gt;% 
-  ggplot(aes(x = V2409, y = n_obs, fill = V2409)) +
-  geom_bar(stat = &quot;identity&quot;)</code></pre>
-<p><img src="EDA_files/figure-html/mental_health-1.png" width="100%" /></p>
+  ggplot(aes(x = V2409, y = count, fill = dataset)) +
+  geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
+  theme(legend.title=element_blank()) +
+  labs(x = &quot;Ever taken medication for mental health&quot;) </code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;V2409&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<p><img src="EDA_files/figure-html/MH_med-1.png" width="100%" /></p>
 <pre class="r"><code># TAKEN MEDICATION FOR A MENTAL CONDITION SINCE ADMISSION
-federal_df %&gt;% 
-  group_by(V2412) %&gt;% 
-  summarize(n_obs = n()) %&gt;% 
-  knitr::kable()</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th align="left">V2412</th>
-<th align="right">n_obs</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">(1) Yes</td>
-<td align="right">472</td>
-</tr>
-<tr class="even">
-<td align="left">(2) No</td>
-<td align="right">232</td>
-</tr>
-<tr class="odd">
-<td align="left">NA</td>
-<td align="right">2982</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>federal_df %&gt;% 
-  group_by(V2412) %&gt;% 
-  summarize(n_obs = n()) %&gt;% 
+
+# federal_df %&gt;% 
+#   group_by(V2412) %&gt;% 
+#   summarize(n_obs = n()) %&gt;% 
+#   knitr::kable()
+
+total_df %&gt;% 
+  group_by(V2412, dataset) %&gt;% 
+  summarize(count = n()) %&gt;% 
   drop_na() %&gt;% 
    mutate(
-    V2412 = fct_reorder(V2412, n_obs)) %&gt;% 
+    V2412 = fct_reorder(V2412, count)) %&gt;% 
   ungroup() %&gt;% 
-  ggplot(aes(x = V2412, y = n_obs, fill = V2412)) +
-  geom_bar(stat = &quot;identity&quot;)</code></pre>
-<p><img src="EDA_files/figure-html/mental_health-2.png" width="100%" /></p>
+  ggplot(aes(x = V2412, y = count, fill = dataset)) +
+  geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
+  theme(legend.title=element_blank()) +
+  labs(x = &quot;Taken medication for mental health since admission&quot;) </code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;V2412&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<p><img src="EDA_files/figure-html/MH_med-2.png" width="100%" /></p>
+</div>
+<div id="hospitalization" class="section level3">
+<h3>Hospitalization</h3>
 <pre class="r"><code># Mental Hosp - year before arrest - MCMH_mhospyr from client
-federal_df %&gt;% 
-  group_by(MCMH_MHOSPYR) %&gt;% 
-  summarize(n_obs = n()) %&gt;% 
-  knitr::kable()</code></pre>
-<table>
-<colgroup>
-<col width="93%" />
-<col width="6%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">MCMH_MHOSPYR</th>
-<th align="right">n_obs</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">(0000001) Yes, admitted to mental hospital during the
-12 months before arrest</td>
-<td align="right">67</td>
-</tr>
-<tr class="even">
-<td align="left">(0000002) No, was not admitted to mental hospital
-during the 12 months before arrest</td>
-<td align="right">179</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000004) No, never admitted to stayed overnight at
-mental hospital</td>
-<td align="right">3343</td>
-</tr>
-<tr class="even">
-<td align="left">(9999998) DK/refused</td>
-<td align="right">41</td>
-</tr>
-<tr class="odd">
-<td align="left">(9999999) Missing</td>
-<td align="right">56</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>federal_df %&gt;% 
-  group_by(MCMH_MHOSPYR) %&gt;% 
-  summarize(n_obs = n()) %&gt;% 
+# federal_df %&gt;% 
+#   group_by(MCMH_MHOSPYR) %&gt;% 
+#   summarize(n_obs = n()) %&gt;% 
+#   knitr::kable()
+
+total_df %&gt;% 
+  group_by(MCMH_MHOSPYR, dataset) %&gt;% 
+  summarize(count = n()) %&gt;% 
   filter(MCMH_MHOSPYR %in% c(&quot;(0000004) No, never admitted to stayed overnight at mental hospital&quot;,&quot;(0000001) Yes, admitted to mental hospital during the 12 months before arrest&quot;,
-  &quot;(0000002) No, was not admitted to mental hospital during the 12 months before arrest&quot;)) %&gt;% 
+  &quot;(0000002) No, was not admitted to mental hospital during the 12 months before arrest&quot;)) %&gt;%
   drop_na() %&gt;% 
    mutate(
-    MCMH_MHOSPYR = fct_reorder(MCMH_MHOSPYR, n_obs)) %&gt;% 
+    MCMH_MHOSPYR = fct_reorder(MCMH_MHOSPYR, count),
+    MCMH_MHOSPYR = str_sub(MCMH_MHOSPYR, 10)
+    ) %&gt;% 
   ungroup() %&gt;% 
-  ggplot(aes(x = MCMH_MHOSPYR, y = n_obs, fill = MCMH_MHOSPYR)) +
-  geom_bar(stat = &quot;identity&quot;)</code></pre>
-<p><img src="EDA_files/figure-html/mental_health-3.png" width="100%" /></p>
+  ggplot(aes(x = MCMH_MHOSPYR, y = count, fill = dataset)) +
+  geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
+  theme(axis.text.x = element_text(angle=45, hjust=1), legend.title=element_blank()) +
+  labs(x = &quot;Hospitalized for mental health, in the year before arrest&quot;) </code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;MCMH_MHOSPYR&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<p><img src="EDA_files/figure-html/MH_hosp-1.png" width="100%" /></p>
 <pre class="r"><code># Mental hosp - since admission - MCMH_mhospadm from client
-federal_df %&gt;% 
-  group_by(MCMH_MHOSPADM) %&gt;% 
-  summarize(n_obs = n()) %&gt;% 
-  knitr::kable()</code></pre>
-<table>
-<colgroup>
-<col width="91%" />
-<col width="8%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th align="left">MCMH_MHOSPADM</th>
-<th align="right">n_obs</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td align="left">(0000001) Yes, admitted to mental hospital since
-admission</td>
-<td align="right">69</td>
-</tr>
-<tr class="even">
-<td align="left">(0000002) No, was not admitted to mental hospital since
-admission</td>
-<td align="right">178</td>
-</tr>
-<tr class="odd">
-<td align="left">(0000004) No, never admitted to stayed overnight at
-mental hospital</td>
-<td align="right">3343</td>
-</tr>
-<tr class="even">
-<td align="left">(9999998) DK/refused</td>
-<td align="right">40</td>
-</tr>
-<tr class="odd">
-<td align="left">(9999999) Missing</td>
-<td align="right">56</td>
-</tr>
-</tbody>
-</table>
-<pre class="r"><code>federal_df %&gt;% 
-  group_by(MCMH_MHOSPADM) %&gt;% 
-  summarize(n_obs = n()) %&gt;% 
+# federal_df %&gt;% 
+#   group_by(MCMH_MHOSPADM) %&gt;% 
+#   summarize(n_obs = n()) %&gt;% 
+#   knitr::kable()
+
+total_df %&gt;% 
+  group_by(MCMH_MHOSPADM, dataset) %&gt;% 
+  summarize(count = n()) %&gt;% 
     filter(!MCMH_MHOSPADM %in% c(&quot;(9999999) Missing&quot;,&quot;(9999998) DK/refused&quot;)) %&gt;% 
   drop_na() %&gt;% 
    mutate(
-    MCMH_MHOSPADM = fct_reorder(MCMH_MHOSPADM, n_obs)) %&gt;% 
+    MCMH_MHOSPADM = fct_reorder(MCMH_MHOSPADM, count),
+    MCMH_MHOSPADM = str_sub(MCMH_MHOSPADM, 10)) %&gt;% 
   ungroup() %&gt;% 
-  ggplot(aes(x = MCMH_MHOSPADM, y = n_obs, fill = MCMH_MHOSPADM)) +
-  geom_bar(stat = &quot;identity&quot;)</code></pre>
-<p><img src="EDA_files/figure-html/mental_health-4.png" width="100%" /></p>
+  ggplot(aes(x = MCMH_MHOSPADM, y = count, fill = dataset)) +
+  geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
+  theme(axis.text.x = element_text(angle=45, hjust=1), legend.title=element_blank()) +
+  labs(x = &quot;Hospitalized for mental health, since admission&quot;) </code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;MCMH_MHOSPADM&#39;. You can override using the
+## `.groups` argument.</code></pre>
+<p><img src="EDA_files/figure-html/MH_hosp-2.png" width="100%" /></p>
+</div>
+<div id="treatment-continuation" class="section level3">
+<h3>Treatment Continuation</h3>
 <pre class="r"><code># MH Treatment Continuation (one year prior to arrest and since admission)
 
 state_tx = state_df %&gt;%
@@ -970,8 +840,8 @@ state_tx = state_df %&gt;%
   mutate(
     sum = sum(n_obs),
     percent = (n_obs/sum) * 100 ) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;MCMH_MH_TREATMENT_PA&#39;. You can override using the `.groups`
-## argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;MCMH_MH_TREATMENT_PA&#39;. You can override
+## using the `.groups` argument.</code></pre>
 <pre class="r"><code>federal_tx = federal_df %&gt;%
   group_by(MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD) %&gt;%
   summarize(n_obs = n()) %&gt;%
@@ -984,62 +854,78 @@ state_tx = state_df %&gt;%
   mutate(
     sum = sum(n_obs),
     percent = (n_obs/sum) * 100 ) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;MCMH_MH_TREATMENT_PA&#39;. You can override using the `.groups`
-## argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;MCMH_MH_TREATMENT_PA&#39;. You can override
+## using the `.groups` argument.</code></pre>
 <pre class="r"><code>colors &lt;- c(&quot;State Prisons&quot; = &quot;blue&quot;, &quot;Federal Prisons&quot; = &quot;red&quot;)
 ggplot() + 
   geom_line(data = state_tx, aes(x = tx_pa_ad, y = percent, group = 1, color = &quot;State Prisons&quot;)) + 
   geom_line(data = federal_tx, aes(x = tx_pa_ad, y = percent, group = 1, color = &quot;Federal Prisons&quot;)) +
   labs(
-    title = &quot;Mental Health Treatment Continuation&quot;,
     x = &quot;1 Year Prior to Arrest/Since Admission&quot;,
     y = &quot;Percent (%) of Survey Respondents&quot;,
-    color = &quot;Legend&quot;
+    color = &quot;&quot;
   ) +
   scale_color_manual(values = colors)</code></pre>
-<p><img src="EDA_files/figure-html/mental_health-5.png" width="100%" /></p>
+<p><img src="EDA_files/figure-html/MH_tx_cont-1.png" width="100%" /></p>
 </div>
-<div id="associations-between-hiv-mental-health" class="section level1">
-<h1>Associations Between HIV &amp; Mental Health</h1>
-<pre class="r"><code>#Overall 
-total_df %&gt;%
-  group_by(MCMH_RSLT_HIV)%&gt;%
-  summarise(count = n()) %&gt;%
-  mutate(percent = (count / sum(count))) %&gt;%
-  knitr::kable()</code></pre>
-<table>
-<colgroup>
-<col width="77%" />
-<col width="8%" />
-<col width="14%" />
-</colgroup>
+</div>
+<div id="hiv" class="section level1">
+<h1>HIV</h1>
+<pre class="r"><code>table1(~ MCMH_RSLT_HIV | dataset, data = total_df, overall = &quot;Total&quot;)</code></pre>
+<div class="Rtable1"><table class="Rtable1">
 <thead>
-<tr class="header">
-<th align="left">MCMH_RSLT_HIV</th>
-<th align="right">count</th>
-<th align="right">percent</th>
+<tr>
+<th class='rowlabel firstrow lastrow'></th>
+<th class='firstrow lastrow'><span class='stratlabel'>Federal<br><span class='stratn'>(N=3589)</span></span></th>
+<th class='firstrow lastrow'><span class='stratlabel'>State<br><span class='stratn'>(N=14292)</span></span></th>
+<th class='firstrow lastrow'><span class='stratlabel'>Total<br><span class='stratn'>(N=17881)</span></span></th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">(0000001) At least one positive test</td>
-<td align="right">228</td>
-<td align="right">0.0127510</td>
+<tr>
+<td class='rowlabel firstrow'>MCMH_RSLT_HIV</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
 </tr>
-<tr class="even">
-<td align="left">(0000002) At least one negative and the other
-unknown</td>
-<td align="right">14252</td>
-<td align="right">0.7970471</td>
+<tr>
+<td class='rowlabel'>(0000001) At least one positive test</td>
+<td>35 (1.0%)</td>
+<td>193 (1.4%)</td>
+<td>228 (1.3%)</td>
 </tr>
-<tr class="odd">
-<td align="left">(9999999) Missing</td>
-<td align="right">3401</td>
-<td align="right">0.1902019</td>
+<tr>
+<td class='rowlabel'>(0000002) At least one negative and the other unknown</td>
+<td>2889 (80.5%)</td>
+<td>11363 (79.5%)</td>
+<td>14252 (79.7%)</td>
+</tr>
+<tr>
+<td class='rowlabel'>(0000009) Missing</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+<td>0 (0%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>(9999999) Missing</td>
+<td class='lastrow'>665 (18.5%)</td>
+<td class='lastrow'>2736 (19.1%)</td>
+<td class='lastrow'>3401 (19.0%)</td>
 </tr>
 </tbody>
 </table>
-<pre class="r"><code>#Graph state vs. Prison
+</div>
+</div>
+<div id="hiv-mental-health" class="section level1">
+<h1>HIV &amp; Mental Health</h1>
+<pre class="r"><code>#Overall 
+# total_df %&gt;%
+#   group_by(MCMH_RSLT_HIV)%&gt;%
+#   summarise(count = n()) %&gt;%
+#   mutate(percent = (count / sum(count))) %&gt;%
+#   knitr::kable()
+
+#Graph state vs. Prison
 federal_bar = 
   federal_df %&gt;%
   group_by(MCMH_RSLT_HIV, MCMH_MENTAL_HISTORY)%&gt;%
@@ -1055,8 +941,8 @@ federal_bar =
   labs(title=&quot;Federal&quot;,
         x =&quot;HIV Status&quot;, y = &quot;Percent with Mental Health Disorder&quot;) +
   ylim(0, 0.5)</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;MCMH_RSLT_HIV&#39;. You can override using the `.groups`
-## argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;MCMH_RSLT_HIV&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <pre class="r"><code>state_bar = 
   state_df %&gt;%
   group_by(MCMH_RSLT_HIV, MCMH_MENTAL_HISTORY)%&gt;%
@@ -1072,8 +958,8 @@ federal_bar =
   labs(title=&quot;State&quot;,
         x =&quot;HIV Status&quot;, y = &quot;Percent with Mental Health Disorder&quot;) +
   ylim(0, 0.5)</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;MCMH_RSLT_HIV&#39;. You can override using the `.groups`
-## argument.</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;MCMH_RSLT_HIV&#39;. You can override using the
+## `.groups` argument.</code></pre>
 <pre class="r"><code>#Mental Health Disorder Prevalence by HIV Status at the Federal &amp; State Levels(2004)
 federal_bar + state_bar</code></pre>
 <p><img src="EDA_files/figure-html/hiv%20mh-1.png" width="100%" /></p>

@@ -10,11 +10,11 @@ output:
 
 ### Data Source
 
-The data used for this analysis can be found [here](https://www.icpsr.umich.edu/web/NACJD/studies/4572). The demographic breakdown for the survey population can be found in the [Exploratory Analysis](EDA.html).
+The dataset used for this analysis can be found [here](https://www.icpsr.umich.edu/web/NACJD/studies/4572). The demographic breakdown for the survey population can be found in the [Exploratory Analysis](EDA.html). Cartographic boundary files for the spatial analyses can be downloaded on the [US Census Bureau](https://www.census.gov/geographies/mapping-files/time-series/geo/carto-boundary-file.html) website.
 
 ### Software and R Packages
 
-All analyses and website development were conducted in RStudio, and the source code is publicly available on [Github](https://github.com/amr2371/prisonsurvey.github.io). The following RStudio libraries were loaded for this analysis: tidyverse, mgcv, modelr, patchwork, and viridis.
+All analyses and website development were conducted in RStudio, and the source code is publicly available on [Github](https://github.com/amr2371/prisonsurvey.github.io). The following RStudio libraries were loaded for this analysis: tidyverse, mgcv, modelr, patchwork, and viridis. Spatial analyses were created with QGIS.
 
 ### References
 
