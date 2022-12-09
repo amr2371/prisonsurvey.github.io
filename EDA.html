@@ -371,8 +371,28 @@ div.tocify {
 </div>
 
 
+<p>To conduct our exploratory data analysis, we first imported the
+datasets of both state and federally incarcerated individuals from the
+<code>Survey of Inmates in State and Federal Correctional Facilities, [United States], 2004 (ICPSR 4572)</code>
+into R. We also selected only our variables of interest to pare down
+these datasets.</p>
+<p>Subsequently, we stacked these two datasets based on a newly created
+variable called <code>dataset</code>, which identified whether the
+associated observation was from the state or federal file. We also
+cleaned this data by recoding some of the factor variables, adding
+labels to variables, changing the coding of values from
+<code>missing</code> or <code>don't know</code> to NA, etc.</p>
+<p>This tidying and cleaning resulted in a combined dataset with
+<code>17881</code> rows (observations) and <code>60</code> columns
+(variables).</p>
 <div id="demographics" class="section level1">
 <h1>Demographics</h1>
+<p>To examine the distribution of demographic variables across our
+dataset, we created a tabular display of variables: <code>sex</code>,
+<code>age group</code>, and <code>race/ethnicity</code>.</p>
+<div id="distribution-of-demographic-variables-by-mental-health-history"
+class="section level3">
+<h3>Distribution of Demographic Variables by Mental Health History</h3>
 <pre class="r"><code>#Demographics Table
 table1(~ V0005 + AGE_CAT + V2982 | MENTAL_HISTORY_BINARY, data = total_df, overall = &quot;Total&quot;)</code></pre>
 <div class="Rtable1"><table class="Rtable1">
@@ -502,36 +522,48 @@ table1(~ V0005 + AGE_CAT + V2982 | MENTAL_HISTORY_BINARY, data = total_df, overa
 </tbody>
 </table>
 </div>
-<pre class="r"><code>#BAR GRAPH FOR EDUCATION
+</div>
+<div id="educational-attainment-by-mental-health-history"
+class="section level3">
+<h3>Educational Attainment by Mental Health History</h3>
+<pre class="r"><code>#Bar Graph for EDUCATION
 total_df %&gt;% 
-  group_by(EDUCATION, MENTAL_HISTORY_BINARY) %&gt;% 
-  summarize(count = n()) %&gt;% 
-   mutate(
-    EDUCATION = fct_reorder(EDUCATION, count)) %&gt;% 
+  group_by(MENTAL_HISTORY_BINARY, EDUCATION) %&gt;% 
+  summarise(n = n()) %&gt;%
+  mutate(freq = n / sum(n)) %&gt;%
   rename(MH_History = MENTAL_HISTORY_BINARY) %&gt;%
   ungroup() %&gt;% 
-  ggplot(aes(x = EDUCATION, y = count, fill = MH_History)) +
+  ggplot(aes(x = EDUCATION, y = freq, fill = MH_History)) +
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1))</code></pre>
-<p><img src="EDA_files/figure-html/demographics-1.png" width="100%" /></p>
-<pre class="r"><code>#BAR GRAPH FOR SES_INCOMEMTH
+<p><img src="EDA_files/figure-html/edu-1.png" width="100%" /></p>
+</div>
+<div id="educational-attainment-by-mental-health-history-1"
+class="section level3">
+<h3>Educational Attainment by Mental Health History</h3>
+<pre class="r"><code>#BAR graph for SES_INCOMEMTH
 total_df %&gt;% 
-  group_by(SES_INCOMEMTH, MENTAL_HISTORY_BINARY) %&gt;% 
-  summarize(count = n()) %&gt;% 
-   mutate(
-    SES_INCOMEMTH = fct_reorder(SES_INCOMEMTH, count)) %&gt;% 
+  group_by(MENTAL_HISTORY_BINARY, SES_INCOMEMTH) %&gt;% 
+  summarise(n = n()) %&gt;%
+  mutate(freq = n / sum(n)) %&gt;%
   rename(MH_History = MENTAL_HISTORY_BINARY) %&gt;%
   ungroup() %&gt;% 
-  ggplot(aes(x = SES_INCOMEMTH, y = count, fill = MH_History)) +
+  ggplot(aes(x = SES_INCOMEMTH, y = freq, fill = MH_History)) +
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
    labs(x = &quot;Monthly Income in Month Before Arrest&quot;)</code></pre>
-<p><img src="EDA_files/figure-html/demographics-2.png" width="100%" /></p>
+<p><img src="EDA_files/figure-html/income-1.png" width="100%" /></p>
+</div>
 </div>
 <div id="incarceration-related-variables" class="section level1">
 <h1>Incarceration-Related Variables</h1>
+<div
+id="distribution-of-incarceration-related-variables-by-mental-health-history"
+class="section level3">
+<h3>Distribution of Incarceration-Related Variables by Mental Health
+History</h3>
 <pre class="r"><code>#Incarceration table
-table1(~ CH_PRIORSENTENCE_NUM + V1197 + CH_CRIMHIST_COLLAPSED + SES_PARENTS_INCARCERATED + SES_FAMILY_INCARCERATED | MENTAL_HISTORY_BINARY, data = total_df, overall = &quot;Total&quot;)</code></pre>
+table1(~ CH_PRIORSENTENCE_NUM + V1197 + CH_CRIMHIST_COLLAPSED + SES_PARENTS_INCARCERATED + SES_FAMILY_INCARCERATED + dataset | MENTAL_HISTORY_BINARY, data = total_df, overall = &quot;Total&quot;)</code></pre>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
 <tr>
@@ -692,33 +724,58 @@ table1(~ CH_PRIORSENTENCE_NUM + V1197 + CH_CRIMHIST_COLLAPSED + SES_PARENTS_INCA
 <td class='lastrow'>57 (1.2%)</td>
 <td class='lastrow'>199 (1.1%)</td>
 </tr>
+<tr>
+<td class='rowlabel firstrow'>Dataset</td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+<td class='firstrow'></td>
+</tr>
+<tr>
+<td class='rowlabel'>Federal</td>
+<td>2829 (21.8%)</td>
+<td>760 (15.6%)</td>
+<td>3589 (20.1%)</td>
+</tr>
+<tr>
+<td class='rowlabel lastrow'>State</td>
+<td class='lastrow'>10168 (78.2%)</td>
+<td class='lastrow'>4124 (84.4%)</td>
+<td class='lastrow'>14292 (79.9%)</td>
+</tr>
 </tbody>
 </table>
 </div>
-<pre class="r"><code>#BAR GRAPH FOR TYPEOFOFFENSE
+</div>
+<div id="type-of-offense-by-mental-health-history"
+class="section level3">
+<h3>Type of Offense by Mental Health History</h3>
+<pre class="r"><code>#Bar graph fir TYPEOFOFFENSE
 total_df %&gt;% 
-  group_by(TYPEOFFENSE, MENTAL_HISTORY_BINARY) %&gt;% 
-  summarize(count = n()) %&gt;% 
-   mutate(
-    TYPEOFFENSE = gsub(&quot;.*)&quot;, &quot;&quot;, TYPEOFFENSE)) %&gt;% 
+  group_by(MENTAL_HISTORY_BINARY, TYPEOFFENSE) %&gt;% 
+  summarise(n = n()) %&gt;%
+  mutate(freq = n / sum(n)) %&gt;%
+  mutate(
+    TYPEOFFENSE = gsub(&quot;.*)&quot;, &quot;&quot;, TYPEOFFENSE), 
+    TYPEOFFENSE = fct_reorder(TYPEOFFENSE, -freq)) %&gt;% 
   rename(MH_History = MENTAL_HISTORY_BINARY) %&gt;%
   ungroup() %&gt;% 
-  ggplot(aes(x = TYPEOFFENSE, y = count, fill = MH_History)) +
+  ggplot(aes(x = TYPEOFFENSE, y = freq, fill = MH_History)) +
   geom_col(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
    labs(x = &quot;Type of Offense&quot;)</code></pre>
-<p><img src="EDA_files/figure-html/incarceration-1.png" width="100%" /></p>
-<pre class="r"><code>#DENSITY PLOT FOR V1197
+<p><img src="EDA_files/figure-html/offense-1.png" width="100%" /></p>
+<pre class="r"><code>#Density plot for V1197
 ggplot(data = total_df, aes(x = V1197)) +
   geom_density(aes(color = MENTAL_HISTORY_BINARY)) +
   labs(x = &quot;Number of Prior Arrests&quot;)</code></pre>
-<p><img src="EDA_files/figure-html/incarceration-2.png" width="100%" /></p>
+<p><img src="EDA_files/figure-html/prior_arrests-1.png" width="100%" /></p>
+</div>
 </div>
 <div id="mental-health" class="section level1">
 <h1>Mental Health</h1>
-<div id="medication" class="section level2">
-<h2>Medication</h2>
-<pre class="r"><code>#Ever taken a medication for mental health 
+<div id="ever-taken-medication" class="section level3">
+<h3>Ever Taken Medication</h3>
+<pre class="r"><code>#Bar graph for ever taken mental health medication
 
 total_df %&gt;% 
   filter(V2409 == &quot;Yes&quot; | V2409 == &quot;No&quot;) %&gt;%
@@ -731,8 +788,11 @@ total_df %&gt;%
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
   theme(legend.position = &quot;none&quot;) +
   labs(x = &quot;Ever taken medication for mental health&quot;) </code></pre>
-<p><img src="EDA_files/figure-html/mental_health-1.png" width="100%" /></p>
-<pre class="r"><code># TAKEN MEDICATION FOR A MENTAL CONDITION SINCE ADMISSION
+<p><img src="EDA_files/figure-html/meds_ever-1.png" width="100%" /></p>
+</div>
+<div id="taken-medication-since-admission" class="section level3">
+<h3>Taken Medication Since Admission</h3>
+<pre class="r"><code>#Bar graph for taken mental health medication since admission
 
 total_df %&gt;% 
   filter(V2412 == &quot;Yes&quot; | V2412 == &quot;No&quot;) %&gt;% 
@@ -745,11 +805,12 @@ total_df %&gt;%
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
   theme(legend.position = &quot;none&quot;) +
   labs(x = &quot;Taken medication for mental health since admission&quot;) </code></pre>
-<p><img src="EDA_files/figure-html/mental_health-2.png" width="100%" /></p>
+<p><img src="EDA_files/figure-html/meds_admission-1.png" width="100%" /></p>
 </div>
-<div id="hospitalization" class="section level2">
-<h2>Hospitalization</h2>
-<pre class="r"><code># Mental Hosp - year before arrest - MCMH_mhospyr from client
+<div id="mental-health-hospitalization-in-year-before-arrest"
+class="section level3">
+<h3>Mental Health Hospitalization in Year Before Arrest</h3>
+<pre class="r"><code># Bar graph of MCMH_MHOSPYR
 
 total_df %&gt;% 
   group_by(MCMH_MHOSPYR) %&gt;% 
@@ -762,12 +823,12 @@ total_df %&gt;%
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
   theme(legend.position = &quot;none&quot;) +
   labs(x = &quot;Hospitalized for mental health, in year before arrest&quot;) </code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-1-1.png" width="100%" /></p>
-<pre class="r"><code># Mental hosp - since admission - MCMH_mhospadm from client
-# federal_df %&gt;% 
-#   group_by(MCMH_MHOSPADM) %&gt;% 
-#   summarize(n_obs = n()) %&gt;% 
-#   knitr::kable()
+<p><img src="EDA_files/figure-html/hosp_year-1.png" width="100%" /></p>
+</div>
+<div id="mental-health-hospitalization-since-admission"
+class="section level3">
+<h3>Mental Health Hospitalization Since Admission</h3>
+<pre class="r"><code># Bar graph of MCMH_MHOSPADM
 
 total_df %&gt;% 
   group_by(MCMH_MHOSPADM) %&gt;% 
@@ -780,11 +841,14 @@ total_df %&gt;%
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
   theme(legend.position = &quot;none&quot;) +
   labs(x = &quot;Hospitalized for mental health, since admission&quot;) </code></pre>
-<p><img src="EDA_files/figure-html/unnamed-chunk-1-2.png" width="100%" /></p>
+<p><img src="EDA_files/figure-html/hosp_admission-1.png" width="100%" /></p>
 </div>
-<div id="treatment-continuation" class="section level2">
-<h2>Treatment Continuation</h2>
-<pre class="r"><code># MH Treatment Continuation (one year prior to arrest and since admission)
+<div
+id="treatment-continuation-one-year-prior-to-arrest-and-since-admission"
+class="section level3">
+<h3>Treatment Continuation (one year prior to arrest and since
+admission)</h3>
+<pre class="r"><code># Line graph for MH treatment continuation (one year prior to arrest and since admission)
 
 state_tx = state_df %&gt;%
   group_by(MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD) %&gt;%
@@ -825,8 +889,8 @@ ggplot() +
 <p><img src="EDA_files/figure-html/trt-1.png" width="100%" /></p>
 </div>
 </div>
-<div id="hiv" class="section level1">
-<h1>HIV</h1>
+<div id="hiv-status-by-mental-health-history" class="section level1">
+<h1>HIV Status by Mental Health History</h1>
 <pre class="r"><code>table1(~ MCMH_RSLT_HIV | MENTAL_HISTORY_BINARY, data = total_df, overall = &quot;Total&quot;)</code></pre>
 <div class="Rtable1"><table class="Rtable1">
 <thead>

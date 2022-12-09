@@ -1,5 +1,5 @@
 ---
-title: "Statical Analysis"
+title: "Explanatory Analysis"
 output: 
   html_document:
     toc: true
@@ -35,69 +35,225 @@ scale_fill_discrete = scale_fill_viridis_d
 theme_set(theme_minimal() + theme(legend.position = "bottom"))
 ```
 
-### Is Mental Health Associated with HIV Status?
-```{r z test}
-#Are mental health disorders more prevalent among those with HIV?
+```{r import, include=FALSE}
+#Importing the datasets
+federal_df <- load("./data/04572-0001-Data.rda") 
 
-#Federal:
-federal_df %>%
-  group_by(MCMH_RSLT_HIV, MCMH_MENTAL_HISTORY)%>%
-  summarise(count = n()) %>%
-  mutate(percent = (count / sum(count))) %>%
-  knitr::kable()
-#NO; About 17% of inmates with HIV have a mental health disorder while 22% of inmates without HIV have a mental health disorder
+federal_df <- da04572.0001 %>% 
+  select(V2288, V2289, V2290, V2291, MCMH_HIVTEST, MCMH_RSLT_HIV, DRUG_INJECT_CB, V2401, V2402, V2403, V2404, V2405, V2406, V2407, V2409, V2412, MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD, MCMH_MENTAL_HISTORY, V1197, CS_SENTENCEMTH,CH_PRIORSENTENCE, CH_PRIORSENTENCE_NUM, CH_CRIMHIST, CH_CRIMHIST_COLLAPSED, CH_NUMCAR,CH_NUMCAR1, CH_NUMCAR2, CH_NUMCAR3, CH_NUMCAR4, CH_NUMCAR5, MOST_SERIOUS_OFFENSE2, TYPEOFFENSE, V1056, V1057, V1060, V1061, V1325, V0001, V0014, AGE_CAT, V2982, V0005, EDUCATION, SES_INCOMEMTH, DRUG_ANY, DRUG_ANYREG, DRUG_ANYMTH, SES_PHYSSEXABUSED_EVER, SES_PARENTS_INCARCERATED, SES_FAMILY_INCARCERATED, V0105, MCMH_WHEN_DISORDER, MCMH_WHEN_DISORDER2,MCMH_MHOSPYR,MCMH_MHOSPADM,MCMH_MHOSPYRADM,MCMH_SMI) %>%
+  mutate(dataset = "Federal")
 
-#State:
-state_df %>%
-  group_by(MCMH_RSLT_HIV, MCMH_MENTAL_HISTORY)%>%
-  summarise(count = n()) %>%
-  mutate(percent = (count / sum(count))) %>%
-  knitr::kable()
+state_df <- load("./data/04572-0002-Data.rda") 
 
-#YES; About 40% of those diagnoses with HIV have a mental health disorder, while about 29% without HIV have a mental health disorder
+state_df <- da04572.0002 %>% 
+   select(V2288, V2289, V2290, V2291, MCMH_HIVTEST, MCMH_RSLT_HIV, DRUG_INJECT_CB, V2401, V2402, V2403, V2404, V2405, V2406, V2407, V2409, V2412, MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD, MCMH_MENTAL_HISTORY, V1197, CS_SENTENCEMTH,CH_PRIORSENTENCE, CH_PRIORSENTENCE_NUM, CH_CRIMHIST, CH_CRIMHIST_COLLAPSED, CH_NUMCAR,CH_NUMCAR1, CH_NUMCAR2, CH_NUMCAR3, CH_NUMCAR4, CH_NUMCAR5, MOST_SERIOUS_OFFENSE2, TYPEOFFENSE, V1056, V1057, V1060, V1061, V1325, V0001, V0014, AGE_CAT, V2982, V0005, EDUCATION, SES_INCOMEMTH, DRUG_ANY, DRUG_ANYREG, DRUG_ANYMTH, SES_PHYSSEXABUSED_EVER, SES_PARENTS_INCARCERATED, SES_FAMILY_INCARCERATED, V0105, MCMH_WHEN_DISORDER, MCMH_WHEN_DISORDER2,MCMH_MHOSPYR,MCMH_MHOSPADM,MCMH_MHOSPYRADM,MCMH_SMI) %>%
+  mutate(dataset = "State")
 ```
 
-#### Is this difference significance?: 2 proportion z-test
-
-**Hypotheses:**
-
-H0: The proportion of HIV+ inmates with a mental health diagnosis *IS EQUAL* to the proportion of HIV- inmates with a mental health diagnosis.
-
-H1: The proportion of HIV+ inmates with a mental health diagnosis *IS NOT EQUAL* to the proportion of HIV- inmates with a mental health diagnosis.
-
-```{r 2 prop z test}
-z_test <- prop.test(x = c(78, 3348), n = c(193, 11399))
-
-z_test$p.value
+```{r combine_clean, include=FALSE}
+#Combining datasets, filtering dataset, formatting variables
+total_df = 
+  bind_rows(state_df, federal_df) %>% 
+  mutate(
+    dataset = as.factor(dataset)) %>%
+  mutate(
+    MENTAL_HISTORY_BINARY = case_when(MCMH_MENTAL_HISTORY == "(0000001) Yes" ~ "1", MCMH_MENTAL_HISTORY == "(0000002) No" ~ "0", MCMH_MENTAL_HISTORY == "(9999997) DK/refused" | MCMH_MENTAL_HISTORY == "(9999999) Blank"  ~ ".")) %>%
+  mutate(
+    MENTAL_HISTORY_BINARY = na_if(MENTAL_HISTORY_BINARY, "."), 
+    MENTAL_HISTORY_BINARY = factor(MENTAL_HISTORY_BINARY, 
+      levels = c(0, 1),
+      labels = c("No history of mental health condition(s)", "History of mental health condition(s)")))  %>% 
+  filter(!is.na(MENTAL_HISTORY_BINARY)) %>% 
+  mutate(V0005 = dplyr::recode(V0005, "(1) Male" = "Male", "(2) Female" = "Female")) %>% 
+  mutate(AGE_CAT = dplyr::recode(AGE_CAT, "(1) < 25 yrs" = "< 25 yrs", "(2) 25-34" = "25-34", "(3) 35-44" =  "35-44", "(4) 45-54" = "45-54", "(5) 55-64" = "55-64", "(6) 65-96" = "65-96", "(7) Unknown" = "Unknown")) %>% 
+  mutate(
+    V2982 = dplyr::recode(V2982, "(1) White non-Hispanic" = "White non-Hispanic", "(2) Black non-Hispanic" = "Black non-Hispanic", "(3) Hispanic" = "Hispanic", "(4) American Indian, Alaska Native non-Hispanic" = "American Indian, Alaska Native non-Hispanic", "(5) Asian, Pacific Islander, Native Hawaiian non-Hispanic" = "Asian, Pacific Islander, Native Hawaiian non-Hispanic", "(6) Multiple Races reported, non-Hispanic" = "Multiple Races reported, non-Hispanic", "(8) Other, Uncategorized - Missing" = "NA"), 
+    V2982 = factor(V2982, exclude = "NA"), 
+    V2982 = na_if(V2982, "NA")) %>% 
+  mutate(
+    EDUCATION = dplyr::recode(EDUCATION, "(0000000) Never attended or attended kindergarten only" = "Never attended or attended kindergarten only", "(0000001) First grade" = "First grade", "(0000002) Second grade" = "Second grade", "(0000003) Third grade" = "Third grade", "(0000004) Fourth grade" = "Fourth grade", "(0000005) Fifth grade" = "Fifth grade", "(0000006) Sixth grade" = "Sixth grade", "(0000007) Seventh grade" = "Seventh grade", "(0000008) Eighth grade" = "Eighth grade", "(0000009) Ninth grade" = "Ninth grade", "(0000010) Tenth grade" = "Tenth grade", "(0000011) Eleventh grade" = "Eleventh grade", "(0000012) Twelfth grade" = "Twelfth grade", "(0000013) College freshman" = "College freshman", "(0000014) College sophomore" = "College sophomore", "(0000015) College junior" = "College junior", "(0000016) College senior" = "College senior", "(0000017) Graduate school one year" = "Graduate school one year", "(0000018) Graduate school two or more years" = "Graduate school two or more years", "(0000019) Attended school in other country/system not comparable to grades" = "Attended school in other country/system not comparable to grades", "(9999997) Don't know" = "Don't know", "(9999998) Refused" = "NA", "(9999999) Missing" = "NA"), 
+    EDUCATION = factor(EDUCATION, exclude = "NA"), 
+    EDUCATION = na_if(EDUCATION, "NA")) %>% 
+  mutate(
+    SES_INCOMEMTH = dplyr::recode(SES_INCOMEMTH, "(0000000) No income" = "No income", "(0000001) $1 - 199" = "$1 - $199", "(0000002) 200 - 399" = "$200 - $399", "(0000003) 400 - 599" = "$400 - $599", "(0000004) 600 - 799" = "$600 - $799", "(0000005) 800 - 999" = "$800 - $999", "(0000006) 1,000 - 1,199" = "$1,000 - $1,199", "(0000007) 1,200 - 1,499" = "$1,200 - $1,499", "(0000008) 1,500 - 1,999" = "$1,500 - $1,999", "(0000009) 2,000 - 2,499" = "$2,000 - $2,499", "(0000010) 2,500 - 4,999" = "$2,500 - $4,999", "(0000011) 5,000 - 7,499" = "$5,000 - $7,499", "(0000012) 7,500 or more" = "$7,500 or more", "(9999997) Don't know" = "Don't know", "(9999998) Refused" = "NA", "(9999999) Missing" = "NA"), 
+    SES_INCOMEMTH = factor(SES_INCOMEMTH, exclude = "NA"), 
+    SES_INCOMEMTH = na_if(SES_INCOMEMTH, "NA")) %>% 
+  mutate(
+    CH_PRIORSENTENCE_NUM = dplyr::recode(CH_PRIORSENTENCE_NUM, "(0000000) No prior sentence" = "No prior sentence", "(0000001) One prior sentence" = "One prior sentence", "(0000002) Two prior sentences" = "Two prior sentences", "(0000003) Three to five prior sentences" = "Three to five prior sentences", "(0000004) Six to ten prior sentences" = "Six to ten prior sentences", "(0000005) Eleven or more prior sentences" = "Eleven or more prior sentences", "(9999999) Missing" = "NA"), 
+    CH_PRIORSENTENCE_NUM = factor(CH_PRIORSENTENCE_NUM, exclude = "NA"), 
+    CH_PRIORSENTENCE_NUM = na_if(CH_PRIORSENTENCE_NUM, "NA")) %>% 
+    mutate(
+    V1197 = ifelse(V1197 <= 996, V1197, NA)) %>% 
+  mutate(
+    CH_CRIMHIST_COLLAPSED = dplyr::recode(CH_CRIMHIST_COLLAPSED, "(0000001) First timers" = "First timers", "(0000002) Recidivist, current or past violent offense" = "Recidivist, current or past violent offense", "(0000003) Recidivist, no current or prior violent offense" = "Recidivist, no current or prior violent offense", "(9999999) Missing" = "NA"), 
+    CH_CRIMHIST_COLLAPSED = factor(CH_CRIMHIST_COLLAPSED, exclude = "NA"), 
+    CH_CRIMHIST_COLLAPSED = na_if(CH_CRIMHIST_COLLAPSED, "NA")) %>% 
+  mutate(
+    SES_PARENTS_INCARCERATED = dplyr::recode(SES_PARENTS_INCARCERATED, "(0000001) Yes" = "Yes", "(0000002) No" = "No","(9999997) Don't know" = "NA", "(9999998) Refused" = "NA", "(9999999) Missing" = "NA"), 
+    SES_PARENTS_INCARCERATED = factor(SES_PARENTS_INCARCERATED, exclude = "NA"), 
+    SES_PARENTS_INCARCERATED = na_if(SES_PARENTS_INCARCERATED, "NA")) %>% 
+  mutate(
+    SES_FAMILY_INCARCERATED = dplyr::recode(SES_FAMILY_INCARCERATED, "(0000001) Yes" = "Yes", "(0000002) No" = "No","(9999997) Don't know" = "NA", "(9999998) Refused" = "NA", "(9999999) Missing" = "NA"), 
+    SES_FAMILY_INCARCERATED = factor(SES_FAMILY_INCARCERATED, exclude = "NA"), 
+    SES_FAMILY_INCARCERATED = na_if(SES_FAMILY_INCARCERATED, "NA")) %>% 
+  mutate(
+      V2409 = dplyr::recode(V2409, "(1) Yes" = "Yes", "(2) No" = "No","(7) Don't Know" = "NA", "(8) Refused" = "NA"), 
+      V2409 = factor(V2409, exclude = "NA"), 
+      V2409 = na_if(V2409, "NA")) %>% 
+  mutate(
+      V2412 = dplyr::recode(V2412, "(1) Yes" = "Yes", "(2) No" = "No","(7) Don't Know" = "NA", "(8) Refused" = "NA"), 
+      V2412 = factor(V2412, exclude = "NA"), 
+      V2412 = na_if(V2412, "NA")) %>% 
+  mutate(
+      MCMH_MHOSPYR = dplyr::recode(MCMH_MHOSPYR, "(0000001) Yes, admitted to mental hospital during the 12 months before arrest" = "Yes in 12 months before arrest", "(0000002) No, was not admitted to mental hospital during the 12 months before arrest" = "Not in 12 months before arrest", "(0000004) No, never admitted to stayed overnight at mental hospital" = "No, never", "(9999998) DK/refused" = "NA", "(9999999) Missing" = "NA"), 
+      MCMH_MHOSPYR = factor(MCMH_MHOSPYR, exclude = "NA"), 
+      MCMH_MHOSPYR = na_if(MCMH_MHOSPYR, "NA")) %>% 
+  mutate(
+    MCMH_MHOSPADM = dplyr::recode(MCMH_MHOSPADM, "(0000001) Yes, admitted to mental hospital since admission" = "Yes since admission", "(0000002) No, was not admitted to mental hospital since admission" = "Not since admission", "(0000004) No, never admitted to stayed overnight at mental hospital" = "No, never", "(9999998) DK/refused" = "NA", "(9999999) Missing" = "NA"), 
+      MCMH_MHOSPADM = factor(MCMH_MHOSPADM, exclude = "NA"), 
+      MCMH_MHOSPADM = na_if(MCMH_MHOSPADM, "NA")) %>% 
+  mutate(
+    MCMH_RSLT_HIV = dplyr::recode(MCMH_RSLT_HIV, "(0000001) At least one positive test" = "Positive", "(0000002) At least one negative and the other unknown" = "Presumed Negative", "(0000009) Missing" = "NA", "(9999999) Missing" = "NA"), 
+      MCMH_RSLT_HIV = factor(MCMH_RSLT_HIV, exclude = "NA"), 
+      MCMH_RSLT_HIV = na_if(MCMH_RSLT_HIV, "NA")) %>% 
+      set_variable_labels(dataset = "Dataset", MENTAL_HISTORY_BINARY = "Binary Mental Health History", V0005 = "Sex", AGE_CAT = "Age Group", V2982 = "Race/Ethnicity", EDUCATION = "Education", SES_INCOMEMTH = "Monthly Income in Month Before Arrest", CH_PRIORSENTENCE_NUM = "Number of Prior Sentences", V1197 = "Number of Prior Arrests", CH_CRIMHIST_COLLAPSED = "Collapsed Criminal History", TYPEOFFENSE = "Type of Offense", SES_PARENTS_INCARCERATED = "Parents Been Incarcerated", SES_FAMILY_INCARCERATED = "Children, Siblings, or Spouse Been Incarcerated", MCMH_RSLT_HIV = "HIV Status")
 ```
 
-The p-value is **0.001135**
+  
 
-At a significance level of 0.05, we *REJECT* the null hypothesis and conclude that the proportion of HIV+ inmates with a mental health diagnosis *IS NOT EQUAL* to the proportion of HIV- inmates with a mental health diagnosis.
+# Is Mental Health Associated with HIV Status?
 
+To assess whether mental health (outcome of interest) is associated with HIV status (exposure of interest), we conducted logistic regression modeling (due to the binary nature of the outcome variable). First, we created a crude model of this association with no additional covariates.
 
-### Is Mental Health Associated with Prior Arrest History?
+* Null hypothesis: Mental health history (yes vs. no history of at least one mental health condition) does not differ by HIV status (presumed negative vs. positive).
 
-#### One-Way ANOVA:
+* Alternate hypothesis: Mental health history (yes vs. no history of at least one mental health condition) DOES differ by HIV status (presumed negative vs. positive).
 
-**Hypotheses**
+```{r crude_OR}
+#Crude Model
+HIV_MH_model = 
+  total_df %>% 
+  drop_na(MCMH_RSLT_HIV, V0005, AGE_CAT, V2982, SES_INCOMEMTH, EDUCATION) %>% 
+glm(MENTAL_HISTORY_BINARY ~ MCMH_RSLT_HIV, data = ., family = binomial()) %>% 
+  broom::tidy(conf.int = TRUE) %>% 
+  janitor::clean_names() %>%
+  mutate(
+    OR = exp(estimate),
+    conf_low = exp(conf_low),
+    conf_high = exp(conf_high)) %>%
+  mutate(term = str_replace(term, "MCMH_RSLT_HIV", "HIV Status: ")) %>% 
+  select(term, estimate, OR, conf_low, conf_high, p_value) %>%
+  knitr::kable(digits = 3)
 
-H0: The mean sentence length is equal across races
-
-H1: The mean sentence length is unequal across races
-
-```{r anova}
-anova_df = federal_df %>%
-  group_by(V2982) %>%
-  filter(CS_SENTENCEMTH < 1200)%>%
-  summarize(sentence_length = mean(CS_SENTENCEMTH))
-
-
-fit_race_sentence = lm(sentence_length ~ V2982, data = anova_df)
-anova(fit_race_sentence) %>% knitr::kable(caption = "One-way ANOVA of Race and Sentence Length")
+HIV_MH_model
 ```
 
-### What are the best predictors of mental health status?
+The estimated odds of having a history of at least one mental health condition among incarcerated individuals in 2004 with a `presumed negative` HIV status was 0.626 times the estimated odds of having a history of at least one mental health condition among incarcerated individuals in 2004 with a `positive` HIV status.
+
+We are 95% confident that the true odds ratio comparing odds of having a history of at least one mental health condition between incarcerated individuals with a `presumed negative` vs. `positive` HIV status in 2004 lies between 0.469 and 0.840. Thus, at a 0.05 level of significance, we have sufficient evidence to support the claim that mental health history (yes vs. no history of at least one mental health condition) DOES differ by HIV status (presumed negative vs. positive). Because our confidence interval does not include the null odds ratio value of 1 and is, in fact, exclusively below this value, it appears that, on average, HIV-positive incarcerated individuals were more likely to have had a history of mental health condition(s).   
+
+Our association of interest may be affected by several confounders: variables which are associated with both the exposure (HIV status) and outcome (mental health history) of interest and are not on the causal pathway between the two. Demographic variables often play such confounding roles. Therefore, we decided to develop an adjusted logistic regression model to explain our association that takes into account covariates of `sex`, `age group`, `race/ethnicity`, `education`, and `monthly income`. Using our background knowledge of the topic and resulting a priori hypotheses, these variables may all logically be confounders of the relationship of interest.
+
+```{r adjusted_OR}
+#Adjusted Model
+
+HIV_MH_model_adj = 
+  total_df %>% 
+  drop_na(MCMH_RSLT_HIV, V0005, AGE_CAT, V2982, SES_INCOMEMTH, EDUCATION) %>% 
+  glm(MENTAL_HISTORY_BINARY ~ MCMH_RSLT_HIV + V0005 + AGE_CAT + V2982 + SES_INCOMEMTH + EDUCATION, data = ., family = binomial()) %>% 
+  broom::tidy(conf.int = TRUE) %>% 
+  janitor::clean_names() %>%
+  mutate(
+    OR = exp(estimate),
+    conf_low = exp(conf_low),
+    conf_high = exp(conf_high)) %>%
+  mutate(
+    term = str_replace(term, "MCMH_RSLT_HIV", "HIV Status: "), 
+    term = str_replace(term, "V0005", "Sex: "), 
+    term = str_replace(term, "AGE_CAT", "Age Group: "),
+    term = str_replace(term, "V2982", "Race/Ethnicity: "), 
+    term = str_replace(term, "SES_INCOMEMTH", "Monthly Income: "), 
+    term = str_replace(term, "EDUCATION", "Education: ")) %>% 
+  select(term, estimate, OR, conf_low, conf_high, p_value) %>%
+  knitr::kable(digits = 3)
+
+HIV_MH_model_adj
+```
+
+In fact, upon including these covariates in our logistic regression model, we find that the new, adjusted coefficient for `MCMH_RSLT_HIV` (HIV status) is appreciably different from our crude coefficient. This was assessed by determining that the adjusted natural log odds ratio (ln(OR)) was >10% different (specifically 32.48% different) from the crude for our exposure of interest.
+
+After controlling for `sex`, `age group`, `race/ethnicity`, `education`, and `monthly income`, we found that the estimated odds of having a history of at least one mental health condition among incarcerated individuals in 2004 with a `presumed negative` HIV status was 0.538 times the estimated odds of having a history of at least one mental health condition among incarcerated individuals in 2004 with a `positive` HIV status.
+
+We are 95% confident that the true odds ratio comparing odds of having a history of at least one mental health condition between incarcerated individuals with a `presumed negative` vs. `positive` HIV status in 2004 lies between 0.397 and 0.735, adjusting for `sex`, `age group`, `race/ethnicity`, `education`, and `monthly income`. Thus, at a 0.05 level of significance, we have sufficient evidence to support the claim that mental health history (yes vs. no history of at least one mental health condition) DOES differ by HIV status (presumed negative vs. positive), even after adjusting for our confounders. Because our confidence interval does not include the null odds ratio value of 1 and is, in fact, exclusively below this value, it appears that, on average, HIV-positive incarcerated individuals were more likely to have had a history of mental health condition(s), controlling for confounding. This means that while we had confounding at play, these were only partially confounding the true association of interest.  
+     
+     
+# Is Mental Health Associated with Prior Arrest History?  
+
+To assess whether mental health (outcome of interest) is associated with prior arrest history (exposure of interest), we conducted logistic regression modeling (due to the binary nature of the outcome variable). First, we created a crude model of this association with no additional covariates.
+
+* Null hypothesis: Mental health history (yes vs. no history of at least one mental health condition) does not differ by number of prior arrests (measured as continuous).
+
+* Alternate hypothesis: Mental health history (yes vs. no history of at least one mental health condition) DOES differ by number of prior arrests (measured as continuous).
+
+```{r crude_arrests}
+#Crude Model
+
+crude_arrests_mh = 
+  total_df %>% 
+  drop_na(V1197, V0005, AGE_CAT, V2982, SES_INCOMEMTH, EDUCATION) %>% 
+  glm(MENTAL_HISTORY_BINARY ~ V1197, data = ., family = binomial()) %>% 
+    broom::tidy(conf.int = TRUE) %>% 
+    janitor::clean_names() %>%
+    mutate(
+      OR = exp(estimate),
+      conf_low = exp(conf_low),
+      conf_high = exp(conf_high)) %>%
+    mutate(term = str_replace(term, "V1197", "Number of Prior Arrests")) %>% 
+    select(term, estimate, OR, conf_low, conf_high, p_value) %>%
+    knitr::kable(digits = 3)
+
+crude_arrests_mh
+```
+
+The estimated odds of having a history of at least one mental health condition among incarcerated individuals in 2004 increased by a factor of 1.017 on average for each one-unit increase in the number of prior arrests variable. 
+
+This appears like a very small difference from the null value, however, our 95% confidence interval indicates that it is meaningful. We are 95% confident that the true odds ratio comparing odds of having a history of at least one mental health condition between incarcerated individuals with a one-unit difference in prior arrests HIV lies between 1.012 and 1.021. Thus, at a 0.05 level of significance, we have sufficient evidence to support the claim that mental health history (yes vs. no history of at least one mental health condition) DOES differ by number of prior arrests.
+
+```{r adjusted_arrests}
+#Adjusted Model
+
+adj_arrests_mh = 
+  total_df %>% 
+  drop_na(V1197, V0005, AGE_CAT, V2982, SES_INCOMEMTH, EDUCATION) %>% 
+  glm(MENTAL_HISTORY_BINARY ~ V1197 + V0005 + AGE_CAT + V2982 + SES_INCOMEMTH + EDUCATION, data = ., family = binomial()) %>% 
+    broom::tidy(conf.int = TRUE) %>% 
+    janitor::clean_names() %>%
+    mutate(
+      OR = exp(estimate),
+      conf_low = exp(conf_low),
+      conf_high = exp(conf_high)) %>%
+    mutate(
+      term = str_replace(term, "V1197", "Number of Prior Arrests"), 
+      term = str_replace(term, "V0005", "Sex: "), 
+      term = str_replace(term, "AGE_CAT", "Age Group: "),
+      term = str_replace(term, "V2982", "Race/Ethnicity: "), 
+      term = str_replace(term, "SES_INCOMEMTH", "Monthly Income: "), 
+      term = str_replace(term, "EDUCATION", "Education: ")) %>% 
+    select(term, estimate, OR, conf_low, conf_high, p_value) %>%
+    knitr::kable(digits = 3)
+
+adj_arrests_mh
+```
+
+While the adjusted odds ratio appears little different from the crude, the adjusted ln(OR) was, in fact, >10% different (specifically 12.5% different) from the crude, meaning it is possible that confounding is at play with regards to the covariates included in this latter model.
+
+After controlling for `sex`, `age group`, `race/ethnicity`, `education`, and `monthly income`, we found that with every one-unit increase in number of arrests, the estimated odds of having a history of at least one mental health condition among incarcerated individuals increased by a factor of 1.018 on average.
+
+We are also 95% confident that the true odds ratio comparing odds of having a history of at least one mental health condition between incarcerated individuals with a one-unit difference in prior arrests HIV lies between 1.012 and 1.021, controlling for the above covariates. Thus, at a 0.05 level of significance, we have sufficient evidence to support the claim that mental health history (yes vs. no history of at least one mental health condition) DOES differ by number of prior arrests, adjusting for sex, age, race/ethnicity, education, and monthly income.     
+     
+**Note: In all of the above regression analyses, observations with NA values for any of the variables included in our models were excluded. They are still, however, included in our exploratory data analyses for full transparency.**
+     
+# What are the best predictors of mental health status?
 
 #### Model Selection
 
@@ -111,7 +267,7 @@ Let's look at the following variables as potential predictors of an inmate's men
 - physical/sexual abuse
 - HIV status
 
-```{r model selection}
-total_df %>%
-  select(num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV)
+```{r model_selection}
+#total_df %>%
+#  select(num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV)
 ```

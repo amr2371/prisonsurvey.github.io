@@ -38,6 +38,8 @@ scale_fill_discrete = scale_fill_viridis_d
 theme_set(theme_minimal() + theme(legend.position = "bottom"))
 ```
 
+To conduct our exploratory data analysis, we first imported the datasets of both state and federally incarcerated individuals from the `Survey of Inmates in State and Federal Correctional Facilities, [United States], 2004 (ICPSR 4572)` into R. We also selected only our variables of interest to pare down these datasets.
+
 ```{r import, include=FALSE}
 #Importing the datasets
 federal_df <- load("./data/04572-0001-Data.rda") 
@@ -52,6 +54,8 @@ state_df <- da04572.0002 %>%
    select(V2288, V2289, V2290, V2291, MCMH_HIVTEST, MCMH_RSLT_HIV, DRUG_INJECT_CB, V2401, V2402, V2403, V2404, V2405, V2406, V2407, V2409, V2412, MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD, MCMH_MENTAL_HISTORY, V1197, CS_SENTENCEMTH,CH_PRIORSENTENCE, CH_PRIORSENTENCE_NUM, CH_CRIMHIST, CH_CRIMHIST_COLLAPSED, CH_NUMCAR,CH_NUMCAR1, CH_NUMCAR2, CH_NUMCAR3, CH_NUMCAR4, CH_NUMCAR5, MOST_SERIOUS_OFFENSE2, TYPEOFFENSE, V1056, V1057, V1060, V1061, V1325, V0001, V0014, AGE_CAT, V2982, V0005, EDUCATION, SES_INCOMEMTH, DRUG_ANY, DRUG_ANYREG, DRUG_ANYMTH, SES_PHYSSEXABUSED_EVER, SES_PARENTS_INCARCERATED, SES_FAMILY_INCARCERATED, V0105, MCMH_WHEN_DISORDER, MCMH_WHEN_DISORDER2,MCMH_MHOSPYR,MCMH_MHOSPADM,MCMH_MHOSPYRADM,MCMH_SMI) %>%
   mutate(dataset = "State")
 ```
+
+Subsequently, we stacked these two datasets based on a newly created variable called `dataset`, which identified whether the associated observation was from the state or federal file. We also cleaned this data by recoding some of the factor variables, adding labels to variables, changing the coding of values from `missing` or `don't know` to NA, etc.
 
 ```{r combine_clean, include=FALSE}
 #Combining datasets, filtering dataset, formatting variables
@@ -74,11 +78,11 @@ total_df =
     V2982 = factor(V2982, exclude = "NA"), 
     V2982 = na_if(V2982, "NA")) %>% 
   mutate(
-    EDUCATION = dplyr::recode(EDUCATION, "(0000000) Never attended or attended kindergarten only" = "Never attended or attended kindergarten only", "(0000001) First grade" = "First grade", "(0000002) Second grade" = "Second grade", "(0000003) Third grade" = "Third grade", "(0000004) Fourth grade" = "Fourth grade", "(0000005) Fifth grade" = "Fifth grade", "(0000006) Sixth grade" = "Sixth grade", "(0000007) Seventh grade" = "Seventh grade", "(0000008) Eighth grade" = "Eighth grade", "(0000009) Ninth grade" = "Ninth grade", "(0000010) Tenth grade" = "Tenth grade", "(0000011) Eleventh grade" = "Eleventh grade", "(0000012) Twelfth grade" = "Twelfth grade", "(0000013) College freshman" = "College freshman", "(0000014) College sophomore" = "College sophomore", "(0000015) College junior" = "College junior", "(0000016) College senior" = "College senior", "(0000017) Graduate school one year" = "Graduate school one year", "(0000018) Graduate school two or more years" = "Graduate school two or more years", "(0000019) Attended school in other country/system not comparable to grades" = "Attended school in other country/system not comparable to grades", "(9999997) Don't know" = "Don't know", "(9999998) Refused" = "NA", "(9999999) Missing" = "NA"), 
+    EDUCATION = dplyr::recode(EDUCATION, "(0000000) Never attended or attended kindergarten only" = "Never attended or attended kindergarten only", "(0000001) First grade" = "First grade", "(0000002) Second grade" = "Second grade", "(0000003) Third grade" = "Third grade", "(0000004) Fourth grade" = "Fourth grade", "(0000005) Fifth grade" = "Fifth grade", "(0000006) Sixth grade" = "Sixth grade", "(0000007) Seventh grade" = "Seventh grade", "(0000008) Eighth grade" = "Eighth grade", "(0000009) Ninth grade" = "Ninth grade", "(0000010) Tenth grade" = "Tenth grade", "(0000011) Eleventh grade" = "Eleventh grade", "(0000012) Twelfth grade" = "Twelfth grade", "(0000013) College freshman" = "College freshman", "(0000014) College sophomore" = "College sophomore", "(0000015) College junior" = "College junior", "(0000016) College senior" = "College senior", "(0000017) Graduate school one year" = "Graduate school one year", "(0000018) Graduate school two or more years" = "Graduate school two or more years", "(0000019) Attended school in other country/system not comparable to grades" = "Attended school in other country/system not comparable to grades", "(9999997) Don't know" = "NA", "(9999998) Refused" = "NA", "(9999999) Missing" = "NA"), 
     EDUCATION = factor(EDUCATION, exclude = "NA"), 
     EDUCATION = na_if(EDUCATION, "NA")) %>% 
   mutate(
-    SES_INCOMEMTH = dplyr::recode(SES_INCOMEMTH, "(0000000) No income" = "No income", "(0000001) $1 - 199" = "$1 - $199", "(0000002) 200 - 399" = "$200 - $399", "(0000003) 400 - 599" = "$400 - $599", "(0000004) 600 - 799" = "$600 - $799", "(0000005) 800 - 999" = "$800 - $999", "(0000006) 1,000 - 1,199" = "$1,000 - $1,199", "(0000007) 1,200 - 1,499" = "$1,200 - $1,499", "(0000008) 1,500 - 1,999" = "$1,500 - $1,999", "(0000009) 2,000 - 2,499" = "$2,000 - $2,499", "(0000010) 2,500 - 4,999" = "$2,500 - $4,999", "(0000011) 5,000 - 7,499" = "$5,000 - $7,499", "(0000012) 7,500 or more" = "$7,500 or more", "(9999997) Don't know" = "Don't know", "(9999998) Refused" = "NA", "(9999999) Missing" = "NA"), 
+    SES_INCOMEMTH = dplyr::recode(SES_INCOMEMTH, "(0000000) No income" = "No income", "(0000001) $1 - 199" = "$1 - $199", "(0000002) 200 - 399" = "$200 - $399", "(0000003) 400 - 599" = "$400 - $599", "(0000004) 600 - 799" = "$600 - $799", "(0000005) 800 - 999" = "$800 - $999", "(0000006) 1,000 - 1,199" = "$1,000 - $1,199", "(0000007) 1,200 - 1,499" = "$1,200 - $1,499", "(0000008) 1,500 - 1,999" = "$1,500 - $1,999", "(0000009) 2,000 - 2,499" = "$2,000 - $2,499", "(0000010) 2,500 - 4,999" = "$2,500 - $4,999", "(0000011) 5,000 - 7,499" = "$5,000 - $7,499", "(0000012) 7,500 or more" = "$7,500 or more", "(9999997) Don't know" = "NA", "(9999998) Refused" = "NA", "(9999999) Missing" = "NA"), 
     SES_INCOMEMTH = factor(SES_INCOMEMTH, exclude = "NA"), 
     SES_INCOMEMTH = na_if(SES_INCOMEMTH, "NA")) %>% 
   mutate(
@@ -122,73 +126,96 @@ total_df =
       set_variable_labels(dataset = "Dataset", MENTAL_HISTORY_BINARY = "Binary Mental Health History", V0005 = "Sex", AGE_CAT = "Age Group", V2982 = "Race/Ethnicity", EDUCATION = "Education", SES_INCOMEMTH = "Monthly Income in Month Before Arrest", CH_PRIORSENTENCE_NUM = "Number of Prior Sentences", V1197 = "Number of Prior Arrests", CH_CRIMHIST_COLLAPSED = "Collapsed Criminal History", TYPEOFFENSE = "Type of Offense", SES_PARENTS_INCARCERATED = "Parents Been Incarcerated", SES_FAMILY_INCARCERATED = "Children, Siblings, or Spouse Been Incarcerated", MCMH_RSLT_HIV = "HIV Status")
 ```
 
+This tidying and cleaning resulted in a combined dataset with ``r nrow(total_df)`` rows (observations) and ``r ncol(total_df)`` columns (variables).
+
+
 # Demographics
+
+To examine the distribution of demographic variables across our dataset, we created a tabular display of variables: `sex`, `age group`, and `race/ethnicity`.  
+
+### Distribution of Demographic Variables by Mental Health History  
 
 ```{r demographics, message=FALSE}
 #Demographics Table
 table1(~ V0005 + AGE_CAT + V2982 | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
+```
+  
+  
+### Educational Attainment by Mental Health History  
 
-#BAR GRAPH FOR EDUCATION
+```{r edu, message=FALSE}
+#Bar Graph for EDUCATION
 total_df %>% 
-  group_by(EDUCATION, MENTAL_HISTORY_BINARY) %>% 
-  summarize(count = n()) %>% 
-   mutate(
-    EDUCATION = fct_reorder(EDUCATION, count)) %>% 
+  group_by(MENTAL_HISTORY_BINARY, EDUCATION) %>% 
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n)) %>%
   rename(MH_History = MENTAL_HISTORY_BINARY) %>%
   ungroup() %>% 
-  ggplot(aes(x = EDUCATION, y = count, fill = MH_History)) +
+  ggplot(aes(x = EDUCATION, y = freq, fill = MH_History)) +
   geom_bar(position = "dodge", stat = "identity") + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
 
+### Educational Attainment by Mental Health History  
 
-#BAR GRAPH FOR SES_INCOMEMTH
+```{r income, message=FALSE}
+#BAR graph for SES_INCOMEMTH
 total_df %>% 
-  group_by(SES_INCOMEMTH, MENTAL_HISTORY_BINARY) %>% 
-  summarize(count = n()) %>% 
-   mutate(
-    SES_INCOMEMTH = fct_reorder(SES_INCOMEMTH, count)) %>% 
+  group_by(MENTAL_HISTORY_BINARY, SES_INCOMEMTH) %>% 
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n)) %>%
   rename(MH_History = MENTAL_HISTORY_BINARY) %>%
   ungroup() %>% 
-  ggplot(aes(x = SES_INCOMEMTH, y = count, fill = MH_History)) +
+  ggplot(aes(x = SES_INCOMEMTH, y = freq, fill = MH_History)) +
   geom_bar(position = "dodge", stat = "identity") + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
    labs(x = "Monthly Income in Month Before Arrest")
-
 ```
 
 
 # Incarceration-Related Variables
 
+### Distribution of Incarceration-Related Variables by Mental Health History  
+
 ```{r incarceration, message=FALSE}
 #Incarceration table
-table1(~ CH_PRIORSENTENCE_NUM + V1197 + CH_CRIMHIST_COLLAPSED + SES_PARENTS_INCARCERATED + SES_FAMILY_INCARCERATED | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
+table1(~ CH_PRIORSENTENCE_NUM + V1197 + CH_CRIMHIST_COLLAPSED + SES_PARENTS_INCARCERATED + SES_FAMILY_INCARCERATED + dataset | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
+```
 
-#BAR GRAPH FOR TYPEOFOFFENSE
+### Type of Offense by Mental Health History  
+
+```{r offense, message=FALSE}
+#Bar graph fir TYPEOFOFFENSE
 total_df %>% 
-  group_by(TYPEOFFENSE, MENTAL_HISTORY_BINARY) %>% 
-  summarize(count = n()) %>% 
-   mutate(
-    TYPEOFFENSE = gsub(".*)", "", TYPEOFFENSE)) %>% 
+  group_by(MENTAL_HISTORY_BINARY, TYPEOFFENSE) %>% 
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n)) %>%
+  mutate(
+    TYPEOFFENSE = gsub(".*)", "", TYPEOFFENSE), 
+    TYPEOFFENSE = fct_reorder(TYPEOFFENSE, -freq)) %>% 
   rename(MH_History = MENTAL_HISTORY_BINARY) %>%
   ungroup() %>% 
-  ggplot(aes(x = TYPEOFFENSE, y = count, fill = MH_History)) +
+  ggplot(aes(x = TYPEOFFENSE, y = freq, fill = MH_History)) +
   geom_col(position = "dodge", stat = "identity") + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
    labs(x = "Type of Offense")
+```
 
-#DENSITY PLOT FOR V1197
+```{r prior_arrests, message=FALSE}
+#Density plot for V1197
 ggplot(data = total_df, aes(x = V1197)) +
   geom_density(aes(color = MENTAL_HISTORY_BINARY)) +
   labs(x = "Number of Prior Arrests")
-
 ```
 
 
-# Mental Health
-## Medication
+# Mental Health  
+  
+  
+### Ever Taken Medication  
 
-```{r mental_health, message=FALSE}
-#Ever taken a medication for mental health 
+```{r meds_ever, message=FALSE}
+#Bar graph for ever taken mental health medication
 
 total_df %>% 
   filter(V2409 == "Yes" | V2409 == "No") %>%
@@ -201,8 +228,12 @@ total_df %>%
   geom_bar(position = "dodge", stat = "identity") + 
   theme(legend.position = "none") +
   labs(x = "Ever taken medication for mental health") 
+```
 
-# TAKEN MEDICATION FOR A MENTAL CONDITION SINCE ADMISSION
+### Taken Medication Since Admission  
+
+```{r meds_admission, message=FALSE}
+#Bar graph for taken mental health medication since admission
 
 total_df %>% 
   filter(V2412 == "Yes" | V2412 == "No") %>% 
@@ -217,9 +248,10 @@ total_df %>%
   labs(x = "Taken medication for mental health since admission") 
 ```
 
-## Hospitalization
-```{r  message=FALSE}
-# Mental Hosp - year before arrest - MCMH_mhospyr from client
+### Mental Health Hospitalization in Year Before Arrest  
+
+```{r hosp_year, message=FALSE}
+# Bar graph of MCMH_MHOSPYR
 
 total_df %>% 
   group_by(MCMH_MHOSPYR) %>% 
@@ -232,12 +264,12 @@ total_df %>%
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
   theme(legend.position = "none") +
   labs(x = "Hospitalized for mental health, in year before arrest") 
+```
 
-# Mental hosp - since admission - MCMH_mhospadm from client
-# federal_df %>% 
-#   group_by(MCMH_MHOSPADM) %>% 
-#   summarize(n_obs = n()) %>% 
-#   knitr::kable()
+### Mental Health Hospitalization Since Admission
+
+```{r hosp_admission, message=FALSE}
+# Bar graph of MCMH_MHOSPADM
 
 total_df %>% 
   group_by(MCMH_MHOSPADM) %>% 
@@ -252,9 +284,9 @@ total_df %>%
   labs(x = "Hospitalized for mental health, since admission") 
 ```
 
-## Treatment Continuation
+### Treatment Continuation (one year prior to arrest and since admission)
 ```{r trt, message=FALSE}
-# MH Treatment Continuation (one year prior to arrest and since admission)
+# Line graph for MH treatment continuation (one year prior to arrest and since admission)
 
 state_tx = state_df %>%
   group_by(MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD) %>%
@@ -294,8 +326,8 @@ ggplot() +
   scale_color_manual(values = colors)
 ```
 
-# HIV 
+# HIV Status by Mental Health History  
+
 ```{r hiv, messgae=FALSE}
 table1(~ MCMH_RSLT_HIV | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
 ```
-
