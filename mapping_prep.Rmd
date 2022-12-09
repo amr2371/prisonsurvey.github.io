@@ -1,5 +1,11 @@
 ---
-title: "Prep for Mapping"
+title: "Mapping"
+output: 
+  html_document:
+    toc: true
+    code_folding: hide
+    toc_float: true
+    theme: flatly
 ---
 
 ```{r setup, include=FALSE}
@@ -43,7 +49,7 @@ total_df %>%
     V1056 = fct_reorder(V1056, count),
     V1056 = str_sub(V1056, 6)) %>% 
   rename(Residence_at_arrest = V1056) %>%
-  write.csv("./mapping/mapping.csv", row.names=TRUE)
+  write.csv("./mapping.csv", row.names=TRUE)
 
 ```
 

@@ -9,6 +9,8 @@ navbar:
       href: EDA.html
     - text: "Statistical Analysis"
       href: stat_tests.html
+    - text: "Spatial Analysis"
+      href: mapping_prep.html 
     - text: "Project Report"
       href: project_report.html
     - icon: fa-github fa-lg
