@@ -520,8 +520,6 @@ total_df %&gt;%
   ggplot(aes(x = EDUCATION, y = count, fill = MH_History)) +
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
   theme(axis.text.x = element_text(angle=45, hjust=1))</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;EDUCATION&#39;. You can override using the
-## `.groups` argument.</code></pre>
 <p><img src="EDA_files/figure-html/demographics-1.png" width="100%" /></p>
 <pre class="r"><code>#BAR GRAPH FOR SES_INCOMEMTH
 total_df %&gt;% 
@@ -535,8 +533,6 @@ total_df %&gt;%
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
   theme(axis.text.x = element_text(angle=45, hjust=1)) +
    labs(x = &quot;Monthly Income in Month Before Arrest&quot;)</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;SES_INCOMEMTH&#39;. You can override using the
-## `.groups` argument.</code></pre>
 <p><img src="EDA_files/figure-html/demographics-2.png" width="100%" /></p>
 </div>
 <div id="incarceration-related-variables" class="section level1">
@@ -706,7 +702,7 @@ table1(~ CH_PRIORSENTENCE_NUM + V1197 + CH_CRIMHIST_COLLAPSED + SES_PARENTS_INCA
 </tbody>
 </table>
 </div>
-<pre class="r"><code>#BAR GRAPH FOR TYPEOFFENSE
+<pre class="r"><code>#BAR GRAPH FOR TYPEOFOFFENSE
 total_df %&gt;% 
   group_by(TYPEOFFENSE, MENTAL_HISTORY_BINARY) %&gt;% 
   summarize(count = n()) %&gt;% 
@@ -717,9 +713,7 @@ total_df %&gt;%
   ggplot(aes(x = TYPEOFFENSE, y = count, fill = MH_History)) +
   geom_col(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
   theme(axis.text.x = element_text(angle=45, hjust=1)) +
-   labs(x = &quot;Type of Offense&quot;) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;TYPEOFFENSE&#39;. You can override using the
-## `.groups` argument.</code></pre>
+   labs(x = &quot;Type of Offense&quot;)</code></pre>
 <p><img src="EDA_files/figure-html/incarceration-1.png" width="100%" /></p>
 <pre class="r"><code>#DENSITY PLOT FOR V1197
 ggplot(data = total_df, aes(x = V1197)) +
@@ -729,8 +723,8 @@ ggplot(data = total_df, aes(x = V1197)) +
 </div>
 <div id="mental-health" class="section level1">
 <h1>Mental Health</h1>
-<div id="medication" class="section level3">
-<h3>Medication</h3>
+<div id="medication" class="section level2">
+<h2>Medication</h2>
 <pre class="r"><code>#Ever taken a medication for mental health 
 
 # federal_df %&gt;% 
@@ -750,9 +744,7 @@ total_df %&gt;%
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
   theme(legend.title=element_blank()) +
   labs(x = &quot;Ever taken medication for mental health&quot;) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;V2409&#39;. You can override using the
-## `.groups` argument.</code></pre>
-<p><img src="EDA_files/figure-html/MH_med-1.png" width="100%" /></p>
+<p><img src="EDA_files/figure-html/mental_health-1.png" width="100%" /></p>
 <pre class="r"><code># TAKEN MEDICATION FOR A MENTAL CONDITION SINCE ADMISSION
 
 # federal_df %&gt;% 
@@ -771,12 +763,11 @@ total_df %&gt;%
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
   theme(legend.title=element_blank()) +
   labs(x = &quot;Taken medication for mental health since admission&quot;) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;V2412&#39;. You can override using the
-## `.groups` argument.</code></pre>
-<p><img src="EDA_files/figure-html/MH_med-2.png" width="100%" /></p>
+<p><img src="EDA_files/figure-html/mental_health-2.png" width="100%" /></p>
 </div>
-<div id="hospitalization" class="section level3">
-<h3>Hospitalization</h3>
+</div>
+<div id="hospitalization" class="section level1">
+<h1>Hospitalization</h1>
 <pre class="r"><code># Mental Hosp - year before arrest - MCMH_mhospyr from client
 # federal_df %&gt;% 
 #   group_by(MCMH_MHOSPYR) %&gt;% 
@@ -798,9 +789,7 @@ total_df %&gt;%
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
   theme(axis.text.x = element_text(angle=45, hjust=1), legend.title=element_blank()) +
   labs(x = &quot;Hospitalized for mental health, in the year before arrest&quot;) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;MCMH_MHOSPYR&#39;. You can override using the
-## `.groups` argument.</code></pre>
-<p><img src="EDA_files/figure-html/MH_hosp-1.png" width="100%" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-1-1.png" width="100%" /></p>
 <pre class="r"><code># Mental hosp - since admission - MCMH_mhospadm from client
 # federal_df %&gt;% 
 #   group_by(MCMH_MHOSPADM) %&gt;% 
@@ -820,12 +809,10 @@ total_df %&gt;%
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
   theme(axis.text.x = element_text(angle=45, hjust=1), legend.title=element_blank()) +
   labs(x = &quot;Hospitalized for mental health, since admission&quot;) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;MCMH_MHOSPADM&#39;. You can override using the
-## `.groups` argument.</code></pre>
-<p><img src="EDA_files/figure-html/MH_hosp-2.png" width="100%" /></p>
+<p><img src="EDA_files/figure-html/unnamed-chunk-1-2.png" width="100%" /></p>
 </div>
-<div id="treatment-continuation" class="section level3">
-<h3>Treatment Continuation</h3>
+<div id="treatment-continuation" class="section level1">
+<h1>Treatment Continuation</h1>
 <pre class="r"><code># MH Treatment Continuation (one year prior to arrest and since admission)
 
 state_tx = state_df %&gt;%
@@ -839,10 +826,9 @@ state_tx = state_df %&gt;%
   ungroup() %&gt;%
   mutate(
     sum = sum(n_obs),
-    percent = (n_obs/sum) * 100 ) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;MCMH_MH_TREATMENT_PA&#39;. You can override
-## using the `.groups` argument.</code></pre>
-<pre class="r"><code>federal_tx = federal_df %&gt;%
+    percent = (n_obs/sum) * 100 ) 
+
+federal_tx = federal_df %&gt;%
   group_by(MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD) %&gt;%
   summarize(n_obs = n()) %&gt;%
   mutate(
@@ -853,10 +839,9 @@ state_tx = state_df %&gt;%
   ungroup() %&gt;%
   mutate(
     sum = sum(n_obs),
-    percent = (n_obs/sum) * 100 ) </code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;MCMH_MH_TREATMENT_PA&#39;. You can override
-## using the `.groups` argument.</code></pre>
-<pre class="r"><code>colors &lt;- c(&quot;State Prisons&quot; = &quot;blue&quot;, &quot;Federal Prisons&quot; = &quot;red&quot;)
+    percent = (n_obs/sum) * 100 ) 
+
+colors &lt;- c(&quot;State Prisons&quot; = &quot;blue&quot;, &quot;Federal Prisons&quot; = &quot;red&quot;)
 ggplot() + 
   geom_line(data = state_tx, aes(x = tx_pa_ad, y = percent, group = 1, color = &quot;State Prisons&quot;)) + 
   geom_line(data = federal_tx, aes(x = tx_pa_ad, y = percent, group = 1, color = &quot;Federal Prisons&quot;)) +
@@ -866,8 +851,7 @@ ggplot() +
     color = &quot;&quot;
   ) +
   scale_color_manual(values = colors)</code></pre>
-<p><img src="EDA_files/figure-html/MH_tx_cont-1.png" width="100%" /></p>
-</div>
+<p><img src="EDA_files/figure-html/trt-1.png" width="100%" /></p>
 </div>
 <div id="hiv" class="section level1">
 <h1>HIV</h1>
@@ -940,10 +924,9 @@ federal_bar =
   geom_bar(stat = &quot;identity&quot;, fill = &quot;steelblue&quot;) +
   labs(title=&quot;Federal&quot;,
         x =&quot;HIV Status&quot;, y = &quot;Percent with Mental Health Disorder&quot;) +
-  ylim(0, 0.5)</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;MCMH_RSLT_HIV&#39;. You can override using the
-## `.groups` argument.</code></pre>
-<pre class="r"><code>state_bar = 
+  ylim(0, 0.5)
+
+state_bar = 
   state_df %&gt;%
   group_by(MCMH_RSLT_HIV, MCMH_MENTAL_HISTORY)%&gt;%
   summarise(count = n()) %&gt;%
@@ -957,10 +940,9 @@ federal_bar =
   geom_bar(stat = &quot;identity&quot;, fill = &quot;red&quot;) +
   labs(title=&quot;State&quot;,
         x =&quot;HIV Status&quot;, y = &quot;Percent with Mental Health Disorder&quot;) +
-  ylim(0, 0.5)</code></pre>
-<pre><code>## `summarise()` has grouped output by &#39;MCMH_RSLT_HIV&#39;. You can override using the
-## `.groups` argument.</code></pre>
-<pre class="r"><code>#Mental Health Disorder Prevalence by HIV Status at the Federal &amp; State Levels(2004)
+  ylim(0, 0.5)
+
+#Mental Health Disorder Prevalence by HIV Status at the Federal &amp; State Levels(2004)
 federal_bar + state_bar</code></pre>
 <p><img src="EDA_files/figure-html/hiv%20mh-1.png" width="100%" /></p>
 </div>
