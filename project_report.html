@@ -33,6 +33,7 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
@@ -228,6 +229,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -373,6 +377,14 @@ div.tocify {
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
 
 
 <h1 class="title toc-ignore">Project Report</h1>
@@ -380,17 +392,6 @@ div.tocify {
 </div>
 
 
-<p>The written report produced by your team is central to this project.
-This will detail how you completed your project, and should cover data
-collection and cleaning, exploratory analyses, alternative strategies,
-descriptions of approaches, and a discussion of results. We anticipate
-that your project will change somewhat over time; these changes and the
-reasons for them should be documented! You will write one report
-document per group, and be sure to include all group member names in the
-document.</p>
-<p>Your report should include the following topics. Depending on your
-project type the amount of discussion you devote to each of them will
-vary:</p>
 <div id="motivation" class="section level1">
 <h1>Motivation</h1>
 <p>Some of our group members are interested in HIV and mental health, so
@@ -402,18 +403,201 @@ overlooked, disenfranchised status.</p>
 </div>
 <div id="related-work" class="section level1">
 <h1>Related work</h1>
-<p>Anything that inspired you, such as a paper, a web site, or something
-we discussed in class.</p>
+<p>The prevalence of mass incarceration in the United States has grown
+drastically, driving severe disparities in individual and community
+health that persist over time. Incarcerated individuals have a higher
+risk of HIV, as well as mental health and substance use disorders, with
+little access to quality treatment despite prisons being required to
+provide healthcare (Wildeman &amp; Wang, 2017). In 2003 and 2004, the
+United States Bureau of Justice Statistics conducted a nationally
+representative survey to collect a variety of information, including
+current and past incarceration history and health status, on those
+incarcerated in federal and state prisons. This analysis will provide an
+overview on the differences in health status among incarcerated
+populations in both federal and state prison systems, specifically
+related to variables for HIV and mental health.</p>
 </div>
 <div id="initial-questions" class="section level1">
 <h1>Initial questions</h1>
-<p>What questions are you trying to answer? How did these questions
-evolve over the course of the project? What new questions did you
-consider in the course of your analysis?</p>
+<p>Initially, we wanted to focus on HIV and mental health status in
+incarcerated individuals, but upon exploratory analysis of the dataset,
+we found a relatively low proportion of survey respondents with a
+positive HIV test and associated information on this subpopulation. We
+therefore shifted our analysis to primarily focus on mental health
+outcomes and also included variables related to respondents’
+incarceration (<code>Number of Prior Sentences</code>,
+<code>Parents Been Incarcerated</code>, <code>Facility Type</code>,
+etc.).</p>
+<p>Our three questions of interest include:</p>
+<ol style="list-style-type: decimal">
+<li>Is mental health associated with HIV Status?</li>
+<li>Is mental health associated with prior arrest history?</li>
+<li>What are the best predictors of mental health status?</li>
+</ol>
 </div>
 <div id="data" class="section level1">
 <h1>Data</h1>
-<p>Source, scraping method, cleaning, etc.</p>
+<div id="source" class="section level3">
+<h3>Source</h3>
+<p>Our dataset,
+<code>Survey of Inmates in State and Federal Correctional Facilities, [United States], 2004 (ICPSR 4572)</code>,
+was collected from a nationally representative survey of incarcerated
+individuals in both state and federal prison systems. Versions of this
+study have been conducted every 5-6 years since 1974. The dataset used
+for this analysis can be found <a
+href="https://www.icpsr.umich.edu/web/NACJD/studies/4572">here</a>. This
+dataset contains information about thousands of randomly sampled
+incarcerated individuals, including variables regarding demographics,
+prison sentence and history with the judicial system, as well as
+health.</p>
+</div>
+<div id="cleaning" class="section level3">
+<h3>Cleaning</h3>
+<p>To conduct our exploratory and statistical data analyses, we first
+imported the datasets containing observations of both state and
+federally incarcerated individuals from the
+<code>Survey of Inmates in State and Federal Correctional Facilities, [United States], 2004 (ICPSR 4572)</code>
+into R. We also selected our variables of interest to pare down the
+datasets. This was necessary as the original datasets were extremely
+extensive with several thousand variables in addition to several
+thousand individual observations. Paring down the datasets not only
+aided with ease of scanning the original dataset for errors, successful
+coding steps, etc. but also was key to avoiding long program run-times
+while developing the code.</p>
+<pre class="r"><code>#Importing the datasets
+federal_df &lt;- load(&quot;./data/04572-0001-Data.rda&quot;) 
+
+federal_df &lt;- da04572.0001 %&gt;% 
+  select(V2288, V2289, V2290, V2291, MCMH_HIVTEST, MCMH_RSLT_HIV, DRUG_INJECT_CB, V2401, V2402, V2403, V2404, V2405, V2406, V2407, V2409, V2412, MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD, MCMH_MENTAL_HISTORY, V1197, CS_SENTENCEMTH,CH_PRIORSENTENCE, CH_PRIORSENTENCE_NUM, CH_CRIMHIST, CH_CRIMHIST_COLLAPSED, CH_NUMCAR,CH_NUMCAR1, CH_NUMCAR2, CH_NUMCAR3, CH_NUMCAR4, CH_NUMCAR5, MOST_SERIOUS_OFFENSE2, TYPEOFFENSE, V1056, V1057, V1060, V1061, V1325, V0001, V0014, AGE_CAT, V2982, V0005, EDUCATION, SES_INCOMEMTH, DRUG_ANY, DRUG_ANYREG, DRUG_ANYMTH, SES_PHYSSEXABUSED_EVER, SES_PARENTS_INCARCERATED, SES_FAMILY_INCARCERATED, V0105, MCMH_WHEN_DISORDER, MCMH_WHEN_DISORDER2,MCMH_MHOSPYR,MCMH_MHOSPADM,MCMH_MHOSPYRADM,MCMH_SMI) %&gt;%
+  mutate(dataset = &quot;Federal&quot;)
+
+state_df &lt;- load(&quot;./data/04572-0002-Data.rda&quot;) 
+
+state_df &lt;- da04572.0002 %&gt;% 
+   select(V2288, V2289, V2290, V2291, MCMH_HIVTEST, MCMH_RSLT_HIV, DRUG_INJECT_CB, V2401, V2402, V2403, V2404, V2405, V2406, V2407, V2409, V2412, MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD, MCMH_MENTAL_HISTORY, V1197, CS_SENTENCEMTH,CH_PRIORSENTENCE, CH_PRIORSENTENCE_NUM, CH_CRIMHIST, CH_CRIMHIST_COLLAPSED, CH_NUMCAR,CH_NUMCAR1, CH_NUMCAR2, CH_NUMCAR3, CH_NUMCAR4, CH_NUMCAR5, MOST_SERIOUS_OFFENSE2, TYPEOFFENSE, V1056, V1057, V1060, V1061, V1325, V0001, V0014, AGE_CAT, V2982, V0005, EDUCATION, SES_INCOMEMTH, DRUG_ANY, DRUG_ANYREG, DRUG_ANYMTH, SES_PHYSSEXABUSED_EVER, SES_PARENTS_INCARCERATED, SES_FAMILY_INCARCERATED, V0105, MCMH_WHEN_DISORDER, MCMH_WHEN_DISORDER2,MCMH_MHOSPYR,MCMH_MHOSPADM,MCMH_MHOSPYRADM,MCMH_SMI) %&gt;%
+  mutate(dataset = &quot;State&quot;)</code></pre>
+<p>We next stacked these two datasets (i.e., federal and state) and
+cleaned the resulting data by checking for coding errors, recoding
+various factor variables for ease of viewing, adding variable labels,
+and changing the coding of values from
+<code>missing</code>/<code>don't know</code>/<code>unknown</code> to
+<code>NA</code> for consistency.</p>
+<pre class="r"><code>#Combining datasets, filtering dataset, formatting variables
+total_df = 
+  bind_rows(state_df, federal_df) %&gt;% 
+  mutate(
+    dataset = as.factor(dataset)) %&gt;%
+  mutate(
+    MENTAL_HISTORY_BINARY = case_when(MCMH_MENTAL_HISTORY == &quot;(0000001) Yes&quot; ~ &quot;1&quot;, MCMH_MENTAL_HISTORY == &quot;(0000002) No&quot; ~ &quot;0&quot;, MCMH_MENTAL_HISTORY == &quot;(9999997) DK/refused&quot; | MCMH_MENTAL_HISTORY == &quot;(9999999) Blank&quot;  ~ &quot;.&quot;)) %&gt;%
+  mutate(
+    MENTAL_HISTORY_BINARY = na_if(MENTAL_HISTORY_BINARY, &quot;.&quot;), 
+    MENTAL_HISTORY_BINARY = factor(MENTAL_HISTORY_BINARY, 
+      levels = c(0, 1),
+      labels = c(&quot;No history of mental health condition(s)&quot;, &quot;History of mental health condition(s)&quot;)))  %&gt;% 
+  filter(!is.na(MENTAL_HISTORY_BINARY)) %&gt;% 
+  mutate(V0005 = dplyr::recode(V0005, &quot;(1) Male&quot; = &quot;Male&quot;, &quot;(2) Female&quot; = &quot;Female&quot;)) %&gt;% 
+  mutate(AGE_CAT = dplyr::recode(AGE_CAT, &quot;(1) &lt; 25 yrs&quot; = &quot;&lt; 25 yrs&quot;, &quot;(2) 25-34&quot; = &quot;25-34&quot;, &quot;(3) 35-44&quot; =  &quot;35-44&quot;, &quot;(4) 45-54&quot; = &quot;45-54&quot;, &quot;(5) 55-64&quot; = &quot;55-64&quot;, &quot;(6) 65-96&quot; = &quot;65-96&quot;, &quot;(7) Unknown&quot; = &quot;Unknown&quot;)) %&gt;% 
+  mutate(
+    V2982 = dplyr::recode(V2982, &quot;(1) White non-Hispanic&quot; = &quot;White non-Hispanic&quot;, &quot;(2) Black non-Hispanic&quot; = &quot;Black non-Hispanic&quot;, &quot;(3) Hispanic&quot; = &quot;Hispanic&quot;, &quot;(4) American Indian, Alaska Native non-Hispanic&quot; = &quot;American Indian, Alaska Native non-Hispanic&quot;, &quot;(5) Asian, Pacific Islander, Native Hawaiian non-Hispanic&quot; = &quot;Asian, Pacific Islander, Native Hawaiian non-Hispanic&quot;, &quot;(6) Multiple Races reported, non-Hispanic&quot; = &quot;Multiple Races reported, non-Hispanic&quot;, &quot;(8) Other, Uncategorized - Missing&quot; = &quot;NA&quot;), 
+    V2982 = factor(V2982, exclude = &quot;NA&quot;), 
+    V2982 = na_if(V2982, &quot;NA&quot;)) %&gt;% 
+  mutate(
+    EDUCATION = dplyr::recode(EDUCATION, &quot;(0000000) Never attended or attended kindergarten only&quot; = &quot;Never attended or kindergarten only&quot;, &quot;(0000001) First grade&quot; = &quot;First grade&quot;, &quot;(0000002) Second grade&quot; = &quot;Second grade&quot;, &quot;(0000003) Third grade&quot; = &quot;Third grade&quot;, &quot;(0000004) Fourth grade&quot; = &quot;Fourth grade&quot;, &quot;(0000005) Fifth grade&quot; = &quot;Fifth grade&quot;, &quot;(0000006) Sixth grade&quot; = &quot;Sixth grade&quot;, &quot;(0000007) Seventh grade&quot; = &quot;Seventh grade&quot;, &quot;(0000008) Eighth grade&quot; = &quot;Eighth grade&quot;, &quot;(0000009) Ninth grade&quot; = &quot;Ninth grade&quot;, &quot;(0000010) Tenth grade&quot; = &quot;Tenth grade&quot;, &quot;(0000011) Eleventh grade&quot; = &quot;Eleventh grade&quot;, &quot;(0000012) Twelfth grade&quot; = &quot;Twelfth grade&quot;, &quot;(0000013) College freshman&quot; = &quot;College freshman&quot;, &quot;(0000014) College sophomore&quot; = &quot;College sophomore&quot;, &quot;(0000015) College junior&quot; = &quot;College junior&quot;, &quot;(0000016) College senior&quot; = &quot;College senior&quot;, &quot;(0000017) Graduate school one year&quot; = &quot;Graduate school one year&quot;, &quot;(0000018) Graduate school two or more years&quot; = &quot;Graduate school two or more years&quot;, &quot;(0000019) Attended school in other country/system not comparable to grades&quot; = &quot;NA&quot;, &quot;(9999997) Don&#39;t know&quot; = &quot;NA&quot;, &quot;(9999998) Refused&quot; = &quot;NA&quot;, &quot;(9999999) Missing&quot; = &quot;NA&quot;), 
+    EDUCATION = factor(EDUCATION, exclude = &quot;NA&quot;), 
+    EDUCATION = na_if(EDUCATION, &quot;NA&quot;)) %&gt;% 
+  mutate(
+    SES_INCOMEMTH = dplyr::recode(SES_INCOMEMTH, &quot;(0000000) No income&quot; = &quot;No income&quot;, &quot;(0000001) $1 - 199&quot; = &quot;$1 - $199&quot;, &quot;(0000002) 200 - 399&quot; = &quot;$200 - $399&quot;, &quot;(0000003) 400 - 599&quot; = &quot;$400 - $599&quot;, &quot;(0000004) 600 - 799&quot; = &quot;$600 - $799&quot;, &quot;(0000005) 800 - 999&quot; = &quot;$800 - $999&quot;, &quot;(0000006) 1,000 - 1,199&quot; = &quot;$1,000 - $1,199&quot;, &quot;(0000007) 1,200 - 1,499&quot; = &quot;$1,200 - $1,499&quot;, &quot;(0000008) 1,500 - 1,999&quot; = &quot;$1,500 - $1,999&quot;, &quot;(0000009) 2,000 - 2,499&quot; = &quot;$2,000 - $2,499&quot;, &quot;(0000010) 2,500 - 4,999&quot; = &quot;$2,500 - $4,999&quot;, &quot;(0000011) 5,000 - 7,499&quot; = &quot;$5,000 - $7,499&quot;, &quot;(0000012) 7,500 or more&quot; = &quot;$7,500 or more&quot;, &quot;(9999997) Don&#39;t know&quot; = &quot;NA&quot;, &quot;(9999998) Refused&quot; = &quot;NA&quot;, &quot;(9999999) Missing&quot; = &quot;NA&quot;), 
+    SES_INCOMEMTH = factor(SES_INCOMEMTH, exclude = &quot;NA&quot;), 
+    SES_INCOMEMTH = na_if(SES_INCOMEMTH, &quot;NA&quot;)) %&gt;% 
+  mutate(
+    CH_PRIORSENTENCE_NUM = dplyr::recode(CH_PRIORSENTENCE_NUM, &quot;(0000000) No prior sentence&quot; = &quot;No prior sentence&quot;, &quot;(0000001) One prior sentence&quot; = &quot;One prior sentence&quot;, &quot;(0000002) Two prior sentences&quot; = &quot;Two prior sentences&quot;, &quot;(0000003) Three to five prior sentences&quot; = &quot;Three to five prior sentences&quot;, &quot;(0000004) Six to ten prior sentences&quot; = &quot;Six to ten prior sentences&quot;, &quot;(0000005) Eleven or more prior sentences&quot; = &quot;Eleven or more prior sentences&quot;, &quot;(9999999) Missing&quot; = &quot;NA&quot;), 
+    CH_PRIORSENTENCE_NUM = factor(CH_PRIORSENTENCE_NUM, exclude = &quot;NA&quot;), 
+    CH_PRIORSENTENCE_NUM = na_if(CH_PRIORSENTENCE_NUM, &quot;NA&quot;)) %&gt;% 
+    mutate(
+    V1197 = ifelse(V1197 &lt;= 996, V1197, NA)) %&gt;% 
+  mutate(
+    CH_CRIMHIST_COLLAPSED = dplyr::recode(CH_CRIMHIST_COLLAPSED, &quot;(0000001) First timers&quot; = &quot;First timers&quot;, &quot;(0000002) Recidivist, current or past violent offense&quot; = &quot;Recidivist, current or past violent offense&quot;, &quot;(0000003) Recidivist, no current or prior violent offense&quot; = &quot;Recidivist, no current or prior violent offense&quot;, &quot;(9999999) Missing&quot; = &quot;NA&quot;), 
+    CH_CRIMHIST_COLLAPSED = factor(CH_CRIMHIST_COLLAPSED, exclude = &quot;NA&quot;), 
+    CH_CRIMHIST_COLLAPSED = na_if(CH_CRIMHIST_COLLAPSED, &quot;NA&quot;)) %&gt;% 
+  mutate(
+    SES_PARENTS_INCARCERATED = dplyr::recode(SES_PARENTS_INCARCERATED, &quot;(0000001) Yes&quot; = &quot;Yes&quot;, &quot;(0000002) No&quot; = &quot;No&quot;,&quot;(9999997) Don&#39;t know&quot; = &quot;NA&quot;, &quot;(9999998) Refused&quot; = &quot;NA&quot;, &quot;(9999999) Missing&quot; = &quot;NA&quot;), 
+    SES_PARENTS_INCARCERATED = factor(SES_PARENTS_INCARCERATED, exclude = &quot;NA&quot;), 
+    SES_PARENTS_INCARCERATED = na_if(SES_PARENTS_INCARCERATED, &quot;NA&quot;)) %&gt;% 
+  mutate(
+    SES_FAMILY_INCARCERATED = dplyr::recode(SES_FAMILY_INCARCERATED, &quot;(0000001) Yes&quot; = &quot;Yes&quot;, &quot;(0000002) No&quot; = &quot;No&quot;,&quot;(9999997) Don&#39;t know&quot; = &quot;NA&quot;, &quot;(9999998) Refused&quot; = &quot;NA&quot;, &quot;(9999999) Missing&quot; = &quot;NA&quot;), 
+    SES_FAMILY_INCARCERATED = factor(SES_FAMILY_INCARCERATED, exclude = &quot;NA&quot;), 
+    SES_FAMILY_INCARCERATED = na_if(SES_FAMILY_INCARCERATED, &quot;NA&quot;)) %&gt;% 
+  mutate(
+      V2409 = dplyr::recode(V2409, &quot;(1) Yes&quot; = &quot;Yes&quot;, &quot;(2) No&quot; = &quot;No&quot;,&quot;(7) Don&#39;t Know&quot; = &quot;NA&quot;, &quot;(8) Refused&quot; = &quot;NA&quot;), 
+      V2409 = factor(V2409, exclude = &quot;NA&quot;), 
+      V2409 = na_if(V2409, &quot;NA&quot;)) %&gt;% 
+  mutate(
+      V2412 = dplyr::recode(V2412, &quot;(1) Yes&quot; = &quot;Yes&quot;, &quot;(2) No&quot; = &quot;No&quot;,&quot;(7) Don&#39;t Know&quot; = &quot;NA&quot;, &quot;(8) Refused&quot; = &quot;NA&quot;), 
+      V2412 = factor(V2412, exclude = &quot;NA&quot;), 
+      V2412 = na_if(V2412, &quot;NA&quot;)) %&gt;% 
+  mutate(
+      MCMH_MHOSPYR = dplyr::recode(MCMH_MHOSPYR, &quot;(0000001) Yes, admitted to mental hospital during the 12 months before arrest&quot; = &quot;Yes in 12 months before arrest&quot;, &quot;(0000002) No, was not admitted to mental hospital during the 12 months before arrest&quot; = &quot;Not in 12 months before arrest&quot;, &quot;(0000004) No, never admitted to stayed overnight at mental hospital&quot; = &quot;No, never&quot;, &quot;(9999998) DK/refused&quot; = &quot;NA&quot;, &quot;(9999999) Missing&quot; = &quot;NA&quot;), 
+      MCMH_MHOSPYR = factor(MCMH_MHOSPYR, exclude = &quot;NA&quot;), 
+      MCMH_MHOSPYR = na_if(MCMH_MHOSPYR, &quot;NA&quot;)) %&gt;% 
+  mutate(
+    MCMH_MHOSPADM = dplyr::recode(MCMH_MHOSPADM, &quot;(0000001) Yes, admitted to mental hospital since admission&quot; = &quot;Yes since admission&quot;, &quot;(0000002) No, was not admitted to mental hospital since admission&quot; = &quot;Not since admission&quot;, &quot;(0000004) No, never admitted to stayed overnight at mental hospital&quot; = &quot;No, never&quot;, &quot;(9999998) DK/refused&quot; = &quot;NA&quot;, &quot;(9999999) Missing&quot; = &quot;NA&quot;), 
+      MCMH_MHOSPADM = factor(MCMH_MHOSPADM, exclude = &quot;NA&quot;), 
+      MCMH_MHOSPADM = na_if(MCMH_MHOSPADM, &quot;NA&quot;)) %&gt;% 
+  mutate(
+    MCMH_RSLT_HIV = dplyr::recode(MCMH_RSLT_HIV, &quot;(0000001) At least one positive test&quot; = &quot;Positive&quot;, &quot;(0000002) At least one negative and the other unknown&quot; = &quot;Presumed Negative&quot;, &quot;(0000009) Missing&quot; = &quot;NA&quot;, &quot;(9999999) Missing&quot; = &quot;NA&quot;), 
+      MCMH_RSLT_HIV = factor(MCMH_RSLT_HIV, exclude = &quot;NA&quot;), 
+      MCMH_RSLT_HIV = na_if(MCMH_RSLT_HIV, &quot;NA&quot;)) %&gt;% 
+  mutate(
+    TYPEOFFENSE = gsub(&quot;.*)&quot;, &quot;&quot;, TYPEOFFENSE), 
+    TYPEOFFENSE = dplyr::recode(TYPEOFFENSE, &quot; Missing&quot; = &quot;NA&quot;, &quot; DK/refused&quot; = &quot;NA&quot;, &quot; Blank&quot; = &quot;NA&quot;),
+    TYPEOFFENSE = na_if(TYPEOFFENSE, &quot;NA&quot;),
+    TYPEOFFENSE = as.factor(TYPEOFFENSE)) %&gt;% 
+  set_variable_labels(dataset = &quot;Facility Type&quot;, MENTAL_HISTORY_BINARY = &quot;Binary Mental Health History&quot;, V0005 = &quot;Sex&quot;, AGE_CAT = &quot;Age Group&quot;, V2982 = &quot;Race/Ethnicity&quot;, EDUCATION = &quot;Education&quot;, SES_INCOMEMTH = &quot;Monthly Income in Month Before Arrest&quot;, CH_PRIORSENTENCE_NUM = &quot;Number of Prior Sentences&quot;, V1197 = &quot;Number of Prior Arrests&quot;, CH_CRIMHIST_COLLAPSED = &quot;Collapsed Criminal History&quot;, TYPEOFFENSE = &quot;Type of Offense&quot;, SES_PARENTS_INCARCERATED = &quot;Parents Been Incarcerated&quot;, SES_FAMILY_INCARCERATED = &quot;Children, Siblings, or Spouse Been Incarcerated&quot;, MCMH_RSLT_HIV = &quot;HIV Status&quot;)</code></pre>
+<p>This tidying and cleaning resulted in a combined dataset with 17881
+rows (observations) and 60 columns (variables). The resulting dataset
+includes demographic, geographic, incarceration-related, and
+health-related variables. In the subsequent analyses, we utilized the
+following variables:</p>
+<ul>
+<li><code>V0005</code> - Sex, male or female</li>
+<li><code>AGE_CAT</code> - Age category</li>
+<li><code>V2982</code> - Race and ethnicity</li>
+<li><code>EDUCATION</code> - Before admission, highest grade of school
+attended</li>
+<li><code>SES_INCOMEMTH</code> - Month before arrest monthly income</li>
+<li><code>CH_PRIORSENTENCE_NUM</code> - Number of prior sentences to
+probation or incarceration</li>
+<li><code>V1197</code> - # of Times Arrested Controlling Arrest
+Date</li>
+<li><code>CH_CRIMHIST_COLLAPSED</code> - Criminal history collapsed,
+categorical</li>
+<li><code>SES_PARENTS_INCARCERATED</code> - Parents have ever been in
+prison or jail</li>
+<li><code>SES_FAMILY_INCARCERATED</code> - Children, brothers, sisters,
+or spouse have ever been in jail or prison</li>
+<li><code>TYPEOFFENSE</code> - Type of Offense</li>
+<li><code>V2409</code> - Ever taken a medication for mental
+conditions</li>
+<li><code>V2412</code> - Taken medication for a mental condition since
+admission</li>
+<li><code>MCMH_MHOSPYR</code> - Mental Hospital - year before
+arrest</li>
+<li><code>MCMH_MHOSPADM</code> - Mental hospital - since admission</li>
+<li><code>MCMH_MH_TREATMENT_PA</code> - Mental Health Treatment 1 year
+prior to arrest</li>
+<li><code>MCMH_MH_TREATMENT_AD</code> - Mental Health Treatment since
+admission</li>
+<li><code>MCMH_RSLT_HIV</code> - HIV test result</li>
+</ul>
+<p>We created the following variables:</p>
+<ul>
+<li><code>dataset</code> - federal or state</li>
+<li><code>MENTAL_HISTORY_BINARY</code> - whether or not the respondent
+had any history with mental health conditions</li>
+<li><code>tx_pa_ad</code> - Treatment 1 Year Before Arrest/Since
+Admission</li>
+</ul>
+</div>
 </div>
 <div id="exploratory-analysis" class="section level1">
 <h1>Exploratory analysis</h1>
@@ -421,20 +605,24 @@ consider in the course of your analysis?</p>
 Justify the steps you took, and show any major changes to your
 ideas.</p>
 </div>
-<div id="additional-analysis" class="section level1">
-<h1>Additional analysis</h1>
-<p>If you undertake formal statistical analyses, describe these in
-detail</p>
+<div id="statistical-analysis" class="section level1">
+<h1>Statistical analysis</h1>
+<div id="association-between-mental-health-and-hiv-status"
+class="section level3">
+<h3>Association between Mental Health and HIV Status</h3>
+</div>
+<div id="association-between-mental-health-and-arrest-history"
+class="section level3">
+<h3>Association between Mental Health and Arrest History</h3>
+</div>
+<div id="model-selection" class="section level3">
+<h3>Model Selection</h3>
+</div>
 </div>
 <div id="discussion" class="section level1">
 <h1>Discussion</h1>
 <p>What were your findings? Are they what you expect? What insights into
 the data can you make?</p>
-<p>As this will be your only chance to describe your project in detail,
-make sure that your report is a standalone document that fully describes
-your process and results. We also expect you to write high-quality code
-that is understandable to an outside reader. Coding collaboratively and
-actively reviewing code within the team will help with this!</p>
 </div>
 <div id="collaborators" class="section level1">
 <h1>Collaborators</h1>
@@ -479,6 +667,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 <script>
 $(document).ready(function ()  {
