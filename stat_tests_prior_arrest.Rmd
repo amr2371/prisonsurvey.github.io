@@ -194,6 +194,4 @@ After controlling for `sex`, `age group`, `race/ethnicity`, `education`, and `mo
 
 We are also 95% confident that the true odds ratio comparing odds of having a history of at least one mental health condition between incarcerated individuals with a one-unit difference in prior arrests HIV lies between 1.012 and 1.021, controlling for the above covariates. Thus, at a 0.05 level of significance, we have sufficient evidence to support the claim that mental health history (yes vs. no history of at least one mental health condition) DOES differ by number of prior arrests, adjusting for sex, age, race/ethnicity, education, and monthly income.     
      
-**Note: In all of the above regression analyses, observations with NA values for any of the variables included in our models were excluded. They are still, however, included in our exploratory data analyses for full transparency.**  
-     
-
+**Note: In all of the above regression analyses, observations with NA values for any of the variables included in our models were excluded. They are still, however, included in our exploratory data analyses for full transparency.** 
