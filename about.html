@@ -13,7 +13,7 @@
 
 <title>About This Project</title>
 
-<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -184,8 +184,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -193,16 +193,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -408,16 +401,19 @@ Census Bureau</a> website.</p>
 the source code is publicly available on <a
 href="https://github.com/amr2371/prisonsurvey.github.io">Github</a>. The
 following RStudio libraries were loaded for this analysis: tidyverse,
-mgcv, modelr, patchwork, labelled, and viridis. Spatial analyses were
-created with QGIS.</p>
+mgcv, modelr, patchwork, labelled, dvmisc, and viridis. Spatial analyses
+were created with QGIS.</p>
 </div>
 <div id="references" class="section level3">
 <h3>References</h3>
-<p>Wildeman, C., &amp; Wang, E. A. (2017). Mass incarceration, public
-health, and widening inequality in the USA. The Lancet, 389(10077),
-1464-1474. <a
-href="https://www.sciencedirect.com/science/article/pii/S0140673617302593?casa_token=1xD25QzmMjoAAAAA:FJ80W6OM0S_SidWPgQPcI8ooIsqB3WrWfRiDAaidhwMSdTbxU23bqw-upyTzm1QU6eQMfH4Y">online
-article</a></p>
+<p><a
+href="https://www.sciencedirect.com/science/article/pii/S0140673617302593?casa_token=1xD25QzmMjoAAAAA:FJ80W6OM0S_SidWPgQPcI8ooIsqB3WrWfRiDAaidhwMSdTbxU23bqw-upyTzm1QU6eQMfH4Y">Wildeman,
+C., &amp; Wang, E. A. (2017). Mass incarceration, public health, and
+widening inequality in the USA. The Lancet, 389(10077),
+1464-1474.</a></p>
+<p><a href="https://www.nimh.nih.gov/health/topics/hiv-aids">National
+Institute of Mental Health. (2022). HIV and AIDS and mental health.
+NIH.gov.</a></p>
 </div>
 
 
