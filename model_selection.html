@@ -1124,7 +1124,7 @@ data to remove missing values and less significant factors.</p>
 total_df %&gt;%
   select(mental_health = MCMH_MENTAL_HISTORY, num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV) %&gt;%
   filter(abuse %in% c(&quot;(0000004) Not abused&quot;, &quot;(0000003) Both physically and sexually abused&quot;), race != &quot;Multiple Races reported, non-Hispanic&quot;)
-  
+
 manual_model = 
   glm(mental_health ~ num_arrests + age + race + sex + abuse + hiv, data = manual_df, family = &quot;binomial&quot;)
 
