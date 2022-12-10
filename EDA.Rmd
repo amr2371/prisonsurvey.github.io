@@ -16,6 +16,7 @@ library(viridis)
 library(labelled)
 library(table1)
 library(patchwork)
+library(plotly)
 
 
 knitr::opts_chunk$set(
@@ -152,7 +153,8 @@ From this table, we can see that certain variables appear to differ by mental he
 
 ```{r edu, message=FALSE}
 #Bar Graph for EDUCATION
-total_df %>% 
+education_bar = 
+  total_df %>% 
   group_by(MENTAL_HISTORY_BINARY, EDUCATION) %>% 
   summarise(n = n()) %>%
   mutate(freq = n / sum(n)) %>%
@@ -165,6 +167,8 @@ total_df %>%
     x = "Education",
     y = "Proportion of Total")+
   guides(fill=guide_legend(title="Mental Health History"))
+
+ggplotly(education_bar)
 ```
 
 When displayed on a bar graph, the two groups of mental health history have similar distributions of educational attainment, but categories from 10th-12th grade appear to have higher proportions of individuals with no mental health history, whereas the college-level categories interestingly have a higher proportion of individuals *with* a history of mental health condition(s).
@@ -174,7 +178,8 @@ When displayed on a bar graph, the two groups of mental health history have simi
 
 ```{r income, message=FALSE}
 #BAR graph for SES_INCOMEMTH
-total_df %>% 
+income_bar = 
+  total_df %>% 
   group_by(MENTAL_HISTORY_BINARY, SES_INCOMEMTH) %>% 
   summarise(n = n()) %>%
   mutate(freq = n / sum(n)) %>%
@@ -184,30 +189,36 @@ total_df %>%
   geom_bar(position = "dodge", stat = "identity") + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
    labs(x = "Monthly Income in Month Before Arrest",
-        y = "Percentage of Individuals")
+        y = "Percentage of Individuals") +
+  guides(fill=guide_legend(title="Mental Health History"))
+
+ggplotly(income_bar)
 ```
   
 With regard to monthly income in the month before arrest, the two categories of mental health history do not have easily distinguishable patterns/distributions. However, in the lower income categories (up to the `$800 - $999` category), there are a higher proportion of individuals with a history of mental health condition(s) - the opposite is true for all categories including and above `$1,000 - $1,199`.  
   
+
   
-# Incarceration-Related Variables
+## Incarceration-Related Variables
 
 ### Distribution of Incarceration-Related Variables by Mental Health History  
 
-Subsequently, a table was created to display the distribution of variables related to individuals' current incarceration and/or history regarding the justice system. These variables included number of prior sentences (`CH_PRIORSENTENCE_NUM`), number of prior arrests (`V1197`), collapsed criminal history (`CH_CRIMHIST_COLLAPSED`), whether their parents have been incarcerated (`SES_PARENTS_INCARCERATED`), whether their other immediate family has been incarcerated (`SES_FAMILY_INCARCERATED`), and whether they are incarcerated in a state or federal facility (`dataset`).
+We created to display the distribution of variables related to individuals' current incarceration and/or history within the justice system. These variables include number of prior sentences (`CH_PRIORSENTENCE_NUM`), number of prior arrests (`V1197`), collapsed criminal history (`CH_CRIMHIST_COLLAPSED`), whether their parents have been incarcerated (`SES_PARENTS_INCARCERATED`), whether their other immediate family has been incarcerated (`SES_FAMILY_INCARCERATED`), and whether they are incarcerated in a state or federal facility (`dataset`).
 
 ```{r incarceration, message=FALSE}
 #Incarceration table
 table1(~ CH_PRIORSENTENCE_NUM + V1197 + CH_CRIMHIST_COLLAPSED + SES_PARENTS_INCARCERATED + SES_FAMILY_INCARCERATED + dataset | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
 ```
   
-Again, some of these variables appear to differ by mental health history status, so some hypothesis testing is shown on the Statistical Analysis page of the website, which examines this further.  
+
+Again, some of these distributions appear to differ by mental health history status, so some hypothesis testing is performed on the Statistical Analysis page of the website to examine this further.  
   
 ### Type of Offense by Mental Health History  
 
 ```{r offense, message=FALSE}
 #Bar graph fir TYPEOFOFFENSE
-total_df %>% 
+offense_bar = 
+  total_df %>% 
   group_by(MENTAL_HISTORY_BINARY, TYPEOFFENSE) %>% 
   summarise(n = n()) %>%
   mutate(freq = n / sum(n)) %>%
@@ -218,7 +229,10 @@ total_df %>%
   geom_bar(position = "dodge", stat = "identity") + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
    labs(x = "Type of Offense",
-        y = "Percentage of Individuals")
+        y = "Percentage of Individuals") +
+  guides(fill=guide_legend(title="Mental Health History"))
+
+ggplotly(offense_bar)
 ```
 
 The above bar graph shows that the two most common types of offense for both categories of mental health history are drug trafficking and robbery, while arson and other property crimes are the least common for both categories.  
