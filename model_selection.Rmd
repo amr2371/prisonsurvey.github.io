@@ -15,6 +15,7 @@ library(modelr)
 library(viridis)
 library(labelled)
 library(table1)
+library(dvmisc)
 
 
 knitr::opts_chunk$set(
@@ -141,6 +142,56 @@ Let's look at the following variables as potential predictors of an inmate's men
 - HIV status
   
 ```{r model_selection}
-#total_df %>%
-#  select(num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV)
+
+model_data = 
+  total_df %>%
+select(mental_health = MCMH_MENTAL_HISTORY, num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV) 
+
+full_model =
+  glm(mental_health ~ num_arrests + sentence_length + age + race + sex + abuse + hiv, data = model_data, family = "binomial")
+
+summary(full_model)
+```  
+
+Fitting a full model, we can see that ALL of these variables are significant at the 0.05 level, but our AIC is quite high. Let's try finding a sub-model using backwards selection:  
+
+```{r backwards}
+backwards = step(full_model, trace = 0)
+summary(backwards)
 ```
+
+Since all variables are considered significant, the backwards selection model is no different from the full model.
+
+Let's manually select the most significant variables and clean up the data to remove missing values and less significant factors.
+
+```{r manual}
+manual_df =
+total_df %>%
+  select(mental_health = MCMH_MENTAL_HISTORY, num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV) %>%
+  filter(abuse %in% c("(0000004) Not abused", "(0000003) Both physically and sexually abused"), race != "Multiple Races reported, non-Hispanic")
+  
+manual_model = 
+  glm(mental_health ~ num_arrests + age + race + sex + abuse + hiv, data = manual_df, family = "binomial")
+
+summary(manual_model)
+```  
+
+When we removed sentence length, as well as the non-significant levels of abuse and race, we have a much better fit.
+
+Let's do one more iteration to remove age and Race: American Indian, Alaska Native non-Hispanic :  
+
+```{r manual 2}
+manual2 = 
+  manual_df %>%
+  filter(race != "American Indian, Alaska Native non-Hispanic")
+
+manual_model2 = 
+  glm(mental_health ~ num_arrests + race + sex + abuse + hiv, data = manual2, family = "binomial")
+
+manual_model2 %>%
+  clean_glm(prep_kable = TRUE) %>% 
+  knitr::kable()
+``` 
+
+The terms in our final model are all significant at the 0.001 level.
+We find that the most significant predictors of an inmate's mental health status are **# of arrests, race, sex, HIV status, and abuse.**

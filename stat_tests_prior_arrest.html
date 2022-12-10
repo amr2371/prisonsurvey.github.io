@@ -392,21 +392,19 @@ div.tocify {
 </div>
 
 
-<div id="is-mental-health-associated-with-prior-arrest-history"
+<div id="is-mental-health-status-associated-with-prior-arrest-history"
 class="section level1">
-<h1>Is Mental Health Associated with Prior Arrest History?</h1>
+<h1>Is Mental Health Status Associated with Prior Arrest History?</h1>
 <p>To assess whether mental health (outcome of interest) is associated
 with prior arrest history (exposure of interest), we conducted logistic
 regression modeling (due to the binary nature of the outcome variable).
 First, we created a crude model of this association with no additional
 covariates.</p>
 <ul>
-<li><p>Null hypothesis: Mental health history (yes vs. no history of at
-least one mental health condition) does not differ by number of prior
-arrests (measured as continuous).</p></li>
-<li><p>Alternate hypothesis: Mental health history (yes vs. no history
-of at least one mental health condition) DOES differ by number of prior
-arrests (measured as continuous).</p></li>
+<li><p>H0 - Null hypothesis: Mental health status does not differ by
+number of prior arrests.</p></li>
+<li><p>H1 - Alternate hypothesis: Mental health status DOES differ by
+number of prior arrests</p></li>
 </ul>
 <div id="crude-model" class="section level3">
 <h3>Crude Model</h3>
@@ -428,40 +426,68 @@ crude_arrests_mh =
 
 crude_arrests_mh</code></pre>
 <table>
-<colgroup>
-<col width="36%" />
-<col width="13%" />
-<col width="9%" />
-<col width="13%" />
-<col width="15%" />
-<col width="12%" />
-</colgroup>
 <thead>
-<tr class="header">
-<th align="left">term</th>
-<th align="right">estimate</th>
-<th align="right">OR</th>
-<th align="right">conf_low</th>
-<th align="right">conf_high</th>
-<th align="right">p_value</th>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+OR
+</th>
+<th style="text-align:right;">
+conf_low
+</th>
+<th style="text-align:right;">
+conf_high
+</th>
+<th style="text-align:right;">
+p_value
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">(Intercept)</td>
-<td align="right">-1.051</td>
-<td align="right">0.350</td>
-<td align="right">0.335</td>
-<td align="right">0.365</td>
-<td align="right">0</td>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+-1.051
+</td>
+<td style="text-align:right;">
+0.350
+</td>
+<td style="text-align:right;">
+0.335
+</td>
+<td style="text-align:right;">
+0.365
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
-<tr class="even">
-<td align="left">Number of Prior Arrests</td>
-<td align="right">0.016</td>
-<td align="right">1.017</td>
-<td align="right">1.012</td>
-<td align="right">1.021</td>
-<td align="right">0</td>
+<tr>
+<td style="text-align:left;">
+Number of Prior Arrests
+</td>
+<td style="text-align:right;">
+0.016
+</td>
+<td style="text-align:right;">
+1.017
+</td>
+<td style="text-align:right;">
+1.012
+</td>
+<td style="text-align:right;">
+1.021
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
 </tbody>
 </table>
@@ -504,372 +530,889 @@ adj_arrests_mh =
     knitr::kable(digits = 3)
 
 adj_arrests_mh</code></pre>
-<table style="width:100%;">
-<colgroup>
-<col width="62%" />
-<col width="8%" />
-<col width="5%" />
-<col width="8%" />
-<col width="8%" />
-<col width="7%" />
-</colgroup>
+<table>
 <thead>
-<tr class="header">
-<th align="left">term</th>
-<th align="right">estimate</th>
-<th align="right">OR</th>
-<th align="right">conf_low</th>
-<th align="right">conf_high</th>
-<th align="right">p_value</th>
+<tr>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:right;">
+estimate
+</th>
+<th style="text-align:right;">
+OR
+</th>
+<th style="text-align:right;">
+conf_low
+</th>
+<th style="text-align:right;">
+conf_high
+</th>
+<th style="text-align:right;">
+p_value
+</th>
 </tr>
 </thead>
 <tbody>
-<tr class="odd">
-<td align="left">(Intercept)</td>
-<td align="right">-0.088</td>
-<td align="right">0.916</td>
-<td align="right">0.439</td>
-<td align="right">1.812</td>
-<td align="right">0.807</td>
+<tr>
+<td style="text-align:left;">
+(Intercept)
+</td>
+<td style="text-align:right;">
+-0.088
+</td>
+<td style="text-align:right;">
+0.916
+</td>
+<td style="text-align:right;">
+0.439
+</td>
+<td style="text-align:right;">
+1.812
+</td>
+<td style="text-align:right;">
+0.807
+</td>
 </tr>
-<tr class="even">
-<td align="left">Number of Prior Arrests</td>
-<td align="right">0.018</td>
-<td align="right">1.018</td>
-<td align="right">1.013</td>
-<td align="right">1.023</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+Number of Prior Arrests
+</td>
+<td style="text-align:right;">
+0.018
+</td>
+<td style="text-align:right;">
+1.018
+</td>
+<td style="text-align:right;">
+1.013
+</td>
+<td style="text-align:right;">
+1.023
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Sex: Female</td>
-<td align="right">0.968</td>
-<td align="right">2.634</td>
-<td align="right">2.411</td>
-<td align="right">2.877</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+Sex: Female
+</td>
+<td style="text-align:right;">
+0.968
+</td>
+<td style="text-align:right;">
+2.634
+</td>
+<td style="text-align:right;">
+2.411
+</td>
+<td style="text-align:right;">
+2.877
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="even">
-<td align="left">Age Group: 25-34</td>
-<td align="right">-0.069</td>
-<td align="right">0.933</td>
-<td align="right">0.827</td>
-<td align="right">1.054</td>
-<td align="right">0.266</td>
+<tr>
+<td style="text-align:left;">
+Age Group: 25-34
+</td>
+<td style="text-align:right;">
+-0.069
+</td>
+<td style="text-align:right;">
+0.933
+</td>
+<td style="text-align:right;">
+0.827
+</td>
+<td style="text-align:right;">
+1.054
+</td>
+<td style="text-align:right;">
+0.266
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Age Group: 35-44</td>
-<td align="right">-0.028</td>
-<td align="right">0.972</td>
-<td align="right">0.860</td>
-<td align="right">1.100</td>
-<td align="right">0.656</td>
+<tr>
+<td style="text-align:left;">
+Age Group: 35-44
+</td>
+<td style="text-align:right;">
+-0.028
+</td>
+<td style="text-align:right;">
+0.972
+</td>
+<td style="text-align:right;">
+0.860
+</td>
+<td style="text-align:right;">
+1.100
+</td>
+<td style="text-align:right;">
+0.656
+</td>
 </tr>
-<tr class="even">
-<td align="left">Age Group: 45-54</td>
-<td align="right">-0.051</td>
-<td align="right">0.950</td>
-<td align="right">0.824</td>
-<td align="right">1.096</td>
-<td align="right">0.484</td>
+<tr>
+<td style="text-align:left;">
+Age Group: 45-54
+</td>
+<td style="text-align:right;">
+-0.051
+</td>
+<td style="text-align:right;">
+0.950
+</td>
+<td style="text-align:right;">
+0.824
+</td>
+<td style="text-align:right;">
+1.096
+</td>
+<td style="text-align:right;">
+0.484
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Age Group: 55-64</td>
-<td align="right">-0.446</td>
-<td align="right">0.640</td>
-<td align="right">0.512</td>
-<td align="right">0.797</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+Age Group: 55-64
+</td>
+<td style="text-align:right;">
+-0.446
+</td>
+<td style="text-align:right;">
+0.640
+</td>
+<td style="text-align:right;">
+0.512
+</td>
+<td style="text-align:right;">
+0.797
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="even">
-<td align="left">Age Group: 65-96</td>
-<td align="right">-0.807</td>
-<td align="right">0.446</td>
-<td align="right">0.281</td>
-<td align="right">0.686</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+Age Group: 65-96
+</td>
+<td style="text-align:right;">
+-0.807
+</td>
+<td style="text-align:right;">
+0.446
+</td>
+<td style="text-align:right;">
+0.281
+</td>
+<td style="text-align:right;">
+0.686
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Race/Ethnicity: Black non-Hispanic</td>
-<td align="right">-0.943</td>
-<td align="right">0.390</td>
-<td align="right">0.356</td>
-<td align="right">0.426</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+Race/Ethnicity: Black non-Hispanic
+</td>
+<td style="text-align:right;">
+-0.943
+</td>
+<td style="text-align:right;">
+0.390
+</td>
+<td style="text-align:right;">
+0.356
+</td>
+<td style="text-align:right;">
+0.426
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="even">
-<td align="left">Race/Ethnicity: Hispanic</td>
-<td align="right">-1.027</td>
-<td align="right">0.358</td>
-<td align="right">0.318</td>
-<td align="right">0.403</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+Race/Ethnicity: Hispanic
+</td>
+<td style="text-align:right;">
+-1.027
+</td>
+<td style="text-align:right;">
+0.358
+</td>
+<td style="text-align:right;">
+0.318
+</td>
+<td style="text-align:right;">
+0.403
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Race/Ethnicity: American Indian, Alaska Native
-non-Hispanic</td>
-<td align="right">-0.615</td>
-<td align="right">0.541</td>
-<td align="right">0.405</td>
-<td align="right">0.714</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+Race/Ethnicity: American Indian, Alaska Native non-Hispanic
+</td>
+<td style="text-align:right;">
+-0.615
+</td>
+<td style="text-align:right;">
+0.541
+</td>
+<td style="text-align:right;">
+0.405
+</td>
+<td style="text-align:right;">
+0.714
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="even">
-<td align="left">Race/Ethnicity: Asian, Pacific Islander, Native
-Hawaiian non-Hispanic</td>
-<td align="right">-0.892</td>
-<td align="right">0.410</td>
-<td align="right">0.267</td>
-<td align="right">0.611</td>
-<td align="right">0.000</td>
+<tr>
+<td style="text-align:left;">
+Race/Ethnicity: Asian, Pacific Islander, Native Hawaiian non-Hispanic
+</td>
+<td style="text-align:right;">
+-0.892
+</td>
+<td style="text-align:right;">
+0.410
+</td>
+<td style="text-align:right;">
+0.267
+</td>
+<td style="text-align:right;">
+0.611
+</td>
+<td style="text-align:right;">
+0.000
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Race/Ethnicity: Multiple Races reported,
-non-Hispanic</td>
-<td align="right">0.070</td>
-<td align="right">1.072</td>
-<td align="right">0.878</td>
-<td align="right">1.308</td>
-<td align="right">0.491</td>
+<tr>
+<td style="text-align:left;">
+Race/Ethnicity: Multiple Races reported, non-Hispanic
+</td>
+<td style="text-align:right;">
+0.070
+</td>
+<td style="text-align:right;">
+1.072
+</td>
+<td style="text-align:right;">
+0.878
+</td>
+<td style="text-align:right;">
+1.308
+</td>
+<td style="text-align:right;">
+0.491
+</td>
 </tr>
-<tr class="even">
-<td align="left">Monthly Income: $1 - $199</td>
-<td align="right">-0.117</td>
-<td align="right">0.890</td>
-<td align="right">0.652</td>
-<td align="right">1.216</td>
-<td align="right">0.463</td>
+<tr>
+<td style="text-align:left;">
+Monthly Income: $1 - $199
+</td>
+<td style="text-align:right;">
+-0.117
+</td>
+<td style="text-align:right;">
+0.890
+</td>
+<td style="text-align:right;">
+0.652
+</td>
+<td style="text-align:right;">
+1.216
+</td>
+<td style="text-align:right;">
+0.463
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Monthly Income: $200 - $399</td>
-<td align="right">-0.017</td>
-<td align="right">0.983</td>
-<td align="right">0.745</td>
-<td align="right">1.302</td>
-<td align="right">0.906</td>
+<tr>
+<td style="text-align:left;">
+Monthly Income: $200 - $399
+</td>
+<td style="text-align:right;">
+-0.017
+</td>
+<td style="text-align:right;">
+0.983
+</td>
+<td style="text-align:right;">
+0.745
+</td>
+<td style="text-align:right;">
+1.302
+</td>
+<td style="text-align:right;">
+0.906
+</td>
 </tr>
-<tr class="even">
-<td align="left">Monthly Income: $400 - $599</td>
-<td align="right">0.142</td>
-<td align="right">1.153</td>
-<td align="right">0.881</td>
-<td align="right">1.514</td>
-<td align="right">0.304</td>
+<tr>
+<td style="text-align:left;">
+Monthly Income: $400 - $599
+</td>
+<td style="text-align:right;">
+0.142
+</td>
+<td style="text-align:right;">
+1.153
+</td>
+<td style="text-align:right;">
+0.881
+</td>
+<td style="text-align:right;">
+1.514
+</td>
+<td style="text-align:right;">
+0.304
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Monthly Income: $600 - $799</td>
-<td align="right">0.127</td>
-<td align="right">1.135</td>
-<td align="right">0.861</td>
-<td align="right">1.502</td>
-<td align="right">0.372</td>
+<tr>
+<td style="text-align:left;">
+Monthly Income: $600 - $799
+</td>
+<td style="text-align:right;">
+0.127
+</td>
+<td style="text-align:right;">
+1.135
+</td>
+<td style="text-align:right;">
+0.861
+</td>
+<td style="text-align:right;">
+1.502
+</td>
+<td style="text-align:right;">
+0.372
+</td>
 </tr>
-<tr class="even">
-<td align="left">Monthly Income: $800 - $999</td>
-<td align="right">-0.053</td>
-<td align="right">0.948</td>
-<td align="right">0.720</td>
-<td align="right">1.255</td>
-<td align="right">0.709</td>
+<tr>
+<td style="text-align:left;">
+Monthly Income: $800 - $999
+</td>
+<td style="text-align:right;">
+-0.053
+</td>
+<td style="text-align:right;">
+0.948
+</td>
+<td style="text-align:right;">
+0.720
+</td>
+<td style="text-align:right;">
+1.255
+</td>
+<td style="text-align:right;">
+0.709
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Monthly Income: $1,000 - $1,199</td>
-<td align="right">-0.219</td>
-<td align="right">0.803</td>
-<td align="right">0.611</td>
-<td align="right">1.060</td>
-<td align="right">0.118</td>
+<tr>
+<td style="text-align:left;">
+Monthly Income: $1,000 - $1,199
+</td>
+<td style="text-align:right;">
+-0.219
+</td>
+<td style="text-align:right;">
+0.803
+</td>
+<td style="text-align:right;">
+0.611
+</td>
+<td style="text-align:right;">
+1.060
+</td>
+<td style="text-align:right;">
+0.118
+</td>
 </tr>
-<tr class="even">
-<td align="left">Monthly Income: $1,200 - $1,499</td>
-<td align="right">-0.306</td>
-<td align="right">0.737</td>
-<td align="right">0.561</td>
-<td align="right">0.971</td>
-<td align="right">0.029</td>
+<tr>
+<td style="text-align:left;">
+Monthly Income: $1,200 - $1,499
+</td>
+<td style="text-align:right;">
+-0.306
+</td>
+<td style="text-align:right;">
+0.737
+</td>
+<td style="text-align:right;">
+0.561
+</td>
+<td style="text-align:right;">
+0.971
+</td>
+<td style="text-align:right;">
+0.029
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Monthly Income: $1,500 - $1,999</td>
-<td align="right">-0.247</td>
-<td align="right">0.781</td>
-<td align="right">0.593</td>
-<td align="right">1.033</td>
-<td align="right">0.081</td>
+<tr>
+<td style="text-align:left;">
+Monthly Income: $1,500 - $1,999
+</td>
+<td style="text-align:right;">
+-0.247
+</td>
+<td style="text-align:right;">
+0.781
+</td>
+<td style="text-align:right;">
+0.593
+</td>
+<td style="text-align:right;">
+1.033
+</td>
+<td style="text-align:right;">
+0.081
+</td>
 </tr>
-<tr class="even">
-<td align="left">Monthly Income: $2,000 - $2,499</td>
-<td align="right">-0.312</td>
-<td align="right">0.732</td>
-<td align="right">0.554</td>
-<td align="right">0.970</td>
-<td align="right">0.029</td>
+<tr>
+<td style="text-align:left;">
+Monthly Income: $2,000 - $2,499
+</td>
+<td style="text-align:right;">
+-0.312
+</td>
+<td style="text-align:right;">
+0.732
+</td>
+<td style="text-align:right;">
+0.554
+</td>
+<td style="text-align:right;">
+0.970
+</td>
+<td style="text-align:right;">
+0.029
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Monthly Income: $2,500 - $4,999</td>
-<td align="right">-0.281</td>
-<td align="right">0.755</td>
-<td align="right">0.576</td>
-<td align="right">0.994</td>
-<td align="right">0.044</td>
+<tr>
+<td style="text-align:left;">
+Monthly Income: $2,500 - $4,999
+</td>
+<td style="text-align:right;">
+-0.281
+</td>
+<td style="text-align:right;">
+0.755
+</td>
+<td style="text-align:right;">
+0.576
+</td>
+<td style="text-align:right;">
+0.994
+</td>
+<td style="text-align:right;">
+0.044
+</td>
 </tr>
-<tr class="even">
-<td align="left">Monthly Income: $5,000 - $7,499</td>
-<td align="right">-0.265</td>
-<td align="right">0.767</td>
-<td align="right">0.567</td>
-<td align="right">1.039</td>
-<td align="right">0.085</td>
+<tr>
+<td style="text-align:left;">
+Monthly Income: $5,000 - $7,499
+</td>
+<td style="text-align:right;">
+-0.265
+</td>
+<td style="text-align:right;">
+0.767
+</td>
+<td style="text-align:right;">
+0.567
+</td>
+<td style="text-align:right;">
+1.039
+</td>
+<td style="text-align:right;">
+0.085
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Monthly Income: $7,500 or more</td>
-<td align="right">-0.280</td>
-<td align="right">0.756</td>
-<td align="right">0.570</td>
-<td align="right">1.005</td>
-<td align="right">0.053</td>
+<tr>
+<td style="text-align:left;">
+Monthly Income: $7,500 or more
+</td>
+<td style="text-align:right;">
+-0.280
+</td>
+<td style="text-align:right;">
+0.756
+</td>
+<td style="text-align:right;">
+0.570
+</td>
+<td style="text-align:right;">
+1.005
+</td>
+<td style="text-align:right;">
+0.053
+</td>
 </tr>
-<tr class="even">
-<td align="left">Education: First grade</td>
-<td align="right">-0.587</td>
-<td align="right">0.556</td>
-<td align="right">0.169</td>
-<td align="right">1.679</td>
-<td align="right">0.311</td>
+<tr>
+<td style="text-align:left;">
+Education: First grade
+</td>
+<td style="text-align:right;">
+-0.587
+</td>
+<td style="text-align:right;">
+0.556
+</td>
+<td style="text-align:right;">
+0.169
+</td>
+<td style="text-align:right;">
+1.679
+</td>
+<td style="text-align:right;">
+0.311
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Education: Second grade</td>
-<td align="right">-1.031</td>
-<td align="right">0.357</td>
-<td align="right">0.075</td>
-<td align="right">1.283</td>
-<td align="right">0.143</td>
+<tr>
+<td style="text-align:left;">
+Education: Second grade
+</td>
+<td style="text-align:right;">
+-1.031
+</td>
+<td style="text-align:right;">
+0.357
+</td>
+<td style="text-align:right;">
+0.075
+</td>
+<td style="text-align:right;">
+1.283
+</td>
+<td style="text-align:right;">
+0.143
+</td>
 </tr>
-<tr class="even">
-<td align="left">Education: Third grade</td>
-<td align="right">-0.534</td>
-<td align="right">0.586</td>
-<td align="right">0.219</td>
-<td align="right">1.531</td>
-<td align="right">0.278</td>
+<tr>
+<td style="text-align:left;">
+Education: Third grade
+</td>
+<td style="text-align:right;">
+-0.534
+</td>
+<td style="text-align:right;">
+0.586
+</td>
+<td style="text-align:right;">
+0.219
+</td>
+<td style="text-align:right;">
+1.531
+</td>
+<td style="text-align:right;">
+0.278
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Education: Fourth grade</td>
-<td align="right">0.120</td>
-<td align="right">1.127</td>
-<td align="right">0.463</td>
-<td align="right">2.779</td>
-<td align="right">0.792</td>
+<tr>
+<td style="text-align:left;">
+Education: Fourth grade
+</td>
+<td style="text-align:right;">
+0.120
+</td>
+<td style="text-align:right;">
+1.127
+</td>
+<td style="text-align:right;">
+0.463
+</td>
+<td style="text-align:right;">
+2.779
+</td>
+<td style="text-align:right;">
+0.792
+</td>
 </tr>
-<tr class="even">
-<td align="left">Education: Fifth grade</td>
-<td align="right">-0.250</td>
-<td align="right">0.779</td>
-<td align="right">0.339</td>
-<td align="right">1.830</td>
-<td align="right">0.559</td>
+<tr>
+<td style="text-align:left;">
+Education: Fifth grade
+</td>
+<td style="text-align:right;">
+-0.250
+</td>
+<td style="text-align:right;">
+0.779
+</td>
+<td style="text-align:right;">
+0.339
+</td>
+<td style="text-align:right;">
+1.830
+</td>
+<td style="text-align:right;">
+0.559
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Education: Sixth grade</td>
-<td align="right">-0.344</td>
-<td align="right">0.709</td>
-<td align="right">0.352</td>
-<td align="right">1.498</td>
-<td align="right">0.349</td>
+<tr>
+<td style="text-align:left;">
+Education: Sixth grade
+</td>
+<td style="text-align:right;">
+-0.344
+</td>
+<td style="text-align:right;">
+0.709
+</td>
+<td style="text-align:right;">
+0.352
+</td>
+<td style="text-align:right;">
+1.498
+</td>
+<td style="text-align:right;">
+0.349
+</td>
 </tr>
-<tr class="even">
-<td align="left">Education: Seventh grade</td>
-<td align="right">-0.207</td>
-<td align="right">0.813</td>
-<td align="right">0.414</td>
-<td align="right">1.684</td>
-<td align="right">0.560</td>
+<tr>
+<td style="text-align:left;">
+Education: Seventh grade
+</td>
+<td style="text-align:right;">
+-0.207
+</td>
+<td style="text-align:right;">
+0.813
+</td>
+<td style="text-align:right;">
+0.414
+</td>
+<td style="text-align:right;">
+1.684
+</td>
+<td style="text-align:right;">
+0.560
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Education: Eighth grade</td>
-<td align="right">-0.291</td>
-<td align="right">0.748</td>
-<td align="right">0.391</td>
-<td align="right">1.515</td>
-<td align="right">0.396</td>
+<tr>
+<td style="text-align:left;">
+Education: Eighth grade
+</td>
+<td style="text-align:right;">
+-0.291
+</td>
+<td style="text-align:right;">
+0.748
+</td>
+<td style="text-align:right;">
+0.391
+</td>
+<td style="text-align:right;">
+1.515
+</td>
+<td style="text-align:right;">
+0.396
+</td>
 </tr>
-<tr class="even">
-<td align="left">Education: Ninth grade</td>
-<td align="right">-0.485</td>
-<td align="right">0.616</td>
-<td align="right">0.325</td>
-<td align="right">1.238</td>
-<td align="right">0.152</td>
+<tr>
+<td style="text-align:left;">
+Education: Ninth grade
+</td>
+<td style="text-align:right;">
+-0.485
+</td>
+<td style="text-align:right;">
+0.616
+</td>
+<td style="text-align:right;">
+0.325
+</td>
+<td style="text-align:right;">
+1.238
+</td>
+<td style="text-align:right;">
+0.152
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Education: Tenth grade</td>
-<td align="right">-0.555</td>
-<td align="right">0.574</td>
-<td align="right">0.304</td>
-<td align="right">1.153</td>
-<td align="right">0.100</td>
+<tr>
+<td style="text-align:left;">
+Education: Tenth grade
+</td>
+<td style="text-align:right;">
+-0.555
+</td>
+<td style="text-align:right;">
+0.574
+</td>
+<td style="text-align:right;">
+0.304
+</td>
+<td style="text-align:right;">
+1.153
+</td>
+<td style="text-align:right;">
+0.100
+</td>
 </tr>
-<tr class="even">
-<td align="left">Education: Eleventh grade</td>
-<td align="right">-0.555</td>
-<td align="right">0.574</td>
-<td align="right">0.304</td>
-<td align="right">1.152</td>
-<td align="right">0.100</td>
+<tr>
+<td style="text-align:left;">
+Education: Eleventh grade
+</td>
+<td style="text-align:right;">
+-0.555
+</td>
+<td style="text-align:right;">
+0.574
+</td>
+<td style="text-align:right;">
+0.304
+</td>
+<td style="text-align:right;">
+1.152
+</td>
+<td style="text-align:right;">
+0.100
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Education: Twelfth grade</td>
-<td align="right">-0.589</td>
-<td align="right">0.555</td>
-<td align="right">0.294</td>
-<td align="right">1.110</td>
-<td align="right">0.079</td>
+<tr>
+<td style="text-align:left;">
+Education: Twelfth grade
+</td>
+<td style="text-align:right;">
+-0.589
+</td>
+<td style="text-align:right;">
+0.555
+</td>
+<td style="text-align:right;">
+0.294
+</td>
+<td style="text-align:right;">
+1.110
+</td>
+<td style="text-align:right;">
+0.079
+</td>
 </tr>
-<tr class="even">
-<td align="left">Education: College freshman</td>
-<td align="right">-0.211</td>
-<td align="right">0.809</td>
-<td align="right">0.422</td>
-<td align="right">1.643</td>
-<td align="right">0.539</td>
+<tr>
+<td style="text-align:left;">
+Education: College freshman
+</td>
+<td style="text-align:right;">
+-0.211
+</td>
+<td style="text-align:right;">
+0.809
+</td>
+<td style="text-align:right;">
+0.422
+</td>
+<td style="text-align:right;">
+1.643
+</td>
+<td style="text-align:right;">
+0.539
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Education: College sophomore</td>
-<td align="right">-0.362</td>
-<td align="right">0.696</td>
-<td align="right">0.365</td>
-<td align="right">1.408</td>
-<td align="right">0.290</td>
+<tr>
+<td style="text-align:left;">
+Education: College sophomore
+</td>
+<td style="text-align:right;">
+-0.362
+</td>
+<td style="text-align:right;">
+0.696
+</td>
+<td style="text-align:right;">
+0.365
+</td>
+<td style="text-align:right;">
+1.408
+</td>
+<td style="text-align:right;">
+0.290
+</td>
 </tr>
-<tr class="even">
-<td align="left">Education: College junior</td>
-<td align="right">-0.473</td>
-<td align="right">0.623</td>
-<td align="right">0.311</td>
-<td align="right">1.312</td>
-<td align="right">0.195</td>
+<tr>
+<td style="text-align:left;">
+Education: College junior
+</td>
+<td style="text-align:right;">
+-0.473
+</td>
+<td style="text-align:right;">
+0.623
+</td>
+<td style="text-align:right;">
+0.311
+</td>
+<td style="text-align:right;">
+1.312
+</td>
+<td style="text-align:right;">
+0.195
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Education: College senior</td>
-<td align="right">-0.377</td>
-<td align="right">0.686</td>
-<td align="right">0.353</td>
-<td align="right">1.408</td>
-<td align="right">0.282</td>
+<tr>
+<td style="text-align:left;">
+Education: College senior
+</td>
+<td style="text-align:right;">
+-0.377
+</td>
+<td style="text-align:right;">
+0.686
+</td>
+<td style="text-align:right;">
+0.353
+</td>
+<td style="text-align:right;">
+1.408
+</td>
+<td style="text-align:right;">
+0.282
+</td>
 </tr>
-<tr class="even">
-<td align="left">Education: Graduate school one year</td>
-<td align="right">-0.130</td>
-<td align="right">0.878</td>
-<td align="right">0.384</td>
-<td align="right">2.061</td>
-<td align="right">0.761</td>
+<tr>
+<td style="text-align:left;">
+Education: Graduate school one year
+</td>
+<td style="text-align:right;">
+-0.130
+</td>
+<td style="text-align:right;">
+0.878
+</td>
+<td style="text-align:right;">
+0.384
+</td>
+<td style="text-align:right;">
+2.061
+</td>
+<td style="text-align:right;">
+0.761
+</td>
 </tr>
-<tr class="odd">
-<td align="left">Education: Graduate school two or more years</td>
-<td align="right">-0.347</td>
-<td align="right">0.707</td>
-<td align="right">0.354</td>
-<td align="right">1.485</td>
-<td align="right">0.340</td>
+<tr>
+<td style="text-align:left;">
+Education: Graduate school two or more years
+</td>
+<td style="text-align:right;">
+-0.347
+</td>
+<td style="text-align:right;">
+0.707
+</td>
+<td style="text-align:right;">
+0.354
+</td>
+<td style="text-align:right;">
+1.485
+</td>
+<td style="text-align:right;">
+0.340
+</td>
 </tr>
 </tbody>
 </table>

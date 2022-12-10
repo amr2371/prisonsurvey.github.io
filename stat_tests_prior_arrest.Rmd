@@ -126,13 +126,13 @@ total_df =
 ```
 
     
-# Is Mental Health Associated with Prior Arrest History?  
+# Is Mental Health Status Associated with Prior Arrest History?  
 
 To assess whether mental health (outcome of interest) is associated with prior arrest history (exposure of interest), we conducted logistic regression modeling (due to the binary nature of the outcome variable). First, we created a crude model of this association with no additional covariates.
 
-* Null hypothesis: Mental health history (yes vs. no history of at least one mental health condition) does not differ by number of prior arrests (measured as continuous).
+* H0 - Null hypothesis: Mental health status does not differ by number of prior arrests.
 
-* Alternate hypothesis: Mental health history (yes vs. no history of at least one mental health condition) DOES differ by number of prior arrests (measured as continuous).
+* H1 - Alternate hypothesis: Mental health status DOES differ by number of prior arrests
   
 ### Crude Model  
   

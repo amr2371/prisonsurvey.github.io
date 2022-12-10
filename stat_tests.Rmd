@@ -125,11 +125,39 @@ total_df =
   set_variable_labels(dataset = "Facility Type", MENTAL_HISTORY_BINARY = "Binary Mental Health History", V0005 = "Sex", AGE_CAT = "Age Group", V2982 = "Race/Ethnicity", EDUCATION = "Education", SES_INCOMEMTH = "Monthly Income in Month Before Arrest", CH_PRIORSENTENCE_NUM = "Number of Prior Sentences", V1197 = "Number of Prior Arrests", CH_CRIMHIST_COLLAPSED = "Collapsed Criminal History", TYPEOFFENSE = "Type of Offense", SES_PARENTS_INCARCERATED = "Parents Been Incarcerated", SES_FAMILY_INCARCERATED = "Children, Siblings, or Spouse Been Incarcerated", MCMH_RSLT_HIV = "HIV Status") 
 ```
 
+
+# Is Mental Health Associated with HIV Status? 
   
+###Z-Test
+  
+To assess whether mental health (outcome of interest) is associated with HIV status (exposure of interest), we performed a 2-proportion z-test with the following hypotheses:  
 
-# Is Mental Health Associated with HIV Status?  
+* H0 - Null: The proportion of HIV positive inmates with mental health history IS EQUAL to the proportion of HIV negative inmates with mental health history.
 
-To assess whether mental health (outcome of interest) is associated with HIV status (exposure of interest), we conducted logistic regression modeling (due to the binary nature of the outcome variable). First, we created a crude model of this association with no additional covariates.
+* H1 - Alternate: The proportion of HIV positive inmates with mental health history IS NOT EQUAL to the proportion of HIV negative inmates with mental health history.
+
+```{r z test, message=FALSE}
+proportions = 
+  total_df %>%
+  rename(HIV = MCMH_RSLT_HIV, MENTAL_HEALTH = MCMH_MENTAL_HISTORY)%>%
+  group_by(HIV, MENTAL_HEALTH)%>%
+  summarise(count = n()) %>%
+  mutate(percent = (count / sum(count))) %>%
+  knitr::kable()
+
+result = prop.test(x = c(84, 3976), n = c(84+144, 3976+10276))
+result
+```  
+The estimated proportions are `r result$estimate`
+
+and the p-value is **`r result$p.value`.**
+
+At a significance level of 0.05, we REJECT the null hypothesis and conclude that the proportions of HIV positive vs. HIV negative inmates with mental health history are NOT EQUAL.
+
+
+
+
+We further studied this relationship by conducting logistic regression modeling (due to the binary nature of the outcome variable). First, we created a crude model of this association with no additional covariates.
 
 * Null hypothesis: Mental health history (yes vs. no history of at least one mental health condition) does not differ by HIV status (presumed negative vs. positive).
 

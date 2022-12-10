@@ -408,8 +408,445 @@ inmate’s mental health status:</p>
 <li>physical/sexual abuse</li>
 <li>HIV status</li>
 </ul>
-<pre class="r"><code>#total_df %&gt;%
-#  select(num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV)</code></pre>
+<pre class="r"><code>model_data = 
+  total_df %&gt;%
+select(mental_health = MCMH_MENTAL_HISTORY, num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV) 
+
+full_model =
+  glm(mental_health ~ num_arrests + sentence_length + age + race + sex + abuse + hiv, data = model_data, family = &quot;binomial&quot;)
+
+summary(full_model)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = mental_health ~ num_arrests + sentence_length + 
+##     age + race + sex + abuse + hiv, family = &quot;binomial&quot;, data = model_data)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.1328  -0.8383   0.5510   0.7611   2.2688  
+## 
+## Coefficients:
+##                                                             Estimate Std. Error
+## (Intercept)                                               -7.042e-01  1.890e-01
+## num_arrests                                               -1.416e-02  2.468e-03
+## sentence_length                                           -2.929e-08  1.203e-08
+## age                                                        5.976e-03  2.035e-03
+## raceBlack non-Hispanic                                     7.833e-01  4.738e-02
+## raceHispanic                                               8.459e-01  6.196e-02
+## raceAmerican Indian, Alaska Native non-Hispanic            4.925e-01  1.568e-01
+## raceAsian, Pacific Islander, Native Hawaiian non-Hispanic  9.032e-01  2.428e-01
+## raceMultiple Races reported, non-Hispanic                 -6.735e-03  1.078e-01
+## sexFemale                                                 -4.352e-01  5.105e-02
+## abuse(0000002) Sexually only                              -1.770e-01  9.505e-02
+## abuse(0000003) Both physically and sexually abused        -7.116e-01  8.277e-02
+## abuse(0000004) Not abused                                  1.003e+00  5.821e-02
+## abuse(9999999) Missing                                     1.957e-01  3.056e-01
+## hivPresumed Negative                                       5.793e-01  1.581e-01
+##                                                           z value Pr(&gt;|z|)    
+## (Intercept)                                                -3.725 0.000195 ***
+## num_arrests                                                -5.738 9.61e-09 ***
+## sentence_length                                            -2.436 0.014849 *  
+## age                                                         2.936 0.003321 ** 
+## raceBlack non-Hispanic                                     16.532  &lt; 2e-16 ***
+## raceHispanic                                               13.652  &lt; 2e-16 ***
+## raceAmerican Indian, Alaska Native non-Hispanic             3.140 0.001687 ** 
+## raceAsian, Pacific Islander, Native Hawaiian non-Hispanic   3.719 0.000200 ***
+## raceMultiple Races reported, non-Hispanic                  -0.062 0.950198    
+## sexFemale                                                  -8.526  &lt; 2e-16 ***
+## abuse(0000002) Sexually only                               -1.862 0.062583 .  
+## abuse(0000003) Both physically and sexually abused         -8.597  &lt; 2e-16 ***
+## abuse(0000004) Not abused                                  17.227  &lt; 2e-16 ***
+## abuse(9999999) Missing                                      0.640 0.521967    
+## hivPresumed Negative                                        3.663 0.000249 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 16411  on 13857  degrees of freedom
+## Residual deviance: 14384  on 13843  degrees of freedom
+##   (4023 observations deleted due to missingness)
+## AIC: 14414
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+<p>Fitting a full model, we can see that ALL of these variables are
+significant at the 0.05 level, but our AIC is quite high. Let’s try
+finding a sub-model using backwards selection:</p>
+<pre class="r"><code>backwards = step(full_model, trace = 0)
+summary(backwards)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = mental_health ~ num_arrests + sentence_length + 
+##     age + race + sex + abuse + hiv, family = &quot;binomial&quot;, data = model_data)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.1328  -0.8383   0.5510   0.7611   2.2688  
+## 
+## Coefficients:
+##                                                             Estimate Std. Error
+## (Intercept)                                               -7.042e-01  1.890e-01
+## num_arrests                                               -1.416e-02  2.468e-03
+## sentence_length                                           -2.929e-08  1.203e-08
+## age                                                        5.976e-03  2.035e-03
+## raceBlack non-Hispanic                                     7.833e-01  4.738e-02
+## raceHispanic                                               8.459e-01  6.196e-02
+## raceAmerican Indian, Alaska Native non-Hispanic            4.925e-01  1.568e-01
+## raceAsian, Pacific Islander, Native Hawaiian non-Hispanic  9.032e-01  2.428e-01
+## raceMultiple Races reported, non-Hispanic                 -6.735e-03  1.078e-01
+## sexFemale                                                 -4.352e-01  5.105e-02
+## abuse(0000002) Sexually only                              -1.770e-01  9.505e-02
+## abuse(0000003) Both physically and sexually abused        -7.116e-01  8.277e-02
+## abuse(0000004) Not abused                                  1.003e+00  5.821e-02
+## abuse(9999999) Missing                                     1.957e-01  3.056e-01
+## hivPresumed Negative                                       5.793e-01  1.581e-01
+##                                                           z value Pr(&gt;|z|)    
+## (Intercept)                                                -3.725 0.000195 ***
+## num_arrests                                                -5.738 9.61e-09 ***
+## sentence_length                                            -2.436 0.014849 *  
+## age                                                         2.936 0.003321 ** 
+## raceBlack non-Hispanic                                     16.532  &lt; 2e-16 ***
+## raceHispanic                                               13.652  &lt; 2e-16 ***
+## raceAmerican Indian, Alaska Native non-Hispanic             3.140 0.001687 ** 
+## raceAsian, Pacific Islander, Native Hawaiian non-Hispanic   3.719 0.000200 ***
+## raceMultiple Races reported, non-Hispanic                  -0.062 0.950198    
+## sexFemale                                                  -8.526  &lt; 2e-16 ***
+## abuse(0000002) Sexually only                               -1.862 0.062583 .  
+## abuse(0000003) Both physically and sexually abused         -8.597  &lt; 2e-16 ***
+## abuse(0000004) Not abused                                  17.227  &lt; 2e-16 ***
+## abuse(9999999) Missing                                      0.640 0.521967    
+## hivPresumed Negative                                        3.663 0.000249 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 16411  on 13857  degrees of freedom
+## Residual deviance: 14384  on 13843  degrees of freedom
+##   (4023 observations deleted due to missingness)
+## AIC: 14414
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+<p>Since all variables are considered significant, the backwards
+selection model is no different from the full model.</p>
+<p>Let’s manually select the most significant variables and clean up the
+data to remove missing values and less significant factors.</p>
+<pre class="r"><code>manual_df =
+total_df %&gt;%
+  select(mental_health = MCMH_MENTAL_HISTORY, num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV) %&gt;%
+  filter(abuse %in% c(&quot;(0000004) Not abused&quot;, &quot;(0000003) Both physically and sexually abused&quot;), race != &quot;Multiple Races reported, non-Hispanic&quot;)
+  
+manual_model = 
+  glm(mental_health ~ num_arrests + age + race + sex + abuse + hiv, data = manual_df, family = &quot;binomial&quot;)
+
+summary(manual_model)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = mental_health ~ num_arrests + age + race + sex + 
+##     abuse + hiv, family = &quot;binomial&quot;, data = manual_df)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -2.1914   0.4984   0.5373   0.7040   2.3252  
+## 
+## Coefficients:
+##                                                            Estimate Std. Error
+## (Intercept)                                               -1.369061   0.217623
+## num_arrests                                               -0.015086   0.002828
+## age                                                        0.004682   0.002350
+## raceBlack non-Hispanic                                     0.841711   0.054070
+## raceHispanic                                               0.887173   0.070881
+## raceAmerican Indian, Alaska Native non-Hispanic            0.388598   0.180343
+## raceAsian, Pacific Islander, Native Hawaiian non-Hispanic  1.113755   0.282368
+## sexFemale                                                 -0.556237   0.063125
+## abuse(0000004) Not abused                                  1.636209   0.078547
+## hivPresumed Negative                                       0.644280   0.178270
+##                                                           z value Pr(&gt;|z|)    
+## (Intercept)                                                -6.291 3.16e-10 ***
+## num_arrests                                                -5.334 9.59e-08 ***
+## age                                                         1.992 0.046373 *  
+## raceBlack non-Hispanic                                     15.567  &lt; 2e-16 ***
+## raceHispanic                                               12.516  &lt; 2e-16 ***
+## raceAmerican Indian, Alaska Native non-Hispanic             2.155 0.031180 *  
+## raceAsian, Pacific Islander, Native Hawaiian non-Hispanic   3.944 8.00e-05 ***
+## sexFemale                                                  -8.812  &lt; 2e-16 ***
+## abuse(0000004) Not abused                                  20.831  &lt; 2e-16 ***
+## hivPresumed Negative                                        3.614 0.000301 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 12237  on 11173  degrees of freedom
+## Residual deviance: 10804  on 11164  degrees of freedom
+##   (3272 observations deleted due to missingness)
+## AIC: 10824
+## 
+## Number of Fisher Scoring iterations: 4</code></pre>
+<p>When we removed sentence length, as well as the non-significant
+levels of abuse and race, we have a much better fit.</p>
+<p>Let’s do one more iteration to remove age and Race: American Indian,
+Alaska Native non-Hispanic :</p>
+<pre class="r"><code>manual2 = 
+  manual_df %&gt;%
+  filter(race != &quot;American Indian, Alaska Native non-Hispanic&quot;)
+
+manual_model2 = 
+  glm(mental_health ~ num_arrests + race + sex + abuse + hiv, data = manual2, family = &quot;binomial&quot;)
+
+manual_model2 %&gt;%
+  clean_glm(prep_kable = TRUE) %&gt;% 
+  knitr::kable()</code></pre>
+<pre><code>## Waiting for profiling to be done...</code></pre>
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+Variable
+</th>
+<th style="text-align:left;">
+Beta (SE)
+</th>
+<th style="text-align:left;">
+OR (95% CI)
+</th>
+<th style="text-align:left;">
+P
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Intercept
+</td>
+<td style="text-align:left;">
+-1.16 (0.20)
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+&lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+num_arrests
+</td>
+<td style="text-align:left;">
+-0.02 (0.00)
+</td>
+<td style="text-align:left;">
+0.98 (0.98, 0.99)
+</td>
+<td style="text-align:left;">
+&lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+race
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+  White non-Hispanic
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+  Black non-Hispanic
+</td>
+<td style="text-align:left;">
+0.83 (0.05)
+</td>
+<td style="text-align:left;">
+2.30 (2.07, 2.55)
+</td>
+<td style="text-align:left;">
+&lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+  Hispanic
+</td>
+<td style="text-align:left;">
+0.87 (0.07)
+</td>
+<td style="text-align:left;">
+2.39 (2.09, 2.75)
+</td>
+<td style="text-align:left;">
+&lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+  Asian, Pacific Islander, Native Hawaiian non-Hispanic
+</td>
+<td style="text-align:left;">
+1.10 (0.28)
+</td>
+<td style="text-align:left;">
+3.00 (1.77, 5.40)
+</td>
+<td style="text-align:left;">
+&lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sex
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+  Male
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+  Female
+</td>
+<td style="text-align:left;">
+-0.56 (0.06)
+</td>
+<td style="text-align:left;">
+0.57 (0.51, 0.65)
+</td>
+<td style="text-align:left;">
+&lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+abuse
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+  (0000003) Both physically and sexually abused
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+  (0000004) Not abused
+</td>
+<td style="text-align:left;">
+1.62 (0.08)
+</td>
+<td style="text-align:left;">
+5.07 (4.34, 5.93)
+</td>
+<td style="text-align:left;">
+&lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+hiv
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+  Positive
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+  Presumed Negative
+</td>
+<td style="text-align:left;">
+0.62 (0.18)
+</td>
+<td style="text-align:left;">
+1.86 (1.31, 2.63)
+</td>
+<td style="text-align:left;">
+&lt;0.001
+</td>
+</tr>
+</tbody>
+</table></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<p>The terms in our final model are all significant at the 0.001 level.
+We find that the most significant predictors of an inmate’s mental
+health status are <strong># of arrests, race, sex, HIV status, and
+abuse.</strong></p>
 </div>
 </div>
 
