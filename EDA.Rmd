@@ -131,10 +131,10 @@ total_df =
   set_variable_labels(dataset = "Facility Type", MENTAL_HISTORY_BINARY = "Binary Mental Health History", V0005 = "Sex", AGE_CAT = "Age Group", V2982 = "Race/Ethnicity", EDUCATION = "Education", SES_INCOMEMTH = "Monthly Income in Month Before Arrest", CH_PRIORSENTENCE_NUM = "Number of Prior Sentences", V1197 = "Number of Prior Arrests", CH_CRIMHIST_COLLAPSED = "Collapsed Criminal History", TYPEOFFENSE = "Type of Offense", SES_PARENTS_INCARCERATED = "Parents Been Incarcerated", SES_FAMILY_INCARCERATED = "Children, Siblings, or Spouse Been Incarcerated", MCMH_RSLT_HIV = "HIV Status")
 ```
 
-This tidying and cleaning resulted in a combined dataset with ``r nrow(total_df)`` rows (observations) and ``r ncol(total_df)`` columns (variables). The resulting dataset includes demographic, geographic, incarceration-related, and health-related variables.
-
-
-## Demographics  
+This tidying and cleaning resulted in a combined dataset with ``r nrow(total_df)`` rows (observations) and ``r ncol(total_df)`` columns (variables). The resulting dataset includes demographic, geographic, incarceration-related, and health-related variables.  
+  
+  
+# Demographics  
 
 To examine the distribution of demographic variables across our dataset, we created a tabular display of variables sex (`V0005`), age group (`AGE_CAT`), and race/ethnicity (`V2982`).
   
@@ -197,9 +197,9 @@ ggplotly(income_bar)
   
 With regard to monthly income in the month before arrest, the two categories of mental health history do not have easily distinguishable patterns/distributions. However, in the lower income categories (up to the `$800 - $999` category), there are a higher proportion of individuals with a history of mental health condition(s) - the opposite is true for all categories including and above `$1,000 - $1,199`.  
   
-
   
-## Incarceration-Related Variables
+  
+# Incarceration-Related Variables
 
 ### Distribution of Incarceration-Related Variables by Mental Health History  
 
@@ -241,14 +241,20 @@ The above bar graph shows that the two most common types of offense for both cat
 
 ```{r prior_arrests, message=FALSE}
 #Density plot for V1197
-total_df %>% 
+arrests_density = 
+  total_df %>% 
   rename(MH_History = MENTAL_HISTORY_BINARY) %>%
   ggplot(data = ., aes(x = V1197)) +
   geom_density(aes(color = MH_History)) +
-  labs(x = "Number of Prior Arrests")
+  labs(x = "Number of Prior Arrests") +
+  guides(fill=guide_legend(title="Mental Health History"))
+
+ggplotly(arrests_density)
+
 ```
 
-The density plot above shows that the distributions of the number of prior arrests are extremely similar for both categories of mental health history. Most of the same peaks are observed in each distribution, suggesting there may be something significant about these seemingly arbitrary numbers of arrests. However, it does seem like a higher proportion of individuals with no mental health history have 0 to roughly 5 arrests compared to inmates with mental health condition(s).
+The density plot above shows that the distributions of the number of prior arrests are extremely similar for both categories of mental health history. Most of the same peaks are observed in each distribution, suggesting there may be something significant about these seemingly arbitrary numbers of arrests. However, it does seem like a higher proportion of individuals with no mental health history have 0 to roughly 5 arrests compared to inmates with mental health condition(s).  
+  
   
 # Mental Health  
   
@@ -257,7 +263,8 @@ The density plot above shows that the distributions of the number of prior arres
 
 ```{r meds, message=FALSE}
 #Stacked bar graph for V2409 and V2412
-total_df %>% 
+stacked_bar = 
+  total_df %>% 
   filter(V2409 == "Yes" | V2409 == "No") %>%
   filter(V2412 != "(7) Don't know") %>% 
   group_by(V2409, V2412) %>% 
@@ -267,9 +274,12 @@ total_df %>%
   theme_minimal() + 
   labs(x = 'Ever Taken Medication for Mental Health', y = 'Number of Individuals') +
   scale_fill_manual('Taken Medication for Mental \nHealth Since Admission', values = c('dark green', 'steelblue'))
+
+ggplotly(stacked_bar)
 ```
 
 Less than half of individuals surveyed have ever taken medication for a mental health condition, but among those who have, most have taken such medication since their admission/incarceration. 
+
 
 ### Mental Health Hospitalization 
 
@@ -304,7 +314,6 @@ hosp_adm =
   theme(legend.position = "none") +
   labs(x = "Hospitalized for mental health, since admission", y = "Proportion of Individuals") 
 
-hosp_year + hosp_adm
 ```
   
   
@@ -333,10 +342,52 @@ total_df %>%
 The bar graph above restricts our analysis of treatment continuation to only those individuals with a history of mental health condition(s) as indicated by the `MENTAL_HISTORY_BINARY` variable. Among those survey respondents, it found that roughly two-thirds of individuals either had constant treatment status before and after incarceration (either no treatment -> no treatment or yes treatment -> yes treatment). Almost one-third of individuals began treatment while incarcerated and less than 10% had received treatment before incarceration but were no longer doing so.  
   
   
-# Distribution of HIV Status by Mental Health History  
+# HIV
+
+### Distribution of HIV Status by Mental Health History  
 
 ```{r hiv, message=FALSE}
 table1(~ MCMH_RSLT_HIV | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
 ```
   
+    
+
 Finally, the table above illustrates HIV status (`MCMH_RSLT_HIV`) for those with and without a history of mental health condition(s). We utilize the value label `presumed negative` as opposed to `negative` because the variable used for analysis codes HIV status as either "at least one positive test" or "at least one negative and the other unknown" based on HIV testing status from both before and after incarceration. The tabular analysis demonstrates an HIV prevalence of roughly 1.3% for our total cross-sectional sample of incarcerated individuals, which appears to differ somewhat between those with and without a history of mental health condition(s) (1.7% and 1.1%, respectively).
+  
+  
+Below is a visualization of this distribution:
+
+```{r, message=FALSE}
+federal_bar = 
+  federal_df %>%
+  group_by(MCMH_RSLT_HIV, MCMH_MENTAL_HISTORY)%>%
+  summarise(count = n()) %>%
+  mutate(percent = (count / sum(count))) %>%
+      filter(MCMH_RSLT_HIV != "(9999999) Missing",
+           MCMH_MENTAL_HISTORY == "(0000001) Yes") %>%
+  mutate(HIV_status = recode(MCMH_RSLT_HIV, 
+      "(0000001) At least one positive test" = "Positive", 
+      "(0000002) At least one negative and the other unknown" = "Negative")) %>%
+  ggplot(aes(x = HIV_status, y = percent)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  labs(title="Federal",
+        x ="HIV Status", y = "Percent with Mental Health Disorder") +
+  ylim(0, 0.5)
+state_bar = 
+  state_df %>%
+  group_by(MCMH_RSLT_HIV, MCMH_MENTAL_HISTORY)%>%
+  summarise(count = n()) %>%
+  mutate(percent = (count / sum(count))) %>%
+      filter(MCMH_RSLT_HIV != "(9999999) Missing",
+           MCMH_MENTAL_HISTORY == "(0000001) Yes") %>%
+  mutate(HIV_status = recode(MCMH_RSLT_HIV, 
+      "(0000001) At least one positive test" = "Positive", 
+      "(0000002) At least one negative and the other unknown" = "Negative")) %>%
+  ggplot(aes(x = HIV_status, y = percent)) +
+  geom_bar(stat = "identity", fill = "dark red") +
+  labs(title="State",
+        x ="HIV Status", y = "Percent with Mental Health Disorder") +
+  ylim(0, 0.5)
+#Mental Health Disorder Prevalence by HIV Status at the Federal & State Levels(2004)
+federal_bar + state_bar
+```
