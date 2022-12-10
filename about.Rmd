@@ -1,5 +1,5 @@
 ---
-title: "About this project"
+title: "About This Project"
 output: 
   html_document:
     toc: true
@@ -7,6 +7,7 @@ output:
     toc_float: true
     theme: flatly
 ---
+  
 
 ### Data Source
 
@@ -14,7 +15,7 @@ The dataset used for this analysis can be found [here](https://www.icpsr.umich.e
 
 ### Software and R Packages
 
-All analyses and website development were conducted in RStudio, and the source code is publicly available on [Github](https://github.com/amr2371/prisonsurvey.github.io). The following RStudio libraries were loaded for this analysis: tidyverse, mgcv, modelr, patchwork, and viridis. Spatial analyses were created with QGIS.
+All analyses and website development were conducted in RStudio, and the source code is publicly available on [Github](https://github.com/amr2371/prisonsurvey.github.io). The following RStudio libraries were loaded for this analysis: tidyverse, mgcv, modelr, patchwork, labelled, and viridis. Spatial analyses were created with QGIS.
 
 ### References
 

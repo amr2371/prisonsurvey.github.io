@@ -11,7 +11,7 @@
 
 
 
-<title>Explanatory Analysis</title>
+<title>Statistical Analyses</title>
 
 <script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -365,7 +365,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Explanatory Analysis</h1>
+<h1 class="title toc-ignore">Statistical Analyses</h1>
 
 </div>
 
@@ -386,6 +386,8 @@ least one mental health condition) does not differ by HIV status
 of at least one mental health condition) DOES differ by HIV status
 (presumed negative vs. positive).</p></li>
 </ul>
+<div id="crude-model" class="section level3">
+<h3>Crude Model</h3>
 <pre class="r"><code>#Crude Model
 HIV_MH_model = 
   total_df %&gt;% 
@@ -469,6 +471,9 @@ covariates of <code>sex</code>, <code>age group</code>,
 <code>monthly income</code>. Using our background knowledge of the topic
 and resulting a priori hypotheses, these variables may all logically be
 confounders of the relationship of interest.</p>
+</div>
+<div id="adjusted-model" class="section level3">
+<h3>Adjusted Model</h3>
 <pre class="r"><code>#Adjusted Model
 
 HIV_MH_model_adj = 
@@ -894,6 +899,7 @@ condition(s), controlling for confounding. This means that while we had
 confounding at play, these were only partially confounding the true
 association of interest.</p>
 </div>
+</div>
 <div id="is-mental-health-associated-with-prior-arrest-history"
 class="section level1">
 <h1>Is Mental Health Associated with Prior Arrest History?</h1>
@@ -910,6 +916,8 @@ arrests (measured as continuous).</p></li>
 of at least one mental health condition) DOES differ by number of prior
 arrests (measured as continuous).</p></li>
 </ul>
+<div id="crude-model-1" class="section level3">
+<h3>Crude Model</h3>
 <pre class="r"><code>#Crude Model
 
 crude_arrests_mh = 
@@ -978,6 +986,9 @@ individuals with a one-unit difference in prior arrests HIV lies between
 sufficient evidence to support the claim that mental health history (yes
 vs. no history of at least one mental health condition) DOES differ by
 number of prior arrests.</p>
+</div>
+<div id="adjusted-model-1" class="section level3">
+<h3>Adjusted Model</h3>
 <pre class="r"><code>#Adjusted Model
 
 adj_arrests_mh = 
@@ -1394,6 +1405,7 @@ income.</p>
 with NA values for any of the variables included in our models were
 excluded. They are still, however, included in our exploratory data
 analyses for full transparency.</strong></p>
+</div>
 </div>
 <div id="what-are-the-best-predictors-of-mental-health-status"
 class="section level1">
