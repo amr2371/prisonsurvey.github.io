@@ -145,9 +145,11 @@ To examine the distribution of demographic variables across our dataset, we crea
 table1(~ V0005 + AGE_CAT + V2982 | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
 ```
 
+<br>
 
 From this table, we can see that certain variables appear to differ by mental health history, one of our primary outcomes of interest. Therefore, we have performed some hypothesis testing on the [Statistical Analysis](stat_tests.html) page to assess whether the observed differences are significant.  
   
+<br>
   
 ### Educational Attainment by Mental Health History  
 
@@ -173,6 +175,7 @@ ggplotly(education_bar)
 
 When displayed on a bar graph, the two groups of mental health history have similar distributions of educational attainment, but categories from 10th-12th grade appear to have higher proportions of individuals with no mental health history, whereas the college-level categories interestingly have a higher proportion of individuals *with* a history of mental health condition(s).
 
+<br>
   
 ### Income in Month Before Arrest by Mental Health History  
 
@@ -197,7 +200,7 @@ ggplotly(income_bar)
   
 With regard to monthly income in the month before arrest, the two categories of mental health history do not have easily distinguishable patterns/distributions. However, in the lower income categories (up to the `$800 - $999` category), there are a higher proportion of individuals with a history of mental health condition(s) - the opposite is true for all categories including and above `$1,000 - $1,199`.  
   
-  
+<br>  
   
 # Incarceration-Related Variables
 
@@ -209,7 +212,8 @@ We created to display the distribution of variables related to individuals' curr
 #Incarceration table
 table1(~ CH_PRIORSENTENCE_NUM + V1197 + CH_CRIMHIST_COLLAPSED + SES_PARENTS_INCARCERATED + SES_FAMILY_INCARCERATED + dataset | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
 ```
-  
+
+<br>
 
 Again, some of these distributions appear to differ by mental health history status, so some hypothesis testing is performed on the Statistical Analysis page of the website to examine this further.  
   
@@ -237,6 +241,8 @@ ggplotly(offense_bar)
 
 The above bar graph shows that the two most common types of offense for both categories of mental health history are drug trafficking and robbery, while arson and other property crimes are the least common for both categories.  
   
+<br>
+
 ### Number of Prior Arrests by Mental Health History  
 
 ```{r prior_arrests, message=FALSE}
@@ -254,11 +260,13 @@ ggplotly(arrests_density)
 ```
 
 The density plot above shows that the distributions of the number of prior arrests are extremely similar for both categories of mental health history. Most of the same peaks are observed in each distribution, suggesting there may be something significant about these seemingly arbitrary numbers of arrests. However, it does seem like a higher proportion of individuals with no mental health history have 0 to roughly 5 arrests compared to inmates with mental health condition(s).  
-  
+
+<br>
   
 # Mental Health  
   
-  
+<br>
+
 ### Medication for Mental Health (Ever and Since Admission)
 
 ```{r meds, message=FALSE}
@@ -280,6 +288,7 @@ ggplotly(stacked_bar)
 
 Less than half of individuals surveyed have ever taken medication for a mental health condition, but among those who have, most have taken such medication since their admission/incarceration. 
 
+<br>
 
 ### Mental Health Hospitalization 
 
@@ -341,7 +350,8 @@ total_df %>%
 
 The bar graph above restricts our analysis of treatment continuation to only those individuals with a history of mental health condition(s) as indicated by the `MENTAL_HISTORY_BINARY` variable. Among those survey respondents, it found that roughly two-thirds of individuals either had constant treatment status before and after incarceration (either no treatment -> no treatment or yes treatment -> yes treatment). Almost one-third of individuals began treatment while incarcerated and less than 10% had received treatment before incarceration but were no longer doing so.  
   
-  
+<br>
+
 # HIV
 
 ### Distribution of HIV Status by Mental Health History  
@@ -350,7 +360,7 @@ The bar graph above restricts our analysis of treatment continuation to only tho
 table1(~ MCMH_RSLT_HIV | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
 ```
   
-    
+<br>   
 
 Finally, the table above illustrates HIV status (`MCMH_RSLT_HIV`) for those with and without a history of mental health condition(s). We utilize the value label `presumed negative` as opposed to `negative` because the variable used for analysis codes HIV status as either "at least one positive test" or "at least one negative and the other unknown" based on HIV testing status from both before and after incarceration. The tabular analysis demonstrates an HIV prevalence of roughly 1.3% for our total cross-sectional sample of incarcerated individuals, which appears to differ somewhat between those with and without a history of mental health condition(s) (1.7% and 1.1%, respectively).
   

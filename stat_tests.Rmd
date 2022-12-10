@@ -125,8 +125,11 @@ total_df =
   set_variable_labels(dataset = "Facility Type", MENTAL_HISTORY_BINARY = "Binary Mental Health History", V0005 = "Sex", AGE_CAT = "Age Group", V2982 = "Race/Ethnicity", EDUCATION = "Education", SES_INCOMEMTH = "Monthly Income in Month Before Arrest", CH_PRIORSENTENCE_NUM = "Number of Prior Sentences", V1197 = "Number of Prior Arrests", CH_CRIMHIST_COLLAPSED = "Collapsed Criminal History", TYPEOFFENSE = "Type of Offense", SES_PARENTS_INCARCERATED = "Parents Been Incarcerated", SES_FAMILY_INCARCERATED = "Children, Siblings, or Spouse Been Incarcerated", MCMH_RSLT_HIV = "HIV Status") 
 ```
 
+<br>
 
 # Is Mental Health Associated with HIV Status? 
+ 
+<br>
   
 ### Z-Test
   
@@ -154,14 +157,15 @@ and the p-value is **`r result$p.value`.**
 
 At a significance level of 0.05, we REJECT the null hypothesis and conclude that the proportions of HIV positive vs. HIV negative inmates with mental health history are NOT EQUAL.
 
-
-
+<br>
 
 We further studied this relationship by conducting logistic regression modeling (due to the binary nature of the outcome variable). First, we created a crude model of this association with no additional covariates.
 
 * Null hypothesis: Mental health history (yes vs. no history of at least one mental health condition) does not differ by HIV status (presumed negative vs. positive).
 
 * Alternate hypothesis: Mental health history (yes vs. no history of at least one mental health condition) DOES differ by HIV status (presumed negative vs. positive).
+
+<br>
 
 ### Crude Model  
 
@@ -184,13 +188,16 @@ glm(MENTAL_HISTORY_BINARY ~ MCMH_RSLT_HIV, data = ., family = binomial()) %>%
 HIV_MH_model
 ```  
   
-  
+<br>
+
 The estimated odds of having a history of at least one mental health condition among incarcerated individuals in 2004 with a `presumed negative` HIV status was 0.626 times the estimated odds of having a history of at least one mental health condition among incarcerated individuals in 2004 with a `positive` HIV status.
 
 We are 95% confident that the true odds ratio comparing odds of having a history of at least one mental health condition between incarcerated individuals with a `presumed negative` vs. `positive` HIV status in 2004 lies between 0.469 and 0.840. Thus, at a 0.05 level of significance, we have sufficient evidence to support the claim that mental health history (yes vs. no history of at least one mental health condition) DOES differ by HIV status (presumed negative vs. positive). Because our confidence interval does not include the null odds ratio value of 1 and is, in fact, exclusively below this value, it appears that, on average, HIV-positive incarcerated individuals were more likely to have had a history of mental health condition(s).   
 
 Our association of interest may be affected by several confounders: variables which are associated with both the exposure (HIV status) and outcome (mental health history) of interest and are not on the causal pathway between the two. Demographic variables often play such confounding roles. Therefore, we decided to develop an adjusted logistic regression model to explain our association that takes into account covariates of `sex`, `age group`, `race/ethnicity`, `education`, and `monthly income`. Using our background knowledge of the topic and resulting a priori hypotheses, these variables may all logically be confounders of the relationship of interest.  
-  
+
+<br>
+
 ### Adjusted Model  
   
 ```{r adjusted_OR}
@@ -219,7 +226,8 @@ HIV_MH_model_adj =
 HIV_MH_model_adj
 ```  
   
-  
+<br>
+
 In fact, upon including these covariates in our logistic regression model, we find that the new, adjusted coefficient for `MCMH_RSLT_HIV` (HIV status) is appreciably different from our crude coefficient. This was assessed by determining that the adjusted natural log odds ratio (ln(OR)) was >10% different (specifically 32.48% different) from the crude for our exposure of interest.
 
 After controlling for `sex`, `age group`, `race/ethnicity`, `education`, and `monthly income`, we found that the estimated odds of having a history of at least one mental health condition among incarcerated individuals in 2004 with a `presumed negative` HIV status was 0.538 times the estimated odds of having a history of at least one mental health condition among incarcerated individuals in 2004 with a `positive` HIV status.

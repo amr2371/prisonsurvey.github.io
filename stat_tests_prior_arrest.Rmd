@@ -125,7 +125,8 @@ total_df =
   set_variable_labels(dataset = "Facility Type", MENTAL_HISTORY_BINARY = "Binary Mental Health History", V0005 = "Sex", AGE_CAT = "Age Group", V2982 = "Race/Ethnicity", EDUCATION = "Education", SES_INCOMEMTH = "Monthly Income in Month Before Arrest", CH_PRIORSENTENCE_NUM = "Number of Prior Sentences", V1197 = "Number of Prior Arrests", CH_CRIMHIST_COLLAPSED = "Collapsed Criminal History", TYPEOFFENSE = "Type of Offense", SES_PARENTS_INCARCERATED = "Parents Been Incarcerated", SES_FAMILY_INCARCERATED = "Children, Siblings, or Spouse Been Incarcerated", MCMH_RSLT_HIV = "HIV Status") 
 ```
 
-    
+<br>
+
 # Is Mental Health Status Associated with Prior Arrest History?  
 
 To assess whether mental health (outcome of interest) is associated with prior arrest history (exposure of interest), we conducted logistic regression modeling (due to the binary nature of the outcome variable). First, we created a crude model of this association with no additional covariates.
@@ -133,7 +134,9 @@ To assess whether mental health (outcome of interest) is associated with prior a
 * H0 - Null hypothesis: Mental health status does not differ by number of prior arrests.
 
 * H1 - Alternate hypothesis: Mental health status DOES differ by number of prior arrests
-  
+
+<br>
+
 ### Crude Model  
   
 ```{r crude_arrests}
@@ -155,6 +158,8 @@ crude_arrests_mh =
 
 crude_arrests_mh
 ```
+
+<br>
 
 The estimated odds of having a history of at least one mental health condition among incarcerated individuals in 2004 increased by a factor of 1.017 on average for each one-unit increase in the number of prior arrests variable. 
 
@@ -187,6 +192,8 @@ adj_arrests_mh =
 
 adj_arrests_mh
 ```
+
+<br>
 
 While the adjusted odds ratio appears little different from the crude, the adjusted ln(OR) was, in fact, >10% different (specifically 12.5% different) from the crude, meaning it is possible that confounding is at play with regards to the covariates included in this latter model.
 

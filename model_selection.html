@@ -395,8 +395,9 @@ div.tocify {
 <div id="what-are-the-best-predictors-of-mental-health-status"
 class="section level1">
 <h1>What are the best predictors of mental health status?</h1>
-<div id="model-selection" class="section level4">
-<h4>Model Selection</h4>
+<p><br></p>
+<div id="model-selection" class="section level3">
+<h3>Model Selection</h3>
 <p>Let’s look at the following variables as potential predictors of an
 inmate’s mental health status:</p>
 <ul>
@@ -761,9 +762,11 @@ hiv
 </ul></li>
 </ul></li>
 </ul>
+<p><br></p>
 <p>Fitting a full model, we can see that ALL of these variables are
-significant at the 0.05 level, but our AIC is quite high. Let’s try
-finding a sub-model using backwards selection:</p>
+significant at the 0.05 level, but our AIC is quite high.</p>
+<p><br></p>
+<p>Let’s try finding a sub-model using backwards selection:</p>
 <pre class="r"><code>backwards = step(full_model, trace = 0)
 backwards %&gt;%
   clean_glm(prep_kable = TRUE) %&gt;% 
@@ -1111,8 +1114,10 @@ hiv
 </ul></li>
 </ul></li>
 </ul>
+<p><br></p>
 <p>Since all variables are considered significant, the backwards
 selection model is no different from the full model.</p>
+<p><br></p>
 <p>Let’s manually select the most significant variables and clean up the
 data to remove missing values and less significant factors.</p>
 <pre class="r"><code>manual_df =
@@ -1399,8 +1404,10 @@ hiv
 </ul></li>
 </ul></li>
 </ul>
+<p><br></p>
 <p>When we removed sentence length, as well as the non-significant
 levels of abuse and race, we have a much better fit.</p>
+<p><br></p>
 <p>Let’s do one more iteration to remove age and Race: American Indian,
 Alaska Native non-Hispanic :</p>
 <pre class="r"><code>manual2 = 
@@ -1658,6 +1665,7 @@ hiv
 </ul></li>
 </ul></li>
 </ul>
+<p><br></p>
 <p>The terms in our final model are all significant at the 0.001 level.
 We find that the most significant predictors of an inmate’s mental
 health status are <strong># of arrests, race, sex, HIV status, and

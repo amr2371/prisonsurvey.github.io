@@ -128,8 +128,10 @@ total_df =
 
     
 # What are the best predictors of mental health status?
+
+<br>
   
-#### Model Selection  
+### Model Selection  
   
 Let's look at the following variables as potential predictors of an inmate's mental health status:
   
@@ -155,7 +157,13 @@ full_model %>%
   knitr::kable()
 ```  
 
-Fitting a full model, we can see that ALL of these variables are significant at the 0.05 level, but our AIC is quite high. Let's try finding a sub-model using backwards selection:  
+<br>
+
+Fitting a full model, we can see that ALL of these variables are significant at the 0.05 level, but our AIC is quite high. 
+
+<br>
+
+Let's try finding a sub-model using backwards selection:  
 
 ```{r backwards, message = FALSE}
 backwards = step(full_model, trace = 0)
@@ -164,7 +172,11 @@ backwards %>%
   knitr::kable()
 ```
 
+<br>
+
 Since all variables are considered significant, the backwards selection model is no different from the full model.
+
+<br>
 
 Let's manually select the most significant variables and clean up the data to remove missing values and less significant factors.
 
@@ -182,7 +194,11 @@ manual_model %>%
   knitr::kable()
 ```  
 
+<br>
+
 When we removed sentence length, as well as the non-significant levels of abuse and race, we have a much better fit.
+
+<br>
 
 Let's do one more iteration to remove age and Race: American Indian, Alaska Native non-Hispanic :  
 
@@ -198,6 +214,8 @@ manual_model2 %>%
   clean_glm(prep_kable = TRUE) %>% 
   knitr::kable()
 ``` 
+
+<br>
 
 The terms in our final model are all significant at the 0.001 level.
 We find that the most significant predictors of an inmate's mental health status are **# of arrests, race, sex, HIV status, and abuse.**
