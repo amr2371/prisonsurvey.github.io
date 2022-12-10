@@ -399,20 +399,19 @@ federally incarcerated individuals from the
 <code>Survey of Inmates in State and Federal Correctional Facilities, [United States], 2004 (ICPSR 4572)</code>
 into R. We also selected our variables of interest to pare down the
 datasets.</p>
-<p>Subsequently, we stacked these two datasets using a newly created
-variable called <code>dataset</code> to identify which original file
-each observation was from (i.e., state vs. federally incarcerated). We
-also cleaned the resulting data by checking for coding errors, recoding
-various factor variables, adding variable labels, and changing the
-coding of values from
+<p>We next stacked these two datasets using a newly created variable
+called <code>dataset</code> to identify which original file each
+observation was from (i.e., state vs. federal). We cleaned the resulting
+data by checking for coding errors, recoding various factor variables,
+adding variable labels, and changing the coding of values from
 <code>missing</code>/<code>don't know</code>/<code>unknown</code> to
 <code>NA</code> for consistency.</p>
 <p>This tidying and cleaning resulted in a combined dataset with
 <code>17881</code> rows (observations) and <code>60</code> columns
 (variables). The resulting dataset includes demographic, geographic,
 incarceration-related, and health-related variables.</p>
-<div id="demographics" class="section level1">
-<h1>Demographics</h1>
+<div id="demographics" class="section level2">
+<h2>Demographics</h2>
 <p>To examine the distribution of demographic variables across our
 dataset, we created a tabular display of variables sex
 (<code>V0005</code>), age group (<code>AGE_CAT</code>), and
@@ -551,9 +550,9 @@ table1(~ V0005 + AGE_CAT + V2982 | MENTAL_HISTORY_BINARY, data = total_df, overa
 </div>
 <p>From this table, we can see that certain variables appear to differ
 by mental health history, one of our primary outcomes of interest.
-Therefore, the statistical analysis page of the website also includes
-hypothesis testing of some of these variables to assess whether the
-observed differences are significant.</p>
+Therefore, we have performed some hypothesis testing on the <a
+href="stat_tests.html">Statistical Analysis</a> page to assess whether
+the observed differences are significant.</p>
 </div>
 <div id="educational-attainment-by-mental-health-history"
 class="section level3">

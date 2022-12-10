@@ -144,6 +144,7 @@ To examine the distribution of demographic variables across our dataset, we crea
 table1(~ V0005 + AGE_CAT + V2982 | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
 ```
 
+
 From this table, we can see that certain variables appear to differ by mental health history, one of our primary outcomes of interest. Therefore, we have performed some hypothesis testing on the [Statistical Analysis](stat_tests.html) page to assess whether the observed differences are significant.  
   
   
@@ -159,10 +160,11 @@ total_df %>%
   ungroup() %>% 
   ggplot(aes(x = EDUCATION, y = freq, fill = MH_History)) +
   geom_bar(position = "dodge", stat = "identity") + 
-  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1)) +
   labs(
     x = "Education",
-    y = "Proportion of Total")
+    y = "Proportion of Total")+
+  guides(fill=guide_legend(title="Mental Health History"))
 ```
 
 When displayed on a bar graph, the two groups of mental health history have similar distributions of educational attainment, but categories from 10th-12th grade appear to have higher proportions of individuals with no mental health history, whereas the college-level categories interestingly have a higher proportion of individuals *with* a history of mental health condition(s).
