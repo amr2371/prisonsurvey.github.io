@@ -128,7 +128,7 @@ total_df =
 
 # Is Mental Health Associated with HIV Status? 
   
-###Z-Test
+### Z-Test
   
 To assess whether mental health (outcome of interest) is associated with HIV status (exposure of interest), we performed a 2-proportion z-test with the following hypotheses:  
 
@@ -182,7 +182,8 @@ glm(MENTAL_HISTORY_BINARY ~ MCMH_RSLT_HIV, data = ., family = binomial()) %>%
   knitr::kable(digits = 3)
 
 HIV_MH_model
-```
+```  
+  
   
 The estimated odds of having a history of at least one mental health condition among incarcerated individuals in 2004 with a `presumed negative` HIV status was 0.626 times the estimated odds of having a history of at least one mental health condition among incarcerated individuals in 2004 with a `positive` HIV status.
 
@@ -216,8 +217,9 @@ HIV_MH_model_adj =
   knitr::kable(digits = 3)
 
 HIV_MH_model_adj
-```
-
+```  
+  
+  
 In fact, upon including these covariates in our logistic regression model, we find that the new, adjusted coefficient for `MCMH_RSLT_HIV` (HIV status) is appreciably different from our crude coefficient. This was assessed by determining that the adjusted natural log odds ratio (ln(OR)) was >10% different (specifically 32.48% different) from the crude for our exposure of interest.
 
 After controlling for `sex`, `age group`, `race/ethnicity`, `education`, and `monthly income`, we found that the estimated odds of having a history of at least one mental health condition among incarcerated individuals in 2004 with a `presumed negative` HIV status was 0.538 times the estimated odds of having a history of at least one mental health condition among incarcerated individuals in 2004 with a `positive` HIV status.
