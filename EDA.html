@@ -861,7 +861,7 @@ hosp_year =
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;, fill = &quot;dark blue&quot;) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
   theme(legend.position = &quot;none&quot;) +
-  labs(x = &quot;Hospitalized for mental health, year before arrest&quot;) 
+  labs(x = &quot;Hospitalized for mental health, year before arrest&quot;, y = &quot;Proportion of Individuals&quot;) 
 
 # Bar graph of MCMH_MHOSPADM
 hosp_adm = 
@@ -876,58 +876,49 @@ hosp_adm =
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;, fill = &quot;dark blue&quot;) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
   theme(legend.position = &quot;none&quot;) +
-  labs(x = &quot;Hospitalized for mental health, since admission&quot;) 
+  labs(x = &quot;Hospitalized for mental health, since admission&quot;, y = &quot;Proportion of Individuals&quot;) 
 
 hosp_year + hosp_adm</code></pre>
 <p><img src="EDA_files/figure-html/hosp-1.png" width="100%" /></p>
 </div>
 <div
-id="treatment-continuation-one-year-prior-to-arrest-and-since-admission"
+id="treatment-continuation-mental-health-treatment-one-year-prior-to-arrest-and-since-admission"
 class="section level3">
-<h3>Treatment Continuation (one year prior to arrest and since
-admission)</h3>
+<h3>Treatment Continuation (mental health treatment one year prior to
+arrest and since admission)</h3>
 <pre class="r"><code># Line graph for MH treatment continuation (one year prior to arrest and since admission)
 
-state_tx = state_df %&gt;%
+total_df %&gt;%
+  filter(MENTAL_HISTORY_BINARY == &quot;History of mental health condition(s)&quot;) %&gt;%
   group_by(MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD) %&gt;%
-  summarize(n_obs = n()) %&gt;%
   mutate(
     MCMH_MH_TREATMENT_PA = gsub(&quot;.* &quot;, &quot;&quot;, MCMH_MH_TREATMENT_PA),
     MCMH_MH_TREATMENT_AD = gsub(&quot;.* &quot;, &quot;&quot;, MCMH_MH_TREATMENT_AD),
-    tx_pa_ad = str_c(MCMH_MH_TREATMENT_PA, &#39;/&#39;,MCMH_MH_TREATMENT_AD)
-  ) %&gt;%
+    tx_pa_ad = str_c(MCMH_MH_TREATMENT_PA, &#39;/&#39;, MCMH_MH_TREATMENT_AD)) %&gt;%
   ungroup() %&gt;%
-  mutate(
-    sum = sum(n_obs),
-    percent = (n_obs/sum) * 100 ) 
-
-federal_tx = federal_df %&gt;%
-  group_by(MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD) %&gt;%
-  summarize(n_obs = n()) %&gt;%
-  mutate(
-    MCMH_MH_TREATMENT_PA = gsub(&quot;.* &quot;, &quot;&quot;, MCMH_MH_TREATMENT_PA),
-    MCMH_MH_TREATMENT_AD = gsub(&quot;.* &quot;, &quot;&quot;, MCMH_MH_TREATMENT_AD),
-    tx_pa_ad = str_c(MCMH_MH_TREATMENT_PA, &#39;/&#39;,MCMH_MH_TREATMENT_AD)
-  ) %&gt;%
-  ungroup() %&gt;%
-  mutate(
-    sum = sum(n_obs),
-    percent = (n_obs/sum) * 100 ) 
-
-colors &lt;- c(&quot;State Prisons&quot; = &quot;blue&quot;, &quot;Federal Prisons&quot; = &quot;red&quot;)
-ggplot() + 
-  geom_line(data = state_tx, aes(x = tx_pa_ad, y = percent, group = 1, color = &quot;State Prisons&quot;)) + 
-  geom_line(data = federal_tx, aes(x = tx_pa_ad, y = percent, group = 1, color = &quot;Federal Prisons&quot;)) +
-  labs(
-    x = &quot;1 Year Prior to Arrest/Since Admission&quot;,
-    y = &quot;Percent (%) of Survey Respondents&quot;,
-    color = &quot;&quot;) +
-  scale_color_manual(values = colors)</code></pre>
+  group_by(tx_pa_ad) %&gt;%
+  summarise(n = n()) %&gt;%
+  mutate(freq = n / sum(n)) %&gt;%
+  ggplot(aes(x = tx_pa_ad, y = freq)) +
+  geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;, fill = &quot;dark red&quot;) + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
+  theme(legend.position = &quot;none&quot;) +
+  labs(x = &quot;Treatment Continuation: (Treatment 1 Year Before Arrest/Since Admission)&quot;, y = &quot;Proportion of Individuals&quot;) </code></pre>
 <p><img src="EDA_files/figure-html/trt-1.png" width="100%" /></p>
+<p>The bar graph above restricts our analysis of treatment continuation
+to only those individuals with a history of mental health condition(s)
+as indicated by the <code>MENTAL_HISTORY_BINARY</code> variable. Among
+those survey respondents, it found that roughly two-thirds of
+individuals either had constant treatment status before and after
+incarceration (either no treatment -&gt; no treatment or yes treatment
+-&gt; yes treatment). Almost one-third of individuals began treatment
+while incarcerated and less than 10% had received treatment before
+incarceration but were no longer doing so.</p>
 </div>
 </div>
-<div id="hiv-status-by-mental-health-history" class="section level1">
-<h1>HIV Status by Mental Health History</h1>
+<div id="distribution-of-hiv-status-by-mental-health-history"
+class="section level1">
+<h1>Distribution of HIV Status by Mental Health History</h1>
 <pre class="r"><code>table1(~ MCMH_RSLT_HIV | MENTAL_HISTORY_BINARY, data = total_df, overall = &quot;Total&quot;)</code></pre>
 <div class="Rtable1"><table class="Rtable1">
 <thead>
@@ -966,6 +957,18 @@ ggplot() +
 </tbody>
 </table>
 </div>
+<p>Finally, the table above illustrates HIV status
+(<code>MCMH_RSLT_HIV</code>) for those with and without a history of
+mental health condition(s). We utilize the value label
+<code>presumed negative</code> as opposed to <code>negative</code>
+because the variable used for analysis codes HIV status as either “at
+least one positive test” or “at least one negative and the other
+unknown” based on HIV testing status from both before and after
+incarceration. The tabular analysis demonstrates an HIV prevalence of
+roughly 1.3% for our total cross-sectional sample of incarcerated
+individuals, which appears to differ somewhat between those with and
+without a history of mental health condition(s) (1.7% and 1.1%,
+respectively).</p>
 </div>
 
 

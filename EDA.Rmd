@@ -269,7 +269,7 @@ hosp_year =
   geom_bar(position = "dodge", stat = "identity", fill = "dark blue") + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
   theme(legend.position = "none") +
-  labs(x = "Hospitalized for mental health, year before arrest") 
+  labs(x = "Hospitalized for mental health, year before arrest", y = "Proportion of Individuals") 
 
 # Bar graph of MCMH_MHOSPADM
 hosp_adm = 
@@ -284,55 +284,41 @@ hosp_adm =
   geom_bar(position = "dodge", stat = "identity", fill = "dark blue") + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
   theme(legend.position = "none") +
-  labs(x = "Hospitalized for mental health, since admission") 
+  labs(x = "Hospitalized for mental health, since admission", y = "Proportion of Individuals") 
 
 hosp_year + hosp_adm
 ```
   
   
-### Treatment Continuation (one year prior to arrest and since admission)
+### Treatment Continuation (mental health treatment one year prior to arrest and since admission)
 ```{r trt, message=FALSE}
 # Line graph for MH treatment continuation (one year prior to arrest and since admission)
 
-state_tx = state_df %>%
+total_df %>%
+  filter(MENTAL_HISTORY_BINARY == "History of mental health condition(s)") %>%
   group_by(MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD) %>%
-  summarize(n_obs = n()) %>%
   mutate(
     MCMH_MH_TREATMENT_PA = gsub(".* ", "", MCMH_MH_TREATMENT_PA),
     MCMH_MH_TREATMENT_AD = gsub(".* ", "", MCMH_MH_TREATMENT_AD),
-    tx_pa_ad = str_c(MCMH_MH_TREATMENT_PA, '/',MCMH_MH_TREATMENT_AD)
-  ) %>%
+    tx_pa_ad = str_c(MCMH_MH_TREATMENT_PA, '/', MCMH_MH_TREATMENT_AD)) %>%
   ungroup() %>%
-  mutate(
-    sum = sum(n_obs),
-    percent = (n_obs/sum) * 100 ) 
-
-federal_tx = federal_df %>%
-  group_by(MCMH_MH_TREATMENT_PA, MCMH_MH_TREATMENT_AD) %>%
-  summarize(n_obs = n()) %>%
-  mutate(
-    MCMH_MH_TREATMENT_PA = gsub(".* ", "", MCMH_MH_TREATMENT_PA),
-    MCMH_MH_TREATMENT_AD = gsub(".* ", "", MCMH_MH_TREATMENT_AD),
-    tx_pa_ad = str_c(MCMH_MH_TREATMENT_PA, '/',MCMH_MH_TREATMENT_AD)
-  ) %>%
-  ungroup() %>%
-  mutate(
-    sum = sum(n_obs),
-    percent = (n_obs/sum) * 100 ) 
-
-colors <- c("State Prisons" = "blue", "Federal Prisons" = "red")
-ggplot() + 
-  geom_line(data = state_tx, aes(x = tx_pa_ad, y = percent, group = 1, color = "State Prisons")) + 
-  geom_line(data = federal_tx, aes(x = tx_pa_ad, y = percent, group = 1, color = "Federal Prisons")) +
-  labs(
-    x = "1 Year Prior to Arrest/Since Admission",
-    y = "Percent (%) of Survey Respondents",
-    color = "") +
-  scale_color_manual(values = colors)
+  group_by(tx_pa_ad) %>%
+  summarise(n = n()) %>%
+  mutate(freq = n / sum(n)) %>%
+  ggplot(aes(x = tx_pa_ad, y = freq)) +
+  geom_bar(position = "dodge", stat = "identity", fill = "dark red") + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + 
+  theme(legend.position = "none") +
+  labs(x = "Treatment Continuation: (Treatment 1 Year Before Arrest/Since Admission)", y = "Proportion of Individuals") 
 ```
 
-# HIV Status by Mental Health History  
+The bar graph above restricts our analysis of treatment continuation to only those individuals with a history of mental health condition(s) as indicated by the `MENTAL_HISTORY_BINARY` variable. Among those survey respondents, it found that roughly two-thirds of individuals either had constant treatment status before and after incarceration (either no treatment -> no treatment or yes treatment -> yes treatment). Almost one-third of individuals began treatment while incarcerated and less than 10% had received treatment before incarceration but were no longer doing so.  
+  
+  
+# Distribution of HIV Status by Mental Health History  
 
-```{r hiv, messgae=FALSE}
+```{r hiv, message=FALSE}
 table1(~ MCMH_RSLT_HIV | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
 ```
+  
+Finally, the table above illustrates HIV status (`MCMH_RSLT_HIV`) for those with and without a history of mental health condition(s). We utilize the value label `presumed negative` as opposed to `negative` because the variable used for analysis codes HIV status as either "at least one positive test" or "at least one negative and the other unknown" based on HIV testing status from both before and after incarceration. The tabular analysis demonstrates an HIV prevalence of roughly 1.3% for our total cross-sectional sample of incarcerated individuals, which appears to differ somewhat between those with and without a history of mental health condition(s) (1.7% and 1.1%, respectively).
