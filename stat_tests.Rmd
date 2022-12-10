@@ -1,5 +1,5 @@
 ---
-title: "Statistical Analyses"
+title: " Is Mental Health Associated with HIV Status?"
 output: 
   html_document:
     toc: true
@@ -125,10 +125,6 @@ total_df =
   set_variable_labels(dataset = "Facility Type", MENTAL_HISTORY_BINARY = "Binary Mental Health History", V0005 = "Sex", AGE_CAT = "Age Group", V2982 = "Race/Ethnicity", EDUCATION = "Education", SES_INCOMEMTH = "Monthly Income in Month Before Arrest", CH_PRIORSENTENCE_NUM = "Number of Prior Sentences", V1197 = "Number of Prior Arrests", CH_CRIMHIST_COLLAPSED = "Collapsed Criminal History", TYPEOFFENSE = "Type of Offense", SES_PARENTS_INCARCERATED = "Parents Been Incarcerated", SES_FAMILY_INCARCERATED = "Children, Siblings, or Spouse Been Incarcerated", MCMH_RSLT_HIV = "HIV Status") 
 ```
 
-<br>
-
-# Is Mental Health Associated with HIV Status? 
- 
 <br>
 
 Our first research question aimed to examine whether HIV status as an exposure was associated with mental health history as an outcome in incarcerated individuals. Do assess this, we conducted logistic regression modeling (due to the binary nature of the outcome variable). First, we created a crude model of this association with no additional covariates.

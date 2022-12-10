@@ -41,11 +41,11 @@ theme_set(theme_minimal() + theme(legend.position = "bottom"))
 
 # Motivation 
 
-Some of our group members are interested in HIV and mental health, so we chose to center our project on these outcomes. Additionally, we felt that focusing on incarcerated individuals would present an interesting lens through which to study these diseases due to this population’s elevated risk for HIV and mental health conditions and their often overlooked, disenfranchised status.
+Some of our group members are interested in HIV and mental health, so we chose to center our project on these outcomes. Additionally, we felt that focusing on incarcerated individuals would present an interesting lens through which to study these diseases due to this population’s elevated risk for HIV and mental health conditions and their often overlooked, disenfranchised status. Through this project, we aim to examine the prevalence of HIV and mental health conditions in the U.S. incarcerated population. Furthermore, we plan to examine the association between these conditions and assess how/whether one’s mental health history can be predicted using the variables from our dataset on incarcerated individuals.
 
 # Related work
 
-The prevalence of mass incarceration in the United States has grown drastically, driving severe disparities in individual and community health that persist over time. Incarcerated individuals have a higher risk of HIV, as well as mental health and substance use disorders, with little access to quality treatment despite prisons being required to provide healthcare (Wildeman & Wang, 2017). In 2003 and 2004, the United States Bureau of Justice Statistics conducted a nationally representative survey to collect a variety of information, including current and past incarceration history and health status, on those incarcerated in federal and state prisons. This analysis will provide an overview on the differences in health status among incarcerated populations in both federal and state prison systems, specifically related to variables for HIV and mental health.
+The prevalence of mass incarceration in the United States has grown drastically, driving severe disparities in individual and community health that persist over time. [Incarcerated individuals](https://www.sciencedirect.com/science/article/pii/S0140673617302593?casa_token=6to34x17J6EAAAAA:kRFrdxBYdGGIM4HXRarrOIO1M2Kpk6Yf1xGstv2To9PmRIRvzJEE0S1BK2W09gzVXrZbI9HM) have a higher risk of HIV, as well as mental health and substance use disorders, with little access to quality treatment despite prisons being required to provide healthcare. Furthermore, HIV/AIDS has been [clearly documented](https://www.nimh.nih.gov/health/topics/hiv-aids) to lead to an increased risk of mental health disorders in the general population. Inspired by this past research and gaps in knowledge about the incarcerated population, we hope to further examine these relationships in our analysis. In 2003 and 2004, the United States Bureau of Justice Statistics conducted a nationally representative survey to collect a variety of information, including current and past incarceration history and health status, on those incarcerated in federal and state prisons. This analysis will provide an overview on the differences in health status among incarcerated populations in both federal and state prison systems, specifically related to variables for HIV and mental health.
 
 # Initial questions
 
@@ -60,11 +60,11 @@ Our three questions of interest include:
 # Data
 ### Source
 
-Our dataset, `Survey of Inmates in State and Federal Correctional Facilities, [United States], 2004 (ICPSR 4572)`, was collected from a nationally representative survey of incarcerated individuals in both state and federal prison systems. Versions of this study have been conducted every 5-6 years since 1974. The dataset used for this analysis can be found [here](https://www.icpsr.umich.edu/web/NACJD/studies/4572). This dataset contains information about thousands of randomly sampled incarcerated individuals, including variables regarding demographics, prison sentence and history with the judicial system, as well as health. 
+Our dataset, `Survey of Inmates in State and Federal Correctional Facilities, [United States], 2004 (ICPSR 4572)`, was collected from a nationally representative survey of incarcerated individuals in both state and federal prison systems. Versions of this cross-sectional study have been conducted every 5-6 years since 1974. The dataset used for this analysis can be found [here](https://www.icpsr.umich.edu/web/NACJD/studies/4572). This dataset contains information about thousands of randomly sampled incarcerated individuals, including variables regarding demographics, prison sentence and history with the judicial system, as well as health. 
 
 ### Cleaning
 
-To conduct our exploratory and statistical data analyses, we first imported the datasets containing observations of both state and federally incarcerated individuals from the `Survey of Inmates in State and Federal Correctional Facilities, [United States], 2004 (ICPSR 4572)` into R. We also selected our variables of interest to pare down the datasets. This was necessary as the original datasets were extremely extensive with several thousand variables in addition to several thousand individual observations. Paring down the datasets not only aided with ease of scanning the original dataset for errors, successful coding steps, etc. but also was key to avoiding long program run-times while developing the code.
+To conduct our exploratory and statistical data analyses, we first imported the datasets containing observations of both state and federally incarcerated individuals from the `Survey of Inmates in State and Federal Correctional Facilities, [United States], 2004 (ICPSR 4572)` into R. We also selected our variables of interest to pare down the datasets. This was necessary as the original datasets were extremely extensive with several thousand variables in addition to several thousand individual observations. Paring down the datasets not only aided with ease of scanning the original dataset for errors and successful completion of coding steps, but it was also key to avoiding long run-times while developing the code.
 
 ```{r import}
 #Importing the datasets
@@ -191,7 +191,7 @@ For our exploratory analyses, we examined the distribution of the variables list
 
 ### Demographics
 
-To display the distribution of demographic factors by mental health history status, we  created a tabular visualization for any continuous variables and categorical variables with a small amount of factor levels/categories. We chose to utilize bar graphs to display the distribution of categorical exposure variables with numerous categories, as this type of graphical summary (as opposed to a histogram, line graph, density plot, etc.)  is appropriate for nominal categorical variables. Furthermore, including them in our tabular summary would be too lengthy and difficult to interpret. While some of our categorical variables could have potentially been treated as continuous (e.g., educational attainment), we felt that doing so would be an oversimplification as it relies on the assumption that the relationship between the exposure (e.g., educational attainment) and outcome (i.e., mental health history) is linear. However, we suspected that a one-unit change in exposure level would not necessarily result in the same average change in outcome, and thus treating such variables as nominal categorical was more appropriate.
+To display the distribution of demographic factors by mental health history status, we  created a tabular visualization for any continuous variables and categorical variables with a small amount of factor levels/categories. We chose to utilize bar graphs to display the distribution of categorical exposure variables with numerous categories, as this type of graphical summary (as opposed to a histogram, line graph, density plot, etc.)  is appropriate for nominal categorical variables. Furthermore, we felt that including them in our tabular summary would be too lengthy and difficult to interpret for viewers. While some of our categorical variables could have potentially been treated as continuous (e.g., educational attainment), we felt that this would be an oversimplification for our regression analyses, as doing so relies on the assumption that the relationship between the exposure (e.g., educational attainment) and outcome (i.e., mental health history) is linear. However, we suspected that any one-unit change in exposure level would not necessarily result in the same average change in outcome, and thus treating such variables as nominal categorical was more appropriate.
 
 <br>
 
@@ -261,7 +261,7 @@ With regard to monthly income in the month before arrest, the two categories of 
 
 ### Incarceration
 
-A similar approach was taken for incarceration-related factors, with a tabular summary created for most variables. The tabular summaries included are akin to what would be presented as the “Table 1” in an epidemiological study/article, which provides basic context about the distribution of key variables in a population as a precursor to explanatory analysis of their relationships to one another. A density plot was provided for our continuous variable of number of prior arrests, while a bar graph was deemed appropriate for the nominal variable of type of offense.
+A similar approach was taken for incarceration-related factors, with a tabular summary created for most variables. The tabular summaries included are akin to what would be presented as the “Table 1” in an epidemiological study/article, which provides basic context about the distribution of key variables in a population as a precursor to explanatory analysis of their relationships to one another. A density plot was provided for our continuous variable of number of prior arrests as we would be using this variable in our subsequent regression analysis, while a bar graph was deemed appropriate to display the nominal variable of type of offense.
 
 <br>
 
@@ -327,7 +327,7 @@ The density plot above shows that the distributions of the number of prior arres
 
 ### Mental Health 
 
-Because we had relatively few mental health variables, and we were not attempting to display their distribution across mental health history categories, we chose to display them through bar graph visualizations. Examining the distribution of various, more niche mental-health-related outcomes such as hospitalizations and medication utilization provided us insight into our population and behavioral and trends. However, because these variables were almost exclusively inherent subsets of the group with a history of mental health condition(s), we felt they were too small of sample sizes to utilize as meaningful outcomes for further explanatory and statistical analyses.  
+Because we had relatively few mental health variables and we were not attempting to display their distribution across mental health history categories, we chose to display them through bar graph visualizations. Examining the distribution of various, more niche mental-health-related outcomes such as hospitalizations and medication utilization provided us with insight into our population and behavioral trends. However, because observations recorded for these variables were almost exclusively inherent subsets of the group with a history of mental health condition(s), we felt they were too small of sample sizes to utilize as meaningful outcomes for further explanatory and statistical analyses.  
 
   
 <br>
@@ -392,6 +392,7 @@ hosp_year + hosp_adm
 
 ```
   
+<br>  
   
 #### Treatment Continuation (mental health treatment one year prior to arrest and since admission)
 ```{r trt, message=FALSE}
@@ -421,7 +422,7 @@ The bar graph above restricts our analysis of treatment continuation to only tho
 
 ### HIV
 
-As our project originally began with a focus on HIV, we decided to include exploratory analysis of this variable on our webpage. In the process of assessing the distribution of HIV status, however, we found the observed prevalence of HIV in our sample was extremely low at only around 1-2%. This led us to include it as a factor, and explore the association with mental health status, both in the exploratory analyses  and statistical analyses. 
+As our project originally began with a focus on HIV, we decided to include exploratory analysis of this variable on our webpage. In the process of assessing the distribution of HIV status, however, we found the observed prevalence of HIV in our sample was extremely low at only around 1-2%. We decided to still include HIV status as a factor and explore its association with mental health both in our exploratory  and statistical analyses. However, we chose to expand our statistical analyses to other relationships and predictors of mental health history because of the limited size of the HIV+ population in our dataset.
 
 <br> 
 
@@ -475,7 +476,7 @@ federal_bar + state_bar
 
 ### Mapping
 
-To provide context and better inform our understanding of the federal and state incarceration systems, we created preliminary choropleth maps that mapped the `HIV Status`, `Mental Health History`, `Mental Health Treatment Prior to Arrest`, and `Mental Health Treatment After Admission’. These variables were chosen to include our two primary topics of interest, as well as to explore the changes in the number of people receiving mental health treatment pre and post incarceration. One challenge we faced with this dataset was that the geographic variables collected were relatively limited, and the included questions had high rates of missing data. Given that respondents were geographically accounted for based on their state of residence upon arrest, we can see larger states with higher populations on the upper end of the frequency scales, specifically in California and Texas. Future studies, and future iterations of this survey may want to include the prison’s state or county to allow for more in depth spatial analyses, though this may pose risks to the privacy and protection of the survey respondents, which must be preserved. 
+To provide context and better inform our understanding of the federal and state incarceration systems, we created preliminary choropleth maps that displayed the geographic distribution of `HIV status`, `mental health history`, `mental health treatment prior to arrest`, and `mental health treatment after admission’ from our sample.  These variables were chosen to include our two primary topics of interest as well as to explore the changes in the number of people receiving mental health treatment pre and post incarceration. One challenge we faced with this dataset was that the geographic variables collected were relatively limited, and the included variables had high rates of missing data. Given that respondents were geographically accounted for based on their state of residence upon arrest, we can see larger states with higher populations on the upper end of the frequency scales, specifically in California and Texas. This suggests that our data may be fairly geographically representative but that we may have more limited insight into areas with smaller populations. Future studies and future iterations of this survey may want to include the prison’s state or county to allow for more in depth spatial analyses, though this may pose risks to the privacy and protection of the survey respondents, which must be preserved. Furthermore, the oversampling of key geographic areas and subpopulations in future studies may be beneficial to gaining more statistically significant and nuanced insights into the challenges faced by these groups.
 
 All maps represent the variable grouped by the participant's state of residence upon arrest, for respondents from both federal and state prisons. These spatial analyses may be heavily impacted by the distribution of large facilities in the prison system. 
 
@@ -517,9 +518,16 @@ Interestingly, though the highest proportion of respondents who received some fo
 
 # Statistical analysis
 
+<br> 
 
-### Is Mental Health Associated with HIV Status? 
+### 1. Is Mental Health Associated with HIV Status? 
  
+<br>
+
+Our first question of interest was whether mental health and HIV status are associated, so we conducted a logistic regression analysis to determine whether history of mental health condition(s) (outcome) is associated with HIV status (exposure). The outcome of mental health history (converted to a binary yes vs. no variable, `MENTAL_HISTORY_BINARY`) was used, as this was a fairly complete variable compared to other mental health-related variables in our dataset. Furthermore, we specifically utilized the derived `MCMH_RSLT_HIV` variable to represent HIV status, as this included information about HIV test results both before and after incarceration. 
+
+To conduct this association, we first ran a crude regression model of only the exposure and outcome of interest. We then explained the confounders we would be including in our adjusted regression model (primarily demographic variables). While other covariates such as incarceration-related variables may also be covariates, due to the cross-sectional nature of our dataset, we cannot be sure those variables preceded our exposure and outcome of interest and are therefore not included as confounders in this epidemiological analysis. To briefly demonstrate the validity of including our chosen demographic potential-confounders, we present several chi-squared tests that prove there is an association between these variables and the outcome. Extensive chi-squared testing is not shown to avoid repetition and due to the small subgroup sizes that would result from 2xK tables of these associations. However, our prior knowledge of the topic and logical reasoning tells us that it is possible for all of our chosen  covariates to be associated with both the exposure and outcome of interest.
+
 <br>
   
 #### Z-Test
@@ -627,7 +635,11 @@ We are 95% confident that the true odds ratio comparing odds of having a history
 
 <br>
 
-### Is Mental Health Status Associated with Prior Arrest History?  
+### 2. Is Mental Health Status Associated with Prior Arrest History?  
+
+Our next question of interest was whether mental health history (as a binary outcome) and number of prior arrests (as a continuous exposure) are associated, so we fit two logistic regression models to examine this relationship. This was done in the same manner and using the same covariates as the modeling for the association between mental health and HIV status.
+
+For both of the regression analyses conducted (HIV status as well as arrest history), we found there to be an association at the 0.05 level of significance between our primary exposure and outcome variables. This was observed both before and after confounding (with an appreciable difference found between the crude and adjusted models in each case). This indicates that each of the primary associations in question were subject to partial confounding. 
 
 To assess whether mental health (outcome of interest) is associated with prior arrest history (exposure of interest), we conducted logistic regression modeling (due to the binary nature of the outcome variable). First, we created a crude model of this association with no additional covariates.
 
@@ -705,13 +717,23 @@ We are also 95% confident that the true odds ratio comparing odds of having a hi
 
 <br>   
 
-### Model Selection
+### 3. Model Selection
+
+Finally, we wanted to understand which variables are most strongly associated with mental health history and can be seen as appropriate predictors for this outcome variable in incarcerated individuals.
+
+We started by identifying a list of potential predictors: age, sex, race, number of prior arrests, sentence length, physical/sexual abuse history, and HIV status. 
+
+Limiting the mental health history to a dichotomous outcome (one or more previous mental health diagnoses vs. no previous diagnoses), we fit a logistic regression model with all the potential predictors. This full model fit showed that almost all the identified variables are significant. The most significant predictor was abuse history, with those with both physical & sexual abuse having a 5.5 times greater odds of mental health history than those with no abuse. 
+
+The AIC (Akaike information criterion)  for this full model was very high, at 14410. This suggests that while most of the terms are significant, this model is very complex and redundant. There is likely a simpler and more parsimonious model that can be fit to this data.
+
+Since most of the terms are already significant at the 0.05 level, a stepwise selection procedure did not yield any improved results. Instead, we took a manual approach to eliminate the least significant terms and factor levels.
+
+After a couple rounds of elimination we fit a model with terms all significant at the 0.001 level. This final model had an AIC of 10620, a large improvement from the full model. From this model, we determined the strongest predictors of an inmate’s mental health history to be sex, race, number of arrests, race, physical & sexual abuse, and HIV status.
 
 <br>    
     
 #### What are the best predictors of mental health status?
-
-<br>
   
 Let's look at the following variables as potential predictors of an inmate's mental health status:
   
@@ -803,7 +825,20 @@ We find that the most significant predictors of an inmate's mental health status
 <br>
 
 # Discussion
-What were your findings? Are they what you expect? What insights into the data can you make?
+
+From our analyses, after controlling for demographic variables, we found a significant association between a history of mental health condition(s) and HIV status for incarcerated individuals in 2004, and the data indicate that mental health history differs by HIV status. Additionally, using the 10% change rule, we can conclude that mental health history differs by prior arrest, controlling for demographic variables. Using model selection, we find that the most significant predictors of an inmate’s mental health status are # of arrests, race, sex, HIV status, and abuse.
+
+This aligned with our expectations of an association being present between mental health status and both past arrest history and HIV status. However, the regression analysis conducted for arrest history vs. mental health history produced an odds ratio very close to (though not including) the null value of 1. It is possible that using additional or different confounders would have explained this observed association, leaving us with a statistically non-significant OR.
+
+We must also address the project’s limitations, which include, but are not limited to: 
+
+* The survey conducted is cross-sectional, meaning we cannot assume causal relationships between variables. There is no follow-up assessment to understand how dynamic factors, like mental health, change over time. An extension of this report could compare the change in responses across a specific  timeframe, specifically with more recently collected data. 
+
+* Results are not generalizable to non-incarcerated populations, or international communities. Additionally, we did not account for the variety of systematic differences and regulations that vary by geography, prison type, and size. The United States 
+
+* We recognize the limited quality of mental health resources provided in prison systems, and the extent to which these broad, population health surveys can reliably capture mental health status. Since these  data were collected, much has changed in the field of mental health and psychiatry (language, measurement methods, diagnostics, etc.) to better represent people and their experience with mental health. This continues to evolve and must be reflected in future Bureau of Justice Statistics surveys.
+
+<br>
 
 # Collaborators
 

@@ -1,5 +1,5 @@
 ---
-title: "Statistical Analyses"
+title: "What are the best predictors of mental health status?"
 output: 
   html_document:
     toc: true
@@ -126,11 +126,8 @@ total_df =
   set_variable_labels(dataset = "Facility Type", MENTAL_HISTORY_BINARY = "Binary Mental Health History", V0005 = "Sex", AGE_CAT = "Age Group", V2982 = "Race/Ethnicity", EDUCATION = "Education", SES_INCOMEMTH = "Monthly Income in Month Before Arrest", CH_PRIORSENTENCE_NUM = "Number of Prior Sentences", V1197 = "Number of Prior Arrests", CH_CRIMHIST_COLLAPSED = "Collapsed Criminal History", TYPEOFFENSE = "Type of Offense", SES_PARENTS_INCARCERATED = "Parents Been Incarcerated", SES_FAMILY_INCARCERATED = "Children, Siblings, or Spouse Been Incarcerated", MCMH_RSLT_HIV = "HIV Status")
 ```
 
-    
-# What are the best predictors of mental health status?
-
 <br>
-  
+
 ### Model Selection  
   
 Let's look at the following variables as potential predictors of an inmate's mental health status:

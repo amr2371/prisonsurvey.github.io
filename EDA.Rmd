@@ -204,6 +204,8 @@ With regard to monthly income in the month before arrest, the two categories of 
   
 # Incarceration-Related Variables
 
+<br>
+
 ### Distribution of Incarceration-Related Variables by Mental Health History  
 
 We created to display the distribution of variables related to individuals' current incarceration and/or history within the justice system. These variables include number of prior sentences (`CH_PRIORSENTENCE_NUM`), number of prior arrests (`V1197`), collapsed criminal history (`CH_CRIMHIST_COLLAPSED`), whether their parents have been incarcerated (`SES_PARENTS_INCARCERATED`), whether their other immediate family has been incarcerated (`SES_FAMILY_INCARCERATED`), and whether they are incarcerated in a state or federal facility (`dataset`).
@@ -327,6 +329,7 @@ hosp_year + hosp_adm
 
 ```
   
+<br>  
   
 ### Treatment Continuation (mental health treatment one year prior to arrest and since admission)
 ```{r trt, message=FALSE}
@@ -355,6 +358,8 @@ The bar graph above restricts our analysis of treatment continuation to only tho
 <br>
 
 # HIV
+
+<br>
 
 ### Distribution of HIV Status by Mental Health History  
 

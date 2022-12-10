@@ -8,9 +8,12 @@ output:
     theme: flatly
 ---
 
+![](mapping/robert-klank-lnyleGoROLY-unsplash.jpg)
+[Source](https://www.jumpingrivers.com/blog/knitr-rmarkdown-image-size/)
+
 ## Introduction
 
-The prevalence of mass incarceration in the United States has grown drastically, driving severe disparities in individual and community health that persist over time. Incarcerated individuals have a higher risk of HIV, as well as mental health and substance use disorders, with little access to quality treatment despite prisons being required to provide healthcare (Wildeman & Wang, 2017). In 2003 and 2004, the United States Bureau of Justice Statistics conducted a nationally representative survey to collect a variety of information, including current and past incarceration history and health status, on those incarcerated in federal and state prisons. This analysis will provide an overview on the differences in health status among incarcerated populations in both federal and state prison systems, specifically related to variables for HIV and Mental Health.  
+The prevalence of mass incarceration in the United States has grown drastically, driving severe disparities in individual and community health that persist over time. Incarcerated individuals have a higher risk of HIV, as well as mental health and substance use disorders, with little access to quality treatment despite prisons being required to provide healthcare ([Wildeman & Wang, 2017](https://www.sciencedirect.com/science/article/pii/S0140673617302593?casa_token=6to34x17J6EAAAAA:kRFrdxBYdGGIM4HXRarrOIO1M2Kpk6Yf1xGstv2To9PmRIRvzJEE0S1BK2W09gzVXrZbI9HM)). In 2003 and 2004, the United States Bureau of Justice Statistics conducted a nationally representative survey to collect a variety of information, including current and past incarceration history and health status, on those incarcerated in federal and state prisons. This analysis will provide an overview on the differences in health status among incarcerated populations in both federal and state prison systems, specifically related to variables for HIV and Mental Health.  
 
 ## Screencast
 
