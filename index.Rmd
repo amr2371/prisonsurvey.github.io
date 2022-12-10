@@ -30,11 +30,12 @@ In the [Exploratory Analysis](EDA.html), you will find:
 * Demographics for survey respondents 
 * Overview of the two primary health variables, HIV and Mental Health
 
-On the [Statistical Analysis](stat_tests.html) page, you can find:
+Under the Statistical Analysis tab, you can find our three questions of interest:
 
-* Hypothesis Testing
-* Regression Analyses
-* Model Selection
+1. [Is mental health associated with HIV status?](stat_tests.html)
+2. [Is mental health associated with prior arrest history?](stat_tests_prior_arrest.html)
+3. [What are the best predictors of mental health status?](model_selection.html)
+
 
 On the [Spatial Analysis](Maps.html) page, you can find maps related to:
 
