@@ -323,6 +323,8 @@ hosp_adm =
   theme(legend.position = "none") +
   labs(x = "Hospitalized for mental health, since admission", y = "Proportion of Individuals") 
 
+hosp_year + hosp_adm
+
 ```
   
   
