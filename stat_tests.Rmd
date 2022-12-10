@@ -3,6 +3,7 @@ title: "Explanatory Analysis"
 output: 
   html_document:
     toc: true
+    code_folding: hide
     toc_float: true
     theme: flatly
 ---
@@ -71,11 +72,11 @@ total_df =
     V2982 = factor(V2982, exclude = "NA"), 
     V2982 = na_if(V2982, "NA")) %>% 
   mutate(
-    EDUCATION = dplyr::recode(EDUCATION, "(0000000) Never attended or attended kindergarten only" = "Never attended or attended kindergarten only", "(0000001) First grade" = "First grade", "(0000002) Second grade" = "Second grade", "(0000003) Third grade" = "Third grade", "(0000004) Fourth grade" = "Fourth grade", "(0000005) Fifth grade" = "Fifth grade", "(0000006) Sixth grade" = "Sixth grade", "(0000007) Seventh grade" = "Seventh grade", "(0000008) Eighth grade" = "Eighth grade", "(0000009) Ninth grade" = "Ninth grade", "(0000010) Tenth grade" = "Tenth grade", "(0000011) Eleventh grade" = "Eleventh grade", "(0000012) Twelfth grade" = "Twelfth grade", "(0000013) College freshman" = "College freshman", "(0000014) College sophomore" = "College sophomore", "(0000015) College junior" = "College junior", "(0000016) College senior" = "College senior", "(0000017) Graduate school one year" = "Graduate school one year", "(0000018) Graduate school two or more years" = "Graduate school two or more years", "(0000019) Attended school in other country/system not comparable to grades" = "Attended school in other country/system not comparable to grades", "(9999997) Don't know" = "Don't know", "(9999998) Refused" = "NA", "(9999999) Missing" = "NA"), 
+    EDUCATION = dplyr::recode(EDUCATION, "(0000000) Never attended or attended kindergarten only" = "Never attended or kindergarten only", "(0000001) First grade" = "First grade", "(0000002) Second grade" = "Second grade", "(0000003) Third grade" = "Third grade", "(0000004) Fourth grade" = "Fourth grade", "(0000005) Fifth grade" = "Fifth grade", "(0000006) Sixth grade" = "Sixth grade", "(0000007) Seventh grade" = "Seventh grade", "(0000008) Eighth grade" = "Eighth grade", "(0000009) Ninth grade" = "Ninth grade", "(0000010) Tenth grade" = "Tenth grade", "(0000011) Eleventh grade" = "Eleventh grade", "(0000012) Twelfth grade" = "Twelfth grade", "(0000013) College freshman" = "College freshman", "(0000014) College sophomore" = "College sophomore", "(0000015) College junior" = "College junior", "(0000016) College senior" = "College senior", "(0000017) Graduate school one year" = "Graduate school one year", "(0000018) Graduate school two or more years" = "Graduate school two or more years", "(0000019) Attended school in other country/system not comparable to grades" = "NA", "(9999997) Don't know" = "NA", "(9999998) Refused" = "NA", "(9999999) Missing" = "NA"), 
     EDUCATION = factor(EDUCATION, exclude = "NA"), 
     EDUCATION = na_if(EDUCATION, "NA")) %>% 
   mutate(
-    SES_INCOMEMTH = dplyr::recode(SES_INCOMEMTH, "(0000000) No income" = "No income", "(0000001) $1 - 199" = "$1 - $199", "(0000002) 200 - 399" = "$200 - $399", "(0000003) 400 - 599" = "$400 - $599", "(0000004) 600 - 799" = "$600 - $799", "(0000005) 800 - 999" = "$800 - $999", "(0000006) 1,000 - 1,199" = "$1,000 - $1,199", "(0000007) 1,200 - 1,499" = "$1,200 - $1,499", "(0000008) 1,500 - 1,999" = "$1,500 - $1,999", "(0000009) 2,000 - 2,499" = "$2,000 - $2,499", "(0000010) 2,500 - 4,999" = "$2,500 - $4,999", "(0000011) 5,000 - 7,499" = "$5,000 - $7,499", "(0000012) 7,500 or more" = "$7,500 or more", "(9999997) Don't know" = "Don't know", "(9999998) Refused" = "NA", "(9999999) Missing" = "NA"), 
+    SES_INCOMEMTH = dplyr::recode(SES_INCOMEMTH, "(0000000) No income" = "No income", "(0000001) $1 - 199" = "$1 - $199", "(0000002) 200 - 399" = "$200 - $399", "(0000003) 400 - 599" = "$400 - $599", "(0000004) 600 - 799" = "$600 - $799", "(0000005) 800 - 999" = "$800 - $999", "(0000006) 1,000 - 1,199" = "$1,000 - $1,199", "(0000007) 1,200 - 1,499" = "$1,200 - $1,499", "(0000008) 1,500 - 1,999" = "$1,500 - $1,999", "(0000009) 2,000 - 2,499" = "$2,000 - $2,499", "(0000010) 2,500 - 4,999" = "$2,500 - $4,999", "(0000011) 5,000 - 7,499" = "$5,000 - $7,499", "(0000012) 7,500 or more" = "$7,500 or more", "(9999997) Don't know" = "NA", "(9999998) Refused" = "NA", "(9999999) Missing" = "NA"), 
     SES_INCOMEMTH = factor(SES_INCOMEMTH, exclude = "NA"), 
     SES_INCOMEMTH = na_if(SES_INCOMEMTH, "NA")) %>% 
   mutate(
@@ -116,7 +117,12 @@ total_df =
     MCMH_RSLT_HIV = dplyr::recode(MCMH_RSLT_HIV, "(0000001) At least one positive test" = "Positive", "(0000002) At least one negative and the other unknown" = "Presumed Negative", "(0000009) Missing" = "NA", "(9999999) Missing" = "NA"), 
       MCMH_RSLT_HIV = factor(MCMH_RSLT_HIV, exclude = "NA"), 
       MCMH_RSLT_HIV = na_if(MCMH_RSLT_HIV, "NA")) %>% 
-      set_variable_labels(dataset = "Dataset", MENTAL_HISTORY_BINARY = "Binary Mental Health History", V0005 = "Sex", AGE_CAT = "Age Group", V2982 = "Race/Ethnicity", EDUCATION = "Education", SES_INCOMEMTH = "Monthly Income in Month Before Arrest", CH_PRIORSENTENCE_NUM = "Number of Prior Sentences", V1197 = "Number of Prior Arrests", CH_CRIMHIST_COLLAPSED = "Collapsed Criminal History", TYPEOFFENSE = "Type of Offense", SES_PARENTS_INCARCERATED = "Parents Been Incarcerated", SES_FAMILY_INCARCERATED = "Children, Siblings, or Spouse Been Incarcerated", MCMH_RSLT_HIV = "HIV Status")
+  mutate(
+    TYPEOFFENSE = gsub(".*)", "", TYPEOFFENSE), 
+    TYPEOFFENSE = dplyr::recode(TYPEOFFENSE, " Missing" = "NA", " DK/refused" = "NA", " Blank" = "NA"),
+    TYPEOFFENSE = na_if(TYPEOFFENSE, "NA"),
+    TYPEOFFENSE = as.factor(TYPEOFFENSE)) %>% 
+  set_variable_labels(dataset = "Facility Type", MENTAL_HISTORY_BINARY = "Binary Mental Health History", V0005 = "Sex", AGE_CAT = "Age Group", V2982 = "Race/Ethnicity", EDUCATION = "Education", SES_INCOMEMTH = "Monthly Income in Month Before Arrest", CH_PRIORSENTENCE_NUM = "Number of Prior Sentences", V1197 = "Number of Prior Arrests", CH_CRIMHIST_COLLAPSED = "Collapsed Criminal History", TYPEOFFENSE = "Type of Offense", SES_PARENTS_INCARCERATED = "Parents Been Incarcerated", SES_FAMILY_INCARCERATED = "Children, Siblings, or Spouse Been Incarcerated", MCMH_RSLT_HIV = "HIV Status") 
 ```
 
   
