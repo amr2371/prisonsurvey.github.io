@@ -54,7 +54,7 @@ state_df <- da04572.0002 %>%
   mutate(dataset = "State")
 ```
 
-Subsequently, we stacked these two datasets using a newly created variable called `dataset` to identify which original file each observation was from (i.e., state vs. federally incarcerated). We also cleaned the resulting data by checking for coding errors, recoding various factor variables, adding variable labels, and changing the coding of values from `missing`/`don't know`/`unknown` to `NA` for consistency.
+We next stacked these two datasets using a newly created variable called `dataset` to identify which original file each observation was from (i.e., state vs. federal). We cleaned the resulting data by checking for coding errors, recoding various factor variables, adding variable labels, and changing the coding of values from `missing`/`don't know`/`unknown` to `NA` for consistency.
 
 ```{r combine_clean, include=FALSE}
 #Combining datasets, filtering dataset, formatting variables
@@ -133,7 +133,7 @@ total_df =
 This tidying and cleaning resulted in a combined dataset with ``r nrow(total_df)`` rows (observations) and ``r ncol(total_df)`` columns (variables). The resulting dataset includes demographic, geographic, incarceration-related, and health-related variables.
 
 
-# Demographics  
+## Demographics  
 
 To examine the distribution of demographic variables across our dataset, we created a tabular display of variables sex (`V0005`), age group (`AGE_CAT`), and race/ethnicity (`V2982`).
   
@@ -144,7 +144,7 @@ To examine the distribution of demographic variables across our dataset, we crea
 table1(~ V0005 + AGE_CAT + V2982 | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
 ```
 
-From this table, we can see that certain variables appear to differ by mental health history, one of our primary outcomes of interest. Therefore, the statistical analysis page of the website also includes hypothesis testing of some of these variables to assess whether the observed differences are significant.  
+From this table, we can see that certain variables appear to differ by mental health history, one of our primary outcomes of interest. Therefore, we have performed some hypothesis testing on the [Statistical Analysis](stat_tests.html) page to assess whether the observed differences are significant.  
   
   
 ### Educational Attainment by Mental Health History  
