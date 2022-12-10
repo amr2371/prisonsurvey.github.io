@@ -3,16 +3,22 @@ output_dir: "."
 navbar:
   title: "Home"
   right:
-    - text: "About"
-      href: about.html
     - text: "Exploratory Analysis"
       href: EDA.html
     - text: "Statistical Analysis"
-      href: stat_tests.html
+      menu:
+        - text: "Association between Mental Health and HIV Status"
+          href: stat_tests.html
+        - text: "Association between Mental Health and Arrest History"
+          href: stat_tests_prior_arrest.html
+        - text: "Model Selection"
+          href: model_selection.html
     - text: "Spatial Analysis"
       href: Maps.html 
     - text: "Project Report"
       href: project_report.html
+    - text: "About"
+      href: about.html
     - icon: fa-github fa-lg
       href: https://github.com/amr2371/prisonsurvey.github.io
 output:

@@ -181,7 +181,8 @@ total_df %>%
   ggplot(aes(x = SES_INCOMEMTH, y = freq, fill = MH_History)) +
   geom_bar(position = "dodge", stat = "identity") + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-   labs(x = "Monthly Income in Month Before Arrest")
+   labs(x = "Monthly Income in Month Before Arrest",
+        y = "Percentage of Individuals")
 ```
   
 With regard to monthly income in the month before arrest, the two categories of mental health history do not have easily distinguishable patterns/distributions. However, in the lower income categories (up to the `$800 - $999` category), there are a higher proportion of individuals with a history of mental health condition(s) - the opposite is true for all categories including and above `$1,000 - $1,199`.  
@@ -214,7 +215,8 @@ total_df %>%
   ggplot(aes(x = TYPEOFFENSE, y = freq, fill = MH_History)) +
   geom_bar(position = "dodge", stat = "identity") + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-   labs(x = "Type of Offense")
+   labs(x = "Type of Offense",
+        y = "Percentage of Individuals")
 ```
 
 The above bar graph shows that the two most common types of offense for both categories of mental health history are drug trafficking and robbery, while arson and other property crimes are the least common for both categories.  
@@ -230,7 +232,7 @@ total_df %>%
   labs(x = "Number of Prior Arrests")
 ```
 
-The density plot above shows that the distributions of the number of prior arrests are extremely similar for both categories of mental health history. Most of the same peaks are observed in each distribution, suggesting there may be something significant about these seemingly arbitrary numbers of arrests. However, it does seem like a higher proportion of individuals with no mental health history have 0 to roughly 5 arrests compared to the other group.  
+The density plot above shows that the distributions of the number of prior arrests are extremely similar for both categories of mental health history. Most of the same peaks are observed in each distribution, suggesting there may be something significant about these seemingly arbitrary numbers of arrests. However, it does seem like a higher proportion of individuals with no mental health history have 0 to roughly 5 arrests compared to inmates with mental health condition(s).
   
 # Mental Health  
   

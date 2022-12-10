@@ -13,7 +13,7 @@
 
 <title>Exploratory Data Analyses</title>
 
-<script src="site_libs/header-attrs-2.17/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
@@ -185,8 +185,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "\e259";
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -194,9 +194,16 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "\e258";
-  font-family: 'Glyphicons Halflings';
+  content: "&#xe258;";
   border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -329,19 +336,34 @@ div.tocify {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="about.html">About</a>
-</li>
-<li>
   <a href="EDA.html">Exploratory Analysis</a>
 </li>
-<li>
-  <a href="stat_tests.html">Statistical Analysis</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Statistical Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="stat_tests.html">Association between Mental Health and HIV Status</a>
+    </li>
+    <li>
+      <a href="stat_tests_prior_arrest.html">Association between Mental Health and Arrest History</a>
+    </li>
+    <li>
+      <a href="model_selection.html">Model Selection</a>
+    </li>
+  </ul>
 </li>
 <li>
   <a href="Maps.html">Spatial Analysis</a>
 </li>
 <li>
   <a href="project_report.html">Project Report</a>
+</li>
+<li>
+  <a href="about.html">About</a>
 </li>
 <li>
   <a href="https://github.com/amr2371/prisonsurvey.github.io">
@@ -570,7 +592,8 @@ total_df %&gt;%
   ggplot(aes(x = SES_INCOMEMTH, y = freq, fill = MH_History)) +
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-   labs(x = &quot;Monthly Income in Month Before Arrest&quot;)</code></pre>
+   labs(x = &quot;Monthly Income in Month Before Arrest&quot;,
+        y = &quot;Percentage of Individuals&quot;)</code></pre>
 <p><img src="EDA_files/figure-html/income-1.png" width="100%" /></p>
 <p>With regard to monthly income in the month before arrest, the two
 categories of mental health history do not have easily distinguishable
@@ -799,7 +822,8 @@ total_df %&gt;%
   ggplot(aes(x = TYPEOFFENSE, y = freq, fill = MH_History)) +
   geom_bar(position = &quot;dodge&quot;, stat = &quot;identity&quot;) + 
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-   labs(x = &quot;Type of Offense&quot;)</code></pre>
+   labs(x = &quot;Type of Offense&quot;,
+        y = &quot;Percentage of Individuals&quot;)</code></pre>
 <p><img src="EDA_files/figure-html/offense-1.png" width="100%" /></p>
 <p>The above bar graph shows that the two most common types of offense
 for both categories of mental health history are drug trafficking and
@@ -822,7 +846,8 @@ history. Most of the same peaks are observed in each distribution,
 suggesting there may be something significant about these seemingly
 arbitrary numbers of arrests. However, it does seem like a higher
 proportion of individuals with no mental health history have 0 to
-roughly 5 arrests compared to the other group.</p>
+roughly 5 arrests compared to inmates with mental health
+condition(s).</p>
 </div>
 </div>
 <div id="mental-health" class="section level1">

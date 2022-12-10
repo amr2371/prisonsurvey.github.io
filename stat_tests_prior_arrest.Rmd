@@ -1,5 +1,5 @@
 ---
-title: "Statistical Analyses"
+title: "Statistical Analyses Prior Arrests"
 output: 
   html_document:
     toc: true
@@ -125,74 +125,75 @@ total_df =
   set_variable_labels(dataset = "Facility Type", MENTAL_HISTORY_BINARY = "Binary Mental Health History", V0005 = "Sex", AGE_CAT = "Age Group", V2982 = "Race/Ethnicity", EDUCATION = "Education", SES_INCOMEMTH = "Monthly Income in Month Before Arrest", CH_PRIORSENTENCE_NUM = "Number of Prior Sentences", V1197 = "Number of Prior Arrests", CH_CRIMHIST_COLLAPSED = "Collapsed Criminal History", TYPEOFFENSE = "Type of Offense", SES_PARENTS_INCARCERATED = "Parents Been Incarcerated", SES_FAMILY_INCARCERATED = "Children, Siblings, or Spouse Been Incarcerated", MCMH_RSLT_HIV = "HIV Status") 
 ```
 
+    
+# Is Mental Health Associated with Prior Arrest History?  
+
+To assess whether mental health (outcome of interest) is associated with prior arrest history (exposure of interest), we conducted logistic regression modeling (due to the binary nature of the outcome variable). First, we created a crude model of this association with no additional covariates.
+
+* Null hypothesis: Mental health history (yes vs. no history of at least one mental health condition) does not differ by number of prior arrests (measured as continuous).
+
+* Alternate hypothesis: Mental health history (yes vs. no history of at least one mental health condition) DOES differ by number of prior arrests (measured as continuous).
   
-
-# Is Mental Health Associated with HIV Status?  
-
-To assess whether mental health (outcome of interest) is associated with HIV status (exposure of interest), we conducted logistic regression modeling (due to the binary nature of the outcome variable). First, we created a crude model of this association with no additional covariates.
-
-* Null hypothesis: Mental health history (yes vs. no history of at least one mental health condition) does not differ by HIV status (presumed negative vs. positive).
-
-* Alternate hypothesis: Mental health history (yes vs. no history of at least one mental health condition) DOES differ by HIV status (presumed negative vs. positive).
-
 ### Crude Model  
-
-```{r crude_OR}
-#Crude Model
-HIV_MH_model = 
-  total_df %>% 
-  drop_na(MCMH_RSLT_HIV, V0005, AGE_CAT, V2982, SES_INCOMEMTH, EDUCATION) %>% 
-glm(MENTAL_HISTORY_BINARY ~ MCMH_RSLT_HIV, data = ., family = binomial()) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
-  janitor::clean_names() %>%
-  mutate(
-    OR = exp(estimate),
-    conf_low = exp(conf_low),
-    conf_high = exp(conf_high)) %>%
-  mutate(term = str_replace(term, "MCMH_RSLT_HIV", "HIV Status: ")) %>% 
-  select(term, estimate, OR, conf_low, conf_high, p_value) %>%
-  knitr::kable(digits = 3)
-
-HIV_MH_model
-```
   
-The estimated odds of having a history of at least one mental health condition among incarcerated individuals in 2004 with a `presumed negative` HIV status was 0.626 times the estimated odds of having a history of at least one mental health condition among incarcerated individuals in 2004 with a `positive` HIV status.
+```{r crude_arrests}
+#Crude Model
 
-We are 95% confident that the true odds ratio comparing odds of having a history of at least one mental health condition between incarcerated individuals with a `presumed negative` vs. `positive` HIV status in 2004 lies between 0.469 and 0.840. Thus, at a 0.05 level of significance, we have sufficient evidence to support the claim that mental health history (yes vs. no history of at least one mental health condition) DOES differ by HIV status (presumed negative vs. positive). Because our confidence interval does not include the null odds ratio value of 1 and is, in fact, exclusively below this value, it appears that, on average, HIV-positive incarcerated individuals were more likely to have had a history of mental health condition(s).   
+crude_arrests_mh = 
+  total_df %>% 
+  drop_na(V1197, V0005, AGE_CAT, V2982, SES_INCOMEMTH, EDUCATION) %>% 
+  glm(MENTAL_HISTORY_BINARY ~ V1197, data = ., family = binomial()) %>% 
+    broom::tidy(conf.int = TRUE) %>% 
+    janitor::clean_names() %>%
+    mutate(
+      OR = exp(estimate),
+      conf_low = exp(conf_low),
+      conf_high = exp(conf_high)) %>%
+    mutate(term = str_replace(term, "V1197", "Number of Prior Arrests")) %>% 
+    select(term, estimate, OR, conf_low, conf_high, p_value) %>%
+    knitr::kable(digits = 3)
 
-Our association of interest may be affected by several confounders: variables which are associated with both the exposure (HIV status) and outcome (mental health history) of interest and are not on the causal pathway between the two. Demographic variables often play such confounding roles. Therefore, we decided to develop an adjusted logistic regression model to explain our association that takes into account covariates of `sex`, `age group`, `race/ethnicity`, `education`, and `monthly income`. Using our background knowledge of the topic and resulting a priori hypotheses, these variables may all logically be confounders of the relationship of interest.  
+crude_arrests_mh
+```
+
+The estimated odds of having a history of at least one mental health condition among incarcerated individuals in 2004 increased by a factor of 1.017 on average for each one-unit increase in the number of prior arrests variable. 
+
+This appears like a very small difference from the null value, however, our 95% confidence interval indicates that it is meaningful. We are 95% confident that the true odds ratio comparing odds of having a history of at least one mental health condition between incarcerated individuals with a one-unit difference in prior arrests HIV lies between 1.012 and 1.021. Thus, at a 0.05 level of significance, we have sufficient evidence to support the claim that mental health history (yes vs. no history of at least one mental health condition) DOES differ by number of prior arrests.
   
 ### Adjusted Model  
   
-```{r adjusted_OR}
+```{r adjusted_arrests}
 #Adjusted Model
 
-HIV_MH_model_adj = 
+adj_arrests_mh = 
   total_df %>% 
-  drop_na(MCMH_RSLT_HIV, V0005, AGE_CAT, V2982, SES_INCOMEMTH, EDUCATION) %>% 
-  glm(MENTAL_HISTORY_BINARY ~ MCMH_RSLT_HIV + V0005 + AGE_CAT + V2982 + SES_INCOMEMTH + EDUCATION, data = ., family = binomial()) %>% 
-  broom::tidy(conf.int = TRUE) %>% 
-  janitor::clean_names() %>%
-  mutate(
-    OR = exp(estimate),
-    conf_low = exp(conf_low),
-    conf_high = exp(conf_high)) %>%
-  mutate(
-    term = str_replace(term, "MCMH_RSLT_HIV", "HIV Status: "), 
-    term = str_replace(term, "V0005", "Sex: "), 
-    term = str_replace(term, "AGE_CAT", "Age Group: "),
-    term = str_replace(term, "V2982", "Race/Ethnicity: "), 
-    term = str_replace(term, "SES_INCOMEMTH", "Monthly Income: "), 
-    term = str_replace(term, "EDUCATION", "Education: ")) %>% 
-  select(term, estimate, OR, conf_low, conf_high, p_value) %>%
-  knitr::kable(digits = 3)
+  drop_na(V1197, V0005, AGE_CAT, V2982, SES_INCOMEMTH, EDUCATION) %>% 
+  glm(MENTAL_HISTORY_BINARY ~ V1197 + V0005 + AGE_CAT + V2982 + SES_INCOMEMTH + EDUCATION, data = ., family = binomial()) %>% 
+    broom::tidy(conf.int = TRUE) %>% 
+    janitor::clean_names() %>%
+    mutate(
+      OR = exp(estimate),
+      conf_low = exp(conf_low),
+      conf_high = exp(conf_high)) %>%
+    mutate(
+      term = str_replace(term, "V1197", "Number of Prior Arrests"), 
+      term = str_replace(term, "V0005", "Sex: "), 
+      term = str_replace(term, "AGE_CAT", "Age Group: "),
+      term = str_replace(term, "V2982", "Race/Ethnicity: "), 
+      term = str_replace(term, "SES_INCOMEMTH", "Monthly Income: "), 
+      term = str_replace(term, "EDUCATION", "Education: ")) %>% 
+    select(term, estimate, OR, conf_low, conf_high, p_value) %>%
+    knitr::kable(digits = 3)
 
-HIV_MH_model_adj
+adj_arrests_mh
 ```
 
-In fact, upon including these covariates in our logistic regression model, we find that the new, adjusted coefficient for `MCMH_RSLT_HIV` (HIV status) is appreciably different from our crude coefficient. This was assessed by determining that the adjusted natural log odds ratio (ln(OR)) was >10% different (specifically 32.48% different) from the crude for our exposure of interest.
+While the adjusted odds ratio appears little different from the crude, the adjusted ln(OR) was, in fact, >10% different (specifically 12.5% different) from the crude, meaning it is possible that confounding is at play with regards to the covariates included in this latter model.
 
-After controlling for `sex`, `age group`, `race/ethnicity`, `education`, and `monthly income`, we found that the estimated odds of having a history of at least one mental health condition among incarcerated individuals in 2004 with a `presumed negative` HIV status was 0.538 times the estimated odds of having a history of at least one mental health condition among incarcerated individuals in 2004 with a `positive` HIV status.
+After controlling for `sex`, `age group`, `race/ethnicity`, `education`, and `monthly income`, we found that with every one-unit increase in number of arrests, the estimated odds of having a history of at least one mental health condition among incarcerated individuals increased by a factor of 1.018 on average.
 
-We are 95% confident that the true odds ratio comparing odds of having a history of at least one mental health condition between incarcerated individuals with a `presumed negative` vs. `positive` HIV status in 2004 lies between 0.397 and 0.735, adjusting for `sex`, `age group`, `race/ethnicity`, `education`, and `monthly income`. Thus, at a 0.05 level of significance, we have sufficient evidence to support the claim that mental health history (yes vs. no history of at least one mental health condition) DOES differ by HIV status (presumed negative vs. positive), even after adjusting for our confounders. Because our confidence interval does not include the null odds ratio value of 1 and is, in fact, exclusively below this value, it appears that, on average, HIV-positive incarcerated individuals were more likely to have had a history of mental health condition(s), controlling for confounding. This means that while we had confounding at play, these were only partially confounding the true association of interest.  
+We are also 95% confident that the true odds ratio comparing odds of having a history of at least one mental health condition between incarcerated individuals with a one-unit difference in prior arrests HIV lies between 1.012 and 1.021, controlling for the above covariates. Thus, at a 0.05 level of significance, we have sufficient evidence to support the claim that mental health history (yes vs. no history of at least one mental health condition) DOES differ by number of prior arrests, adjusting for sex, age, race/ethnicity, education, and monthly income.     
      
+**Note: In all of the above regression analyses, observations with NA values for any of the variables included in our models were excluded. They are still, however, included in our exploratory data analyses for full transparency.**  
+     
+

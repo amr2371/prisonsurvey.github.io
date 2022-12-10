@@ -11,7 +11,7 @@
 
 
 
-<title>Health of Incarcerated Individuals in State &amp; Federal Correctional Facilities, 2003-2004</title>
+<title>Statistical Analyses</title>
 
 <script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -387,75 +387,30 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Health of Incarcerated Individuals in State
-&amp; Federal Correctional Facilities, 2003-2004</h1>
+<h1 class="title toc-ignore">Statistical Analyses</h1>
 
 </div>
 
 
-<div id="introduction" class="section level2">
-<h2>Introduction</h2>
-<p>The prevalence of mass incarceration in the United States has grown
-drastically, driving severe disparities in individual and community
-health that persist over time. Incarcerated individuals have a higher
-risk of HIV, as well as mental health and substance use disorders, with
-little access to quality treatment despite prisons being required to
-provide healthcare (Wildeman &amp; Wang, 2017). In 2003 and 2004, the
-United States Bureau of Justice Statistics conducted a nationally
-representative survey to collect a variety of information, including
-current and past incarceration history and health status, on those
-incarcerated in federal and state prisons. This analysis will provide an
-overview on the differences in health status among incarcerated
-populations in both federal and state prison systems, specifically
-related to variables for HIV and Mental Health.</p>
+<div id="what-are-the-best-predictors-of-mental-health-status"
+class="section level1">
+<h1>What are the best predictors of mental health status?</h1>
+<div id="model-selection" class="section level4">
+<h4>Model Selection</h4>
+<p>Let’s look at the following variables as potential predictors of an
+inmate’s mental health status:</p>
+<ul>
+<li>sentence length</li>
+<li>number of arrests</li>
+<li>age</li>
+<li>race</li>
+<li>sex</li>
+<li>physical/sexual abuse</li>
+<li>HIV status</li>
+</ul>
+<pre class="r"><code>#total_df %&gt;%
+#  select(num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV)</code></pre>
 </div>
-<div id="screencast" class="section level2">
-<h2>Screencast</h2>
-<p>Link Here</p>
-</div>
-<div id="website-overview" class="section level2">
-<h2>Website Overview</h2>
-<p>On the <a href="about.html">About Page</a>, you will find information
-related to:</p>
-<ul>
-<li>Link to the Data Source</li>
-<li>Software used to create the website and run the analyses</li>
-<li>R Packages used to create the website and run the analyses</li>
-<li>References</li>
-</ul>
-<p>In the <a href="EDA.html">Exploratory Analysis</a>, you will
-find:</p>
-<ul>
-<li>Demographics for survey respondents</li>
-<li>Overview of the two primary health variables, HIV and Mental
-Health</li>
-</ul>
-<p>On the <a href="stat_tests.html">Statistical Analysis</a> page, you
-can find:</p>
-<ul>
-<li>Hypothesis Testing</li>
-<li>Regression Analyses</li>
-<li>Model Selection</li>
-</ul>
-<p>On the <a href="Maps.html">Spatial Analysis</a> page, you can find
-maps related to:</p>
-<ul>
-<li>HIV Status, by state of residence upon arrest</li>
-<li>Mental Health History, by state of residence upon arrest</li>
-<li>Mental Health Treatment Prior to Arrest, by state of residence upon
-arrest</li>
-<li>Mental Health Treatment After Admission, by state of residence upon
-arrest</li>
-</ul>
-<p>Our <a href="project_report.html">full project report</a> includes a
-comprehensive review of all topics and analyses.</p>
-</div>
-<div id="collaborators" class="section level2">
-<h2>Collaborators</h2>
-<p>Mackenzie Frost (maf2311)</p>
-<p>Allison Randy-Cofie (amr2371)</p>
-<p>Shritama Ray (sr3861)</p>
-<p>Anna Zavodszky (amz2148)</p>
 </div>
 
 
