@@ -201,10 +201,6 @@ To display the distribution of demographic factors by mental health history stat
 #Demographics Table
 table1(~ V0005 + AGE_CAT + V2982 | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
 ```
-
-<br>
-
-From this table, we can see that certain variables appear to differ by mental health history, one of our primary outcomes of interest. Therefore, we have performed some hypothesis testing on the [Statistical Analysis](stat_tests.html) page to assess whether the observed differences are significant.  
   
 <br>
 
@@ -230,8 +226,6 @@ education_bar =
 ggplotly(education_bar)
 ```
 
-When displayed on a bar graph, the two groups of mental health history have similar distributions of educational attainment, but categories from 10th-12th grade appear to have higher proportions of individuals with no mental health history, whereas the college-level categories interestingly have a higher proportion of individuals *with* a history of mental health condition(s).
-
 <br>
 
 #### Income in Month Before Arrest by Mental Health History  
@@ -255,8 +249,6 @@ income_bar =
 ggplotly(income_bar)
 ```
   
-With regard to monthly income in the month before arrest, the two categories of mental health history do not have easily distinguishable patterns/distributions. However, in the lower income categories (up to the `$800 - $999` category), there are a higher proportion of individuals with a history of mental health condition(s) - the opposite is true for all categories including and above `$1,000 - $1,199`.  
-  
 <br> 
 
 ### Incarceration
@@ -267,16 +259,12 @@ A similar approach was taken for incarceration-related factors, with a tabular s
 
 #### Distribution of Incarceration-Related Variables by Mental Health History 
 
-We created to display the distribution of variables related to individuals' current incarceration and/or history within the justice system. These variables include number of prior sentences (`CH_PRIORSENTENCE_NUM`), number of prior arrests (`V1197`), collapsed criminal history (`CH_CRIMHIST_COLLAPSED`), whether their parents have been incarcerated (`SES_PARENTS_INCARCERATED`), whether their other immediate family has been incarcerated (`SES_FAMILY_INCARCERATED`), and whether they are incarcerated in a state or federal facility (`dataset`).
-
 ```{r incarceration, message=FALSE}
 #Incarceration table
 table1(~ CH_PRIORSENTENCE_NUM + V1197 + CH_CRIMHIST_COLLAPSED + SES_PARENTS_INCARCERATED + SES_FAMILY_INCARCERATED + dataset | MENTAL_HISTORY_BINARY, data = total_df, overall = "Total")
 ```
 
 <br>
-
-Again, some of these distributions appear to differ by mental health history status, so some hypothesis testing is performed on the Statistical Analysis page of the website to examine this further.  
   
 #### Type of Offense by Mental Health History
 
@@ -299,8 +287,6 @@ offense_bar =
 
 ggplotly(offense_bar)
 ```
-
-The above bar graph shows that the two most common types of offense for both categories of mental health history are drug trafficking and robbery, while arson and other property crimes are the least common for both categories.  
   
 <br>
 
@@ -319,8 +305,6 @@ arrests_density =
 ggplotly(arrests_density)
 
 ```
-
-The density plot above shows that the distributions of the number of prior arrests are extremely similar for both categories of mental health history. Most of the same peaks are observed in each distribution, suggesting there may be something significant about these seemingly arbitrary numbers of arrests. However, it does seem like a higher proportion of individuals with no mental health history have 0 to roughly 5 arrests compared to inmates with mental health condition(s).  
 
 <br>
 
@@ -350,8 +334,6 @@ stacked_bar =
 
 ggplotly(stacked_bar)
 ```
-
-Less than half of individuals surveyed have ever taken medication for a mental health condition, but among those who have, most have taken such medication since their admission/incarceration. 
 
 <br>
 
@@ -415,8 +397,6 @@ total_df %>%
   theme(legend.position = "none") +
   labs(x = "Treatment Continuation: (Treatment 1 Year Before Arrest/Since Admission)", y = "Proportion of Individuals") 
 ```
-
-The bar graph above restricts our analysis of treatment continuation to only those individuals with a history of mental health condition(s) as indicated by the `MENTAL_HISTORY_BINARY` variable. Among those survey respondents, it found that roughly two-thirds of individuals either had constant treatment status before and after incarceration (either no treatment -> no treatment or yes treatment -> yes treatment). Almost one-third of individuals began treatment while incarcerated and less than 10% had received treatment before incarceration but were no longer doing so.  
   
 <br>
 
@@ -434,7 +414,7 @@ table1(~ MCMH_RSLT_HIV | MENTAL_HISTORY_BINARY, data = total_df, overall = "Tota
   
 <br>   
 
-Finally, the table above illustrates HIV status (`MCMH_RSLT_HIV`) for those with and without a history of mental health condition(s). We utilize the value label `presumed negative` as opposed to `negative` because the variable used for analysis codes HIV status as either "at least one positive test" or "at least one negative and the other unknown" based on HIV testing status from both before and after incarceration. The tabular analysis demonstrates an HIV prevalence of roughly 1.3% for our total cross-sectional sample of incarcerated individuals, which appears to differ somewhat between those with and without a history of mental health condition(s) (1.7% and 1.1%, respectively).
+We utilize the value label `presumed negative` as opposed to `negative` because the variable used for analysis codes HIV status as either "at least one positive test" or "at least one negative and the other unknown" based on HIV testing status from both before and after incarceration. The tabular analysis demonstrates an HIV prevalence of roughly 1.3% for our total cross-sectional sample of incarcerated individuals, which appears to differ somewhat between those with and without a history of mental health condition(s) (1.7% and 1.1%, respectively).
   
   
 Below is a visualization of this distribution:
@@ -486,15 +466,11 @@ The graduated color scale represents values corresponding to the number of respo
 
 #### HIV Status
 
-Based on state of residence upon arrest, it appears that a high proportion of respondents with at least one positive HIV test were form California, Texas, Florida, and states in the Northeast. 
-
 ![](mapping/HIV.png)
 
 <br> 
 
 #### Mental Health History
-
-A large number of respondents who reported to have had a history with at least one mental health condition come from California and Texas.
 
 ![](mapping/MH_status.png)
 
@@ -502,15 +478,11 @@ A large number of respondents who reported to have had a history with at least o
 
 #### Mental Health Treatment Prior to Arrest
 
-Again, California and Texas lead the way with a large number of respondents having received some form of mental health treatment prior to arrest. 
-
 ![](mapping/MH_tx_prior.png)
 
 <br> 
 
 #### Mental Health Treatment After Admission
-
-Interestingly, though the highest proportion of respondents who received some form of mental health treatment after admission come from California and Texas, there is an increase, compared to before arrest, for states in the Eastern Region. 
 
 ![](mapping/MH_tx_after.png)
 
@@ -529,36 +501,6 @@ Our first question of interest was whether mental health and HIV status are asso
 To conduct this association, we first ran a crude regression model of only the exposure and outcome of interest. We then explained the confounders we would be including in our adjusted regression model (primarily demographic variables). While other covariates such as incarceration-related variables may also be covariates, due to the cross-sectional nature of our dataset, we cannot be sure those variables preceded our exposure and outcome of interest and are therefore not included as confounders in this epidemiological analysis. To briefly demonstrate the validity of including our chosen demographic potential-confounders, we present several chi-squared tests that prove there is an association between these variables and the outcome. Extensive chi-squared testing is not shown to avoid repetition and due to the small subgroup sizes that would result from 2xK tables of these associations. However, our prior knowledge of the topic and logical reasoning tells us that it is possible for all of our chosen  covariates to be associated with both the exposure and outcome of interest.
 
 <br>
-  
-#### Z-Test
-  
-To assess whether mental health (outcome of interest) is associated with HIV status (exposure of interest), we performed a 2-proportion z-test with the following hypotheses:  
-
-* H0 - Null: The proportion of HIV positive inmates with mental health history IS EQUAL to the proportion of HIV negative inmates with mental health history.
-
-* H1 - Alternate: The proportion of HIV positive inmates with mental health history IS NOT EQUAL to the proportion of HIV negative inmates with mental health history.
-
-```{r z test, message=FALSE}
-proportions = 
-  total_df %>%
-  rename(HIV = MCMH_RSLT_HIV, MENTAL_HEALTH = MCMH_MENTAL_HISTORY)%>%
-  group_by(HIV, MENTAL_HEALTH)%>%
-  summarise(count = n()) %>%
-  mutate(percent = (count / sum(count))) %>%
-  knitr::kable()
-
-result = prop.test(x = c(84, 3976), n = c(84+144, 3976+10276))
-result
-```  
-The estimated proportions are `r result$estimate`
-
-and the p-value is **`r result$p.value`.**
-
-At a significance level of 0.05, we REJECT the null hypothesis and conclude that the proportions of HIV positive vs. HIV negative inmates with mental health history are NOT EQUAL.
-
-<br>
-
-We further studied this relationship by conducting logistic regression modeling (due to the binary nature of the outcome variable). First, we created a crude model of this association with no additional covariates.
 
 * Null hypothesis: Mental health history (yes vs. no history of at least one mental health condition) does not differ by HIV status (presumed negative vs. positive).
 
@@ -593,7 +535,25 @@ The estimated odds of having a history of at least one mental health condition a
 
 We are 95% confident that the true odds ratio comparing odds of having a history of at least one mental health condition between incarcerated individuals with a `presumed negative` vs. `positive` HIV status in 2004 lies between 0.469 and 0.840. Thus, at a 0.05 level of significance, we have sufficient evidence to support the claim that mental health history (yes vs. no history of at least one mental health condition) DOES differ by HIV status (presumed negative vs. positive). Because our confidence interval does not include the null odds ratio value of 1 and is, in fact, exclusively below this value, it appears that, on average, HIV-positive incarcerated individuals were more likely to have had a history of mental health condition(s).   
 
-Our association of interest may be affected by several confounders: variables which are associated with both the exposure (HIV status) and outcome (mental health history) of interest and are not on the causal pathway between the two. Demographic variables often play such confounding roles. Therefore, we decided to develop an adjusted logistic regression model to explain our association that takes into account covariates of `sex`, `age group`, `race/ethnicity`, `education`, and `monthly income`. Using our background knowledge of the topic and resulting a priori hypotheses, these variables may all logically be confounders of the relationship of interest.  
+<br>
+
+#### Statistical Tests for Confounders
+
+```{r confounders, message=FALSE}
+
+sex_MH = matrix(c(10898, 3157, 2099, 1727), byrow = TRUE, 2, 2)
+chisq.test(sex_MH)
+
+age_MH = matrix(c(2027, 741, 4409, 1552, 3930, 1623, 1891, 756, 597, 182, 143, 30), byrow = TRUE, 6, 2)
+chisq.test(age_MH)
+
+race_MH = matrix(c(3832, 2456, 5691, 1403, 2727, 647, 243, 97, 162, 34, 321, 240), byrow = TRUE, 6, 2)
+chisq.test(race_MH)
+```
+
+<br>
+
+As the above chi-squared tests demonstrate, the covariates being considered (here, sex, age, and race/ethnicity are shown) are significantly associated with the outcome of interest. Therefore, we will move on to conduct our adjusted regression modeling.
 
 <br>
 
@@ -640,8 +600,6 @@ We are 95% confident that the true odds ratio comparing odds of having a history
 Our next question of interest was whether mental health history (as a binary outcome) and number of prior arrests (as a continuous exposure) are associated, so we fit two logistic regression models to examine this relationship. This was done in the same manner and using the same covariates as the modeling for the association between mental health and HIV status.
 
 For both of the regression analyses conducted (HIV status as well as arrest history), we found there to be an association at the 0.05 level of significance between our primary exposure and outcome variables. This was observed both before and after confounding (with an appreciable difference found between the crude and adjusted models in each case). This indicates that each of the primary associations in question were subject to partial confounding. 
-
-To assess whether mental health (outcome of interest) is associated with prior arrest history (exposure of interest), we conducted logistic regression modeling (due to the binary nature of the outcome variable). First, we created a crude model of this association with no additional covariates.
 
 * H0 - Null hypothesis: Mental health status does not differ by number of prior arrests.
 
@@ -724,44 +682,57 @@ We are also 95% confident that the true odds ratio comparing odds of having a hi
 Finally, we wanted to understand which variables are most strongly associated with mental health history and can be seen as appropriate predictors for this outcome variable in incarcerated individuals.
 
 We started by identifying a list of potential predictors: 
-* sentence length 
-* number of arrests
+
 * age
-* race
 * sex
-* physical/sexual abuse
-* HIV status
+* race
+* number of prior arrests
+* sentence length
+* physical/sexual abuse history
+* HIV status. 
 
 Limiting the mental health history to a dichotomous outcome (one or more previous mental health diagnoses vs. no previous diagnoses), we fit a logistic regression model with all the potential predictors. This full model fit showed that almost all the identified variables are significant. The most significant predictor was abuse history, with those with both physical & sexual abuse having a 5.5 times greater odds of mental health history than those with no abuse. 
-
+  
 ```{r model_selection, message = FALSE}
-
 model_data = 
   total_df %>%
-select(mental_health = MCMH_MENTAL_HISTORY, num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV) 
+select(mental_health = MCMH_MENTAL_HISTORY, Num_Arrests = V1197, Sentence_Length = CS_SENTENCEMTH, Age = V0014, Race = V2982, Sex = V0005, Abuse_History = SES_PHYSSEXABUSED_EVER, HIV = MCMH_RSLT_HIV) %>%
+  mutate(mental_health = recode(mental_health, "(0000001) Yes" = "Yes", "(0000002) No" = "No"),
+         Abuse_History = recode(Abuse_History, "(0000004) Not abused" = "Not Abused", "(0000003) Both physically and sexually abused" = "Physical & Sexual abuse", "(0000002) Sexually only" = "Sexual only", "(9999999) Missing" = "Missing",  "(0000001) Physically only" = "Physical only"))%>%
+  filter(mental_health %in% c("Yes", "No"))
 
 full_model =
-  glm(mental_health ~ num_arrests + sentence_length + age + race + sex + abuse + hiv, data = model_data, family = "binomial")
+  glm(relevel(mental_health, ref = "No") ~ Num_Arrests + Sentence_Length + Age + Race + Sex + relevel(Abuse_History, ref = "Not Abused") + relevel(HIV, "Presumed Negative"), data = model_data, family = "binomial")
 
 full_model %>%
-  clean_glm(prep_kable = TRUE) %>% 
-  knitr::kable()
+  clean_glm() %>%
+  knitr::kable(prep_kable = TRUE)
 ```  
 
 <br>
 
 The AIC (Akaike information criterion)  for this full model was very high, at 14410. This suggests that while most of the terms are significant, this model is very complex and redundant. There is likely a simpler and more parsimonious model that can be fit to this data.
 
+```{r backwards, message = FALSE}
+backwards = step(full_model, trace = 0)
+backwards %>%
+  clean_glm(prep_kable = TRUE) %>% 
+  knitr::kable()
+```
+
+<br>
+
 Since most of the terms are already significant at the 0.05 level, a stepwise selection procedure did not yield any improved results. Instead, we took a manual approach to eliminate the least significant terms and factor levels.
+
+<br>
 
 ```{r manual, message = FALSE}
 manual_df =
-total_df %>%
-  select(mental_health = MCMH_MENTAL_HISTORY, num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV) %>%
-  filter(abuse %in% c("(0000004) Not abused", "(0000003) Both physically and sexually abused"), race != "Multiple Races reported, non-Hispanic")
+model_data %>%
+  filter(Abuse_History %in% c("Not Abused", "Physical & Sexual abuse"), Race != "Multiple Races reported, non-Hispanic")
 
 manual_model = 
-  glm(mental_health ~ num_arrests + age + race + sex + abuse + hiv, data = manual_df, family = "binomial")
+  glm(relevel(mental_health, ref = "No") ~ Num_Arrests + Age + Race + Sex + relevel(Abuse_History, ref = "Not Abused") + relevel(HIV, "Presumed Negative"), data = manual_df, family = "binomial")
 
 manual_model %>%
   clean_glm(prep_kable = TRUE) %>% 
@@ -770,19 +741,13 @@ manual_model %>%
 
 <br>
 
-When we removed sentence length, as well as the non-significant levels of abuse and race, we created a much better fit.
-
-<br>
-
-We did one more iteration to remove age and Race: American Indian, Alaska Native non-Hispanic :  
-
 ```{r manual 2, message = FALSE}
 manual2 = 
   manual_df %>%
-  filter(race != "American Indian, Alaska Native non-Hispanic")
+  filter(Race != "American Indian, Alaska Native non-Hispanic")
 
 manual_model2 = 
-  glm(mental_health ~ num_arrests + race + sex + abuse + hiv, data = manual2, family = "binomial")
+  glm(relevel(mental_health, ref = "No") ~ Num_Arrests + Race + Sex + relevel(Abuse_History, ref = "Not Abused") + relevel(HIV, "Presumed Negative"), data = manual2, family = "binomial")
 
 manual_model2 %>%
   clean_glm(prep_kable = TRUE) %>% 
@@ -791,7 +756,7 @@ manual_model2 %>%
 
 <br>
 
-After a couple rounds of elimination we fit a model with terms all significant at the 0.001 level. This final model had an AIC of 10620, a large improvement from the full model. We found that the most significant predictors of an inmate's mental health status are **Number of arrests, Race, Sex, HIV status, and Abuse History.**
+After a couple rounds of elimination we fit a model with terms all significant at the 0.001 level. This final model had an AIC of 10620, a large improvement from the full model. From this model, we determined the strongest predictors of an inmate’s mental health history to be sex, race, number of arrests, race, physical & sexual abuse, and HIV status.
 
 <br>
 

@@ -143,17 +143,17 @@ Let's look at the following variables as potential predictors of an inmate's men
 ```{r model_selection, message = FALSE}
 model_data = 
   total_df %>%
-select(mental_health = MCMH_MENTAL_HISTORY, num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV) %>%
+select(mental_health = MCMH_MENTAL_HISTORY, Num_Arrests = V1197, Sentence_Length = CS_SENTENCEMTH, Age = V0014, Race = V2982, Sex = V0005, Abuse_History = SES_PHYSSEXABUSED_EVER, HIV = MCMH_RSLT_HIV) %>%
   mutate(mental_health = recode(mental_health, "(0000001) Yes" = "Yes", "(0000002) No" = "No"),
-         abuse = recode(abuse, "(0000004) Not abused" = "Not Abused", "(0000003) Both physically and sexually abused" = "Physical & Sexual abuse", "(0000002) Sexually only" = "Sexual only", "(9999999) Missing" = "Missing",  "(0000001) Physically only" = "Physical only"))%>%
+         Abuse_History = recode(Abuse_History, "(0000004) Not abused" = "Not Abused", "(0000003) Both physically and sexually abused" = "Physical & Sexual abuse", "(0000002) Sexually only" = "Sexual only", "(9999999) Missing" = "Missing",  "(0000001) Physically only" = "Physical only"))%>%
   filter(mental_health %in% c("Yes", "No"))
 
 full_model =
-  glm(relevel(mental_health, ref = "No") ~ num_arrests + sentence_length + age + race + sex + relevel(abuse, ref = "Not Abused") + relevel(hiv, "Presumed Negative"), data = model_data, family = "binomial")
+  glm(relevel(mental_health, ref = "No") ~ Num_Arrests + Sentence_Length + Age + Race + Sex + relevel(Abuse_History, ref = "Not Abused") + relevel(HIV, "Presumed Negative"), data = model_data, family = "binomial")
 
 full_model %>%
-  clean_glm(prep_kable = TRUE) %>% 
-  knitr::kable()
+  clean_glm() %>%
+  knitr::kable(prep_kable = TRUE)
 ```  
 
 <br>
@@ -182,10 +182,10 @@ Let's manually select the most significant variables and clean up the data to re
 ```{r manual, message = FALSE}
 manual_df =
 model_data %>%
-  filter(abuse %in% c("Not Abused", "Physical & Sexual abuse"), race != "Multiple Races reported, non-Hispanic")
+  filter(Abuse_History %in% c("Not Abused", "Physical & Sexual abuse"), Race != "Multiple Races reported, non-Hispanic")
 
 manual_model = 
-  glm(relevel(mental_health, ref = "No") ~ num_arrests + age + race + sex + relevel(abuse, ref = "Not Abused") + relevel(hiv, "Presumed Negative"), data = manual_df, family = "binomial")
+  glm(relevel(mental_health, ref = "No") ~ Num_Arrests + Age + Race + Sex + relevel(Abuse_History, ref = "Not Abused") + relevel(HIV, "Presumed Negative"), data = manual_df, family = "binomial")
 
 manual_model %>%
   clean_glm(prep_kable = TRUE) %>% 
@@ -203,10 +203,10 @@ Let's do one more iteration to remove age and Race: American Indian, Alaska Nati
 ```{r manual 2, message = FALSE}
 manual2 = 
   manual_df %>%
-  filter(race != "American Indian, Alaska Native non-Hispanic")
+  filter(Race != "American Indian, Alaska Native non-Hispanic")
 
 manual_model2 = 
-  glm(relevel(mental_health, ref = "No") ~ num_arrests + race + sex + relevel(abuse, ref = "Not Abused") + relevel(hiv, "Presumed Negative"), data = manual2, family = "binomial")
+  glm(relevel(mental_health, ref = "No") ~ Num_Arrests + Race + Sex + relevel(Abuse_History, ref = "Not Abused") + relevel(HIV, "Presumed Negative"), data = manual2, family = "binomial")
 
 manual_model2 %>%
   clean_glm(prep_kable = TRUE) %>% 
