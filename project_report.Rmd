@@ -41,7 +41,7 @@ theme_set(theme_minimal() + theme(legend.position = "bottom"))
 
 # Motivation 
 
-Some of our group members are interested in HIV and mental health, so we chose to center our project on these outcomes. Additionally, we felt that focusing on incarcerated individuals would present an interesting lens through which to study these diseases due to this population’s elevated risk for HIV and mental health conditions and their often overlooked, disenfranchised status. Through this project, we aim to examine the prevalence of HIV and mental health conditions in the U.S. incarcerated population. Furthermore, we plan to examine the association between these conditions and assess how/whether one’s mental health history can be predicted using the variables from our dataset on incarcerated individuals.
+Our group members are interested in studying HIV and mental health, so we chose to center our project on these outcomes. Additionally, we felt that focusing on incarcerated individuals would present an interesting lens through which to study these diseases due to this population’s elevated risk for HIV and mental health conditions and their often overlooked, disenfranchised status. Through this project, we aim to examine the prevalence of HIV and mental health conditions in the U.S. incarcerated population. Furthermore, we plan to examine the association between these conditions and assess how/whether one’s mental health history can be predicted using the variables from our dataset on incarcerated individuals.
 
 # Related work
 
@@ -719,24 +719,11 @@ We are also 95% confident that the true odds ratio comparing odds of having a hi
 
 ### 3. Model Selection
 
+#### What are the best predictors of mental health status?
+
 Finally, we wanted to understand which variables are most strongly associated with mental health history and can be seen as appropriate predictors for this outcome variable in incarcerated individuals.
 
-We started by identifying a list of potential predictors: age, sex, race, number of prior arrests, sentence length, physical/sexual abuse history, and HIV status. 
-
-Limiting the mental health history to a dichotomous outcome (one or more previous mental health diagnoses vs. no previous diagnoses), we fit a logistic regression model with all the potential predictors. This full model fit showed that almost all the identified variables are significant. The most significant predictor was abuse history, with those with both physical & sexual abuse having a 5.5 times greater odds of mental health history than those with no abuse. 
-
-The AIC (Akaike information criterion)  for this full model was very high, at 14410. This suggests that while most of the terms are significant, this model is very complex and redundant. There is likely a simpler and more parsimonious model that can be fit to this data.
-
-Since most of the terms are already significant at the 0.05 level, a stepwise selection procedure did not yield any improved results. Instead, we took a manual approach to eliminate the least significant terms and factor levels.
-
-After a couple rounds of elimination we fit a model with terms all significant at the 0.001 level. This final model had an AIC of 10620, a large improvement from the full model. From this model, we determined the strongest predictors of an inmate’s mental health history to be sex, race, number of arrests, race, physical & sexual abuse, and HIV status.
-
-<br>    
-    
-#### What are the best predictors of mental health status?
-  
-Let's look at the following variables as potential predictors of an inmate's mental health status:
-  
+We started by identifying a list of potential predictors: 
 * sentence length 
 * number of arrests
 * age
@@ -744,7 +731,9 @@ Let's look at the following variables as potential predictors of an inmate's men
 * sex
 * physical/sexual abuse
 * HIV status
-  
+
+Limiting the mental health history to a dichotomous outcome (one or more previous mental health diagnoses vs. no previous diagnoses), we fit a logistic regression model with all the potential predictors. This full model fit showed that almost all the identified variables are significant. The most significant predictor was abuse history, with those with both physical & sexual abuse having a 5.5 times greater odds of mental health history than those with no abuse. 
+
 ```{r model_selection, message = FALSE}
 
 model_data = 
@@ -761,26 +750,9 @@ full_model %>%
 
 <br>
 
-Fitting a full model, we can see that ALL of these variables are significant at the 0.05 level, but our AIC is quite high. 
+The AIC (Akaike information criterion)  for this full model was very high, at 14410. This suggests that while most of the terms are significant, this model is very complex and redundant. There is likely a simpler and more parsimonious model that can be fit to this data.
 
-<br>
-
-Let's try finding a sub-model using backwards selection:  
-
-```{r backwards, message = FALSE}
-backwards = step(full_model, trace = 0)
-backwards %>%
-  clean_glm(prep_kable = TRUE) %>% 
-  knitr::kable()
-```
-
-<br>
-
-Since all variables are considered significant, the backwards selection model is no different from the full model.
-
-<br>
-
-Let's manually select the most significant variables and clean up the data to remove missing values and less significant factors.
+Since most of the terms are already significant at the 0.05 level, a stepwise selection procedure did not yield any improved results. Instead, we took a manual approach to eliminate the least significant terms and factor levels.
 
 ```{r manual, message = FALSE}
 manual_df =
@@ -798,11 +770,11 @@ manual_model %>%
 
 <br>
 
-When we removed sentence length, as well as the non-significant levels of abuse and race, we have a much better fit.
+When we removed sentence length, as well as the non-significant levels of abuse and race, we created a much better fit.
 
 <br>
 
-Let's do one more iteration to remove age and Race: American Indian, Alaska Native non-Hispanic :  
+We did one more iteration to remove age and Race: American Indian, Alaska Native non-Hispanic :  
 
 ```{r manual 2, message = FALSE}
 manual2 = 
@@ -819,8 +791,7 @@ manual_model2 %>%
 
 <br>
 
-The terms in our final model are all significant at the 0.001 level.
-We find that the most significant predictors of an inmate's mental health status are **# of arrests, race, sex, HIV status, and abuse.**
+After a couple rounds of elimination we fit a model with terms all significant at the 0.001 level. This final model had an AIC of 10620, a large improvement from the full model. We found that the most significant predictors of an inmate's mental health status are **Number of arrests, Race, Sex, HIV status, and Abuse History.**
 
 <br>
 

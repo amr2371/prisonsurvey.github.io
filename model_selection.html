@@ -409,10 +409,13 @@ inmate’s mental health status:</p>
 </ul>
 <pre class="r"><code>model_data = 
   total_df %&gt;%
-select(mental_health = MCMH_MENTAL_HISTORY, num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV) 
+select(mental_health = MCMH_MENTAL_HISTORY, num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV) %&gt;%
+  mutate(mental_health = recode(mental_health, &quot;(0000001) Yes&quot; = &quot;Yes&quot;, &quot;(0000002) No&quot; = &quot;No&quot;),
+         abuse = recode(abuse, &quot;(0000004) Not abused&quot; = &quot;Not Abused&quot;, &quot;(0000003) Both physically and sexually abused&quot; = &quot;Physical &amp; Sexual abuse&quot;, &quot;(0000002) Sexually only&quot; = &quot;Sexual only&quot;, &quot;(9999999) Missing&quot; = &quot;Missing&quot;,  &quot;(0000001) Physically only&quot; = &quot;Physical only&quot;))%&gt;%
+  filter(mental_health %in% c(&quot;Yes&quot;, &quot;No&quot;))
 
 full_model =
-  glm(mental_health ~ num_arrests + sentence_length + age + race + sex + abuse + hiv, data = model_data, family = &quot;binomial&quot;)
+  glm(relevel(mental_health, ref = &quot;No&quot;) ~ num_arrests + sentence_length + age + race + sex + relevel(abuse, ref = &quot;Not Abused&quot;) + relevel(hiv, &quot;Presumed Negative&quot;), data = model_data, family = &quot;binomial&quot;)
 
 full_model %&gt;%
   clean_glm(prep_kable = TRUE) %&gt;% 
@@ -440,7 +443,7 @@ P
 Intercept
 </td>
 <td style="text-align:left;">
--0.70 (0.19)
+-0.88 (0.09)
 </td>
 <td style="text-align:left;">
 <ul>
@@ -454,10 +457,10 @@ Intercept
 num_arrests
 </td>
 <td style="text-align:left;">
--0.01 (0.00)
+0.01 (0.00)
 </td>
 <td style="text-align:left;">
-0.99 (0.98, 0.99)
+1.01 (1.01, 1.02)
 </td>
 <td style="text-align:left;">
 &lt;0.001
@@ -468,7 +471,7 @@ num_arrests
 sentence_length
 </td>
 <td style="text-align:left;">
--0.00 (0.00)
+0.00 (0.00)
 </td>
 <td style="text-align:left;">
 1.00 (1.00, 1.00)
@@ -482,10 +485,10 @@ sentence_length
 age
 </td>
 <td style="text-align:left;">
-0.01 (0.00)
+-0.01 (0.00)
 </td>
 <td style="text-align:left;">
-1.01 (1.00, 1.01)
+0.99 (0.99, 1.00)
 </td>
 <td style="text-align:left;">
 0.003
@@ -521,10 +524,10 @@ race
   Black non-Hispanic
 </td>
 <td style="text-align:left;">
-0.78 (0.05)
+-0.78 (0.05)
 </td>
 <td style="text-align:left;">
-2.19 (1.99, 2.40)
+0.46 (0.42, 0.50)
 </td>
 <td style="text-align:left;">
 &lt;0.001
@@ -535,10 +538,10 @@ race
   Hispanic
 </td>
 <td style="text-align:left;">
-0.85 (0.06)
+-0.85 (0.06)
 </td>
 <td style="text-align:left;">
-2.33 (2.06, 2.63)
+0.43 (0.38, 0.48)
 </td>
 <td style="text-align:left;">
 &lt;0.001
@@ -549,10 +552,10 @@ race
   American Indian, Alaska Native non-Hispanic
 </td>
 <td style="text-align:left;">
-0.49 (0.16)
+-0.49 (0.16)
 </td>
 <td style="text-align:left;">
-1.64 (1.21, 2.24)
+0.61 (0.45, 0.83)
 </td>
 <td style="text-align:left;">
 0.002
@@ -563,10 +566,10 @@ race
   Asian, Pacific Islander, Native Hawaiian non-Hispanic
 </td>
 <td style="text-align:left;">
-0.90 (0.24)
+-0.90 (0.24)
 </td>
 <td style="text-align:left;">
-2.47 (1.56, 4.06)
+0.41 (0.25, 0.64)
 </td>
 <td style="text-align:left;">
 &lt;0.001
@@ -577,10 +580,10 @@ race
   Multiple Races reported, non-Hispanic
 </td>
 <td style="text-align:left;">
--0.01 (0.11)
+0.01 (0.11)
 </td>
 <td style="text-align:left;">
-0.99 (0.80, 1.23)
+1.01 (0.81, 1.24)
 </td>
 <td style="text-align:left;">
 0.95
@@ -616,63 +619,10 @@ sex
   Female
 </td>
 <td style="text-align:left;">
--0.44 (0.05)
+0.44 (0.05)
 </td>
 <td style="text-align:left;">
-0.65 (0.59, 0.72)
-</td>
-<td style="text-align:left;">
-&lt;0.001
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-abuse
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-  (0000001) Physically only
-</td>
-<td style="text-align:left;">
-<ul>
-<li></td>
-<td style="text-align:left;">
-<ul>
-<li></td>
-<td style="text-align:left;">
-<ul>
-<li></td>
-</tr>
-<tr>
-<td style="text-align:left;">
-  (0000002) Sexually only
-</td>
-<td style="text-align:left;">
--0.18 (0.10)
-</td>
-<td style="text-align:left;">
-0.84 (0.70, 1.01)
-</td>
-<td style="text-align:left;">
-0.06
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-  (0000003) Both physically and sexually abused
-</td>
-<td style="text-align:left;">
--0.71 (0.08)
-</td>
-<td style="text-align:left;">
-0.49 (0.42, 0.58)
+1.55 (1.40, 1.71)
 </td>
 <td style="text-align:left;">
 &lt;0.001
@@ -680,7 +630,32 @@ abuse
 </tr>
 <tr>
 <td style="text-align:left;">
-  (0000004) Not abused
+relevel(abuse, ref = "Not Abused")
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+  Not Abused
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+  Physical only
 </td>
 <td style="text-align:left;">
 1.00 (0.06)
@@ -694,46 +669,74 @@ abuse
 </tr>
 <tr>
 <td style="text-align:left;">
-  (9999999) Missing
+  Sexual only
 </td>
 <td style="text-align:left;">
-0.20 (0.31)
+1.18 (0.09)
 </td>
 <td style="text-align:left;">
-1.22 (0.68, 2.26)
+3.25 (2.75, 3.85)
 </td>
 <td style="text-align:left;">
-0.52
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-hiv
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
+&lt;0.001
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-  Positive
+  Physical &amp; Sexual abuse
 </td>
 <td style="text-align:left;">
-<ul>
-<li></td>
+1.71 (0.07)
+</td>
 <td style="text-align:left;">
-<ul>
-<li></td>
+5.55 (4.81, 6.42)
+</td>
 <td style="text-align:left;">
-<ul>
-<li></td>
+&lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+  Missing
+</td>
+<td style="text-align:left;">
+0.81 (0.30)
+</td>
+<td style="text-align:left;">
+2.24 (1.22, 4.01)
+</td>
+<td style="text-align:left;">
+0.008
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+relevel(hiv, "Presumed Negative")
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
   Presumed Negative
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+  Positive
 </td>
 <td style="text-align:left;">
 0.58 (0.16)
@@ -792,7 +795,7 @@ P
 Intercept
 </td>
 <td style="text-align:left;">
--0.70 (0.19)
+-0.88 (0.09)
 </td>
 <td style="text-align:left;">
 <ul>
@@ -806,10 +809,10 @@ Intercept
 num_arrests
 </td>
 <td style="text-align:left;">
--0.01 (0.00)
+0.01 (0.00)
 </td>
 <td style="text-align:left;">
-0.99 (0.98, 0.99)
+1.01 (1.01, 1.02)
 </td>
 <td style="text-align:left;">
 &lt;0.001
@@ -820,7 +823,7 @@ num_arrests
 sentence_length
 </td>
 <td style="text-align:left;">
--0.00 (0.00)
+0.00 (0.00)
 </td>
 <td style="text-align:left;">
 1.00 (1.00, 1.00)
@@ -834,10 +837,10 @@ sentence_length
 age
 </td>
 <td style="text-align:left;">
-0.01 (0.00)
+-0.01 (0.00)
 </td>
 <td style="text-align:left;">
-1.01 (1.00, 1.01)
+0.99 (0.99, 1.00)
 </td>
 <td style="text-align:left;">
 0.003
@@ -873,10 +876,10 @@ race
   Black non-Hispanic
 </td>
 <td style="text-align:left;">
-0.78 (0.05)
+-0.78 (0.05)
 </td>
 <td style="text-align:left;">
-2.19 (1.99, 2.40)
+0.46 (0.42, 0.50)
 </td>
 <td style="text-align:left;">
 &lt;0.001
@@ -887,10 +890,10 @@ race
   Hispanic
 </td>
 <td style="text-align:left;">
-0.85 (0.06)
+-0.85 (0.06)
 </td>
 <td style="text-align:left;">
-2.33 (2.06, 2.63)
+0.43 (0.38, 0.48)
 </td>
 <td style="text-align:left;">
 &lt;0.001
@@ -901,10 +904,10 @@ race
   American Indian, Alaska Native non-Hispanic
 </td>
 <td style="text-align:left;">
-0.49 (0.16)
+-0.49 (0.16)
 </td>
 <td style="text-align:left;">
-1.64 (1.21, 2.24)
+0.61 (0.45, 0.83)
 </td>
 <td style="text-align:left;">
 0.002
@@ -915,10 +918,10 @@ race
   Asian, Pacific Islander, Native Hawaiian non-Hispanic
 </td>
 <td style="text-align:left;">
-0.90 (0.24)
+-0.90 (0.24)
 </td>
 <td style="text-align:left;">
-2.47 (1.56, 4.06)
+0.41 (0.25, 0.64)
 </td>
 <td style="text-align:left;">
 &lt;0.001
@@ -929,10 +932,10 @@ race
   Multiple Races reported, non-Hispanic
 </td>
 <td style="text-align:left;">
--0.01 (0.11)
+0.01 (0.11)
 </td>
 <td style="text-align:left;">
-0.99 (0.80, 1.23)
+1.01 (0.81, 1.24)
 </td>
 <td style="text-align:left;">
 0.95
@@ -968,63 +971,10 @@ sex
   Female
 </td>
 <td style="text-align:left;">
--0.44 (0.05)
+0.44 (0.05)
 </td>
 <td style="text-align:left;">
-0.65 (0.59, 0.72)
-</td>
-<td style="text-align:left;">
-&lt;0.001
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-abuse
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-  (0000001) Physically only
-</td>
-<td style="text-align:left;">
-<ul>
-<li></td>
-<td style="text-align:left;">
-<ul>
-<li></td>
-<td style="text-align:left;">
-<ul>
-<li></td>
-</tr>
-<tr>
-<td style="text-align:left;">
-  (0000002) Sexually only
-</td>
-<td style="text-align:left;">
--0.18 (0.10)
-</td>
-<td style="text-align:left;">
-0.84 (0.70, 1.01)
-</td>
-<td style="text-align:left;">
-0.06
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-  (0000003) Both physically and sexually abused
-</td>
-<td style="text-align:left;">
--0.71 (0.08)
-</td>
-<td style="text-align:left;">
-0.49 (0.42, 0.58)
+1.55 (1.40, 1.71)
 </td>
 <td style="text-align:left;">
 &lt;0.001
@@ -1032,7 +982,32 @@ abuse
 </tr>
 <tr>
 <td style="text-align:left;">
-  (0000004) Not abused
+relevel(abuse, ref = "Not Abused")
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+  Not Abused
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+  Physical only
 </td>
 <td style="text-align:left;">
 1.00 (0.06)
@@ -1046,46 +1021,74 @@ abuse
 </tr>
 <tr>
 <td style="text-align:left;">
-  (9999999) Missing
+  Sexual only
 </td>
 <td style="text-align:left;">
-0.20 (0.31)
+1.18 (0.09)
 </td>
 <td style="text-align:left;">
-1.22 (0.68, 2.26)
+3.25 (2.75, 3.85)
 </td>
 <td style="text-align:left;">
-0.52
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-hiv
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
-</td>
-<td style="text-align:left;">
+&lt;0.001
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-  Positive
+  Physical &amp; Sexual abuse
 </td>
 <td style="text-align:left;">
-<ul>
-<li></td>
+1.71 (0.07)
+</td>
 <td style="text-align:left;">
-<ul>
-<li></td>
+5.55 (4.81, 6.42)
+</td>
 <td style="text-align:left;">
-<ul>
-<li></td>
+&lt;0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+  Missing
+</td>
+<td style="text-align:left;">
+0.81 (0.30)
+</td>
+<td style="text-align:left;">
+2.24 (1.22, 4.01)
+</td>
+<td style="text-align:left;">
+0.008
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+relevel(hiv, "Presumed Negative")
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
+<td style="text-align:left;">
+</td>
 </tr>
 <tr>
 <td style="text-align:left;">
   Presumed Negative
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+  Positive
 </td>
 <td style="text-align:left;">
 0.58 (0.16)
@@ -1119,12 +1122,11 @@ selection model is no different from the full model.</p>
 <p>Let’s manually select the most significant variables and clean up the
 data to remove missing values and less significant factors.</p>
 <pre class="r"><code>manual_df =
-total_df %&gt;%
-  select(mental_health = MCMH_MENTAL_HISTORY, num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV) %&gt;%
-  filter(abuse %in% c(&quot;(0000004) Not abused&quot;, &quot;(0000003) Both physically and sexually abused&quot;), race != &quot;Multiple Races reported, non-Hispanic&quot;)
+model_data %&gt;%
+  filter(abuse %in% c(&quot;Not Abused&quot;, &quot;Physical &amp; Sexual abuse&quot;), race != &quot;Multiple Races reported, non-Hispanic&quot;)
 
 manual_model = 
-  glm(mental_health ~ num_arrests + age + race + sex + abuse + hiv, data = manual_df, family = &quot;binomial&quot;)
+  glm(relevel(mental_health, ref = &quot;No&quot;) ~ num_arrests + age + race + sex + relevel(abuse, ref = &quot;Not Abused&quot;) + relevel(hiv, &quot;Presumed Negative&quot;), data = manual_df, family = &quot;binomial&quot;)
 
 manual_model %&gt;%
   clean_glm(prep_kable = TRUE) %&gt;% 
@@ -1152,7 +1154,7 @@ P
 Intercept
 </td>
 <td style="text-align:left;">
--1.37 (0.22)
+-0.91 (0.10)
 </td>
 <td style="text-align:left;">
 <ul>
@@ -1166,10 +1168,10 @@ Intercept
 num_arrests
 </td>
 <td style="text-align:left;">
--0.02 (0.00)
+0.02 (0.00)
 </td>
 <td style="text-align:left;">
-0.99 (0.98, 0.99)
+1.02 (1.01, 1.02)
 </td>
 <td style="text-align:left;">
 &lt;0.001
@@ -1180,10 +1182,10 @@ num_arrests
 age
 </td>
 <td style="text-align:left;">
-0.00 (0.00)
+-0.00 (0.00)
 </td>
 <td style="text-align:left;">
-1.00 (1.00, 1.01)
+1.00 (0.99, 1.00)
 </td>
 <td style="text-align:left;">
 0.05
@@ -1219,10 +1221,10 @@ race
   Black non-Hispanic
 </td>
 <td style="text-align:left;">
-0.84 (0.05)
+-0.84 (0.05)
 </td>
 <td style="text-align:left;">
-2.32 (2.09, 2.58)
+0.43 (0.39, 0.48)
 </td>
 <td style="text-align:left;">
 &lt;0.001
@@ -1233,10 +1235,10 @@ race
   Hispanic
 </td>
 <td style="text-align:left;">
-0.89 (0.07)
+-0.89 (0.07)
 </td>
 <td style="text-align:left;">
-2.43 (2.12, 2.79)
+0.41 (0.36, 0.47)
 </td>
 <td style="text-align:left;">
 &lt;0.001
@@ -1247,10 +1249,10 @@ race
   American Indian, Alaska Native non-Hispanic
 </td>
 <td style="text-align:left;">
-0.39 (0.18)
+-0.39 (0.18)
 </td>
 <td style="text-align:left;">
-1.47 (1.04, 2.12)
+0.68 (0.47, 0.96)
 </td>
 <td style="text-align:left;">
 0.03
@@ -1261,10 +1263,10 @@ race
   Asian, Pacific Islander, Native Hawaiian non-Hispanic
 </td>
 <td style="text-align:left;">
-1.11 (0.28)
+-1.11 (0.28)
 </td>
 <td style="text-align:left;">
-3.05 (1.80, 5.49)
+0.33 (0.18, 0.55)
 </td>
 <td style="text-align:left;">
 &lt;0.001
@@ -1300,10 +1302,10 @@ sex
   Female
 </td>
 <td style="text-align:left;">
--0.56 (0.06)
+0.56 (0.06)
 </td>
 <td style="text-align:left;">
-0.57 (0.51, 0.65)
+1.74 (1.54, 1.97)
 </td>
 <td style="text-align:left;">
 &lt;0.001
@@ -1311,7 +1313,7 @@ sex
 </tr>
 <tr>
 <td style="text-align:left;">
-abuse
+relevel(abuse, ref = "Not Abused")
 </td>
 <td style="text-align:left;">
 </td>
@@ -1322,7 +1324,7 @@ abuse
 </tr>
 <tr>
 <td style="text-align:left;">
-  (0000003) Both physically and sexually abused
+  Not Abused
 </td>
 <td style="text-align:left;">
 <ul>
@@ -1336,7 +1338,7 @@ abuse
 </tr>
 <tr>
 <td style="text-align:left;">
-  (0000004) Not abused
+  Physical &amp; Sexual abuse
 </td>
 <td style="text-align:left;">
 1.64 (0.08)
@@ -1350,7 +1352,7 @@ abuse
 </tr>
 <tr>
 <td style="text-align:left;">
-hiv
+relevel(hiv, "Presumed Negative")
 </td>
 <td style="text-align:left;">
 </td>
@@ -1358,24 +1360,24 @@ hiv
 </td>
 <td style="text-align:left;">
 </td>
-</tr>
-<tr>
-<td style="text-align:left;">
-  Positive
-</td>
-<td style="text-align:left;">
-<ul>
-<li></td>
-<td style="text-align:left;">
-<ul>
-<li></td>
-<td style="text-align:left;">
-<ul>
-<li></td>
 </tr>
 <tr>
 <td style="text-align:left;">
   Presumed Negative
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+  Positive
 </td>
 <td style="text-align:left;">
 0.64 (0.18)
@@ -1413,7 +1415,7 @@ Alaska Native non-Hispanic :</p>
   filter(race != &quot;American Indian, Alaska Native non-Hispanic&quot;)
 
 manual_model2 = 
-  glm(mental_health ~ num_arrests + race + sex + abuse + hiv, data = manual2, family = &quot;binomial&quot;)
+  glm(relevel(mental_health, ref = &quot;No&quot;) ~ num_arrests + race + sex + relevel(abuse, ref = &quot;Not Abused&quot;) + relevel(hiv, &quot;Presumed Negative&quot;), data = manual2, family = &quot;binomial&quot;)
 
 manual_model2 %&gt;%
   clean_glm(prep_kable = TRUE) %&gt;% 
@@ -1441,7 +1443,7 @@ P
 Intercept
 </td>
 <td style="text-align:left;">
--1.16 (0.20)
+-1.09 (0.04)
 </td>
 <td style="text-align:left;">
 <ul>
@@ -1455,10 +1457,10 @@ Intercept
 num_arrests
 </td>
 <td style="text-align:left;">
--0.02 (0.00)
+0.02 (0.00)
 </td>
 <td style="text-align:left;">
-0.98 (0.98, 0.99)
+1.02 (1.01, 1.02)
 </td>
 <td style="text-align:left;">
 &lt;0.001
@@ -1494,10 +1496,10 @@ race
   Black non-Hispanic
 </td>
 <td style="text-align:left;">
-0.83 (0.05)
+-0.83 (0.05)
 </td>
 <td style="text-align:left;">
-2.30 (2.07, 2.55)
+0.44 (0.39, 0.48)
 </td>
 <td style="text-align:left;">
 &lt;0.001
@@ -1508,10 +1510,10 @@ race
   Hispanic
 </td>
 <td style="text-align:left;">
-0.87 (0.07)
+-0.87 (0.07)
 </td>
 <td style="text-align:left;">
-2.39 (2.09, 2.75)
+0.42 (0.36, 0.48)
 </td>
 <td style="text-align:left;">
 &lt;0.001
@@ -1522,10 +1524,10 @@ race
   Asian, Pacific Islander, Native Hawaiian non-Hispanic
 </td>
 <td style="text-align:left;">
-1.10 (0.28)
+-1.10 (0.28)
 </td>
 <td style="text-align:left;">
-3.00 (1.77, 5.40)
+0.33 (0.19, 0.56)
 </td>
 <td style="text-align:left;">
 &lt;0.001
@@ -1561,10 +1563,10 @@ sex
   Female
 </td>
 <td style="text-align:left;">
--0.56 (0.06)
+0.56 (0.06)
 </td>
 <td style="text-align:left;">
-0.57 (0.51, 0.65)
+1.75 (1.54, 1.98)
 </td>
 <td style="text-align:left;">
 &lt;0.001
@@ -1572,7 +1574,7 @@ sex
 </tr>
 <tr>
 <td style="text-align:left;">
-abuse
+relevel(abuse, ref = "Not Abused")
 </td>
 <td style="text-align:left;">
 </td>
@@ -1583,7 +1585,7 @@ abuse
 </tr>
 <tr>
 <td style="text-align:left;">
-  (0000003) Both physically and sexually abused
+  Not Abused
 </td>
 <td style="text-align:left;">
 <ul>
@@ -1597,7 +1599,7 @@ abuse
 </tr>
 <tr>
 <td style="text-align:left;">
-  (0000004) Not abused
+  Physical &amp; Sexual abuse
 </td>
 <td style="text-align:left;">
 1.62 (0.08)
@@ -1611,7 +1613,7 @@ abuse
 </tr>
 <tr>
 <td style="text-align:left;">
-hiv
+relevel(hiv, "Presumed Negative")
 </td>
 <td style="text-align:left;">
 </td>
@@ -1619,24 +1621,24 @@ hiv
 </td>
 <td style="text-align:left;">
 </td>
-</tr>
-<tr>
-<td style="text-align:left;">
-  Positive
-</td>
-<td style="text-align:left;">
-<ul>
-<li></td>
-<td style="text-align:left;">
-<ul>
-<li></td>
-<td style="text-align:left;">
-<ul>
-<li></td>
 </tr>
 <tr>
 <td style="text-align:left;">
   Presumed Negative
+</td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+<td style="text-align:left;">
+<ul>
+<li></td>
+</tr>
+<tr>
+<td style="text-align:left;">
+  Positive
 </td>
 <td style="text-align:left;">
 0.62 (0.18)
@@ -1666,8 +1668,8 @@ hiv
 <p><br></p>
 <p>The terms in our final model are all significant at the 0.001 level.
 We find that the most significant predictors of an inmate’s mental
-health status are <strong># of arrests, race, sex, HIV status, and
-abuse.</strong></p>
+health status are <strong>Number of arrests, Race, Sex, HIV status, and
+Abuse History.</strong></p>
 </div>
 
 

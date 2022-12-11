@@ -141,13 +141,15 @@ Let's look at the following variables as potential predictors of an inmate's men
 - HIV status
   
 ```{r model_selection, message = FALSE}
-
 model_data = 
   total_df %>%
-select(mental_health = MCMH_MENTAL_HISTORY, num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV) 
+select(mental_health = MCMH_MENTAL_HISTORY, num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV) %>%
+  mutate(mental_health = recode(mental_health, "(0000001) Yes" = "Yes", "(0000002) No" = "No"),
+         abuse = recode(abuse, "(0000004) Not abused" = "Not Abused", "(0000003) Both physically and sexually abused" = "Physical & Sexual abuse", "(0000002) Sexually only" = "Sexual only", "(9999999) Missing" = "Missing",  "(0000001) Physically only" = "Physical only"))%>%
+  filter(mental_health %in% c("Yes", "No"))
 
 full_model =
-  glm(mental_health ~ num_arrests + sentence_length + age + race + sex + abuse + hiv, data = model_data, family = "binomial")
+  glm(relevel(mental_health, ref = "No") ~ num_arrests + sentence_length + age + race + sex + relevel(abuse, ref = "Not Abused") + relevel(hiv, "Presumed Negative"), data = model_data, family = "binomial")
 
 full_model %>%
   clean_glm(prep_kable = TRUE) %>% 
@@ -179,12 +181,11 @@ Let's manually select the most significant variables and clean up the data to re
 
 ```{r manual, message = FALSE}
 manual_df =
-total_df %>%
-  select(mental_health = MCMH_MENTAL_HISTORY, num_arrests = V1197, sentence_length = CS_SENTENCEMTH, age = V0014, race = V2982, sex = V0005, abuse = SES_PHYSSEXABUSED_EVER, hiv = MCMH_RSLT_HIV) %>%
-  filter(abuse %in% c("(0000004) Not abused", "(0000003) Both physically and sexually abused"), race != "Multiple Races reported, non-Hispanic")
+model_data %>%
+  filter(abuse %in% c("Not Abused", "Physical & Sexual abuse"), race != "Multiple Races reported, non-Hispanic")
 
 manual_model = 
-  glm(mental_health ~ num_arrests + age + race + sex + abuse + hiv, data = manual_df, family = "binomial")
+  glm(relevel(mental_health, ref = "No") ~ num_arrests + age + race + sex + relevel(abuse, ref = "Not Abused") + relevel(hiv, "Presumed Negative"), data = manual_df, family = "binomial")
 
 manual_model %>%
   clean_glm(prep_kable = TRUE) %>% 
@@ -205,7 +206,7 @@ manual2 =
   filter(race != "American Indian, Alaska Native non-Hispanic")
 
 manual_model2 = 
-  glm(mental_health ~ num_arrests + race + sex + abuse + hiv, data = manual2, family = "binomial")
+  glm(relevel(mental_health, ref = "No") ~ num_arrests + race + sex + relevel(abuse, ref = "Not Abused") + relevel(hiv, "Presumed Negative"), data = manual2, family = "binomial")
 
 manual_model2 %>%
   clean_glm(prep_kable = TRUE) %>% 
@@ -215,4 +216,4 @@ manual_model2 %>%
 <br>
 
 The terms in our final model are all significant at the 0.001 level.
-We find that the most significant predictors of an inmate's mental health status are **# of arrests, race, sex, HIV status, and abuse.**
+We find that the most significant predictors of an inmate's mental health status are **Number of arrests, Race, Sex, HIV status, and Abuse History.**

@@ -8,8 +8,10 @@ output:
     theme: flatly
 ---
 
-![](mapping/robert-klank-lnyleGoROLY-unsplash.jpg)
-[Source](https://www.jumpingrivers.com/blog/knitr-rmarkdown-image-size/)
+```{r, out.width = "300px", fig.align='center'}
+knitr::include_graphics("mapping/robert-klank-lnyleGoROLY-unsplash.jpg")
+```
+[Source](https://unsplash.com/s/photos/jail)
 
 ## Introduction
 
