@@ -42,7 +42,7 @@ The prevalence of mass incarceration in the United States has grown drastically,
 
 ## Screencast
 
-<iframe src = "https://www.youtube.com/watch?v=nrDpQv4QzKs" width="560" height="315" title="YouTube video player" frameborder="0" data-external="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe src = "https://www.youtube.com/embed/nrDpQv4QzKs" width="560" height="315" title="YouTube video player" frameborder="0" data-external="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ## Website Overview
 
